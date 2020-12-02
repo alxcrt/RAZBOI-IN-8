@@ -10,9 +10,11 @@ int main() {
 
   // initgraph(&gd, &gm, NULL);
   initwindow(800, 800, "Razboi in 8", 0, 0);
+  settextjustify(CENTER_TEXT, CENTER_TEXT);
 
   while (1) {
-    createButton(getmaxx() / 2, getmaxy() / 2, 70, 20, "Exit", closeWindow);
+    createButton(getmaxx() / 2, getmaxy() / 3, "Start Game", game);
+    createButton(getmaxx() / 2, getmaxy() / 2, "Exit", closeWindow);
     delay(10);
   }
 
