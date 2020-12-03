@@ -1,4 +1,4 @@
-#include "helper.hpp"
+#include "Utils.hpp"
 
 #include <iostream>
 
@@ -6,16 +6,22 @@
 
 // Create a buttonz
 button createButton(int x, int y, const char* label) {
-  // Get the width and height in pixel of the desired label
-  int labelWidth = textwidth((char*)label);
-  int labelHeight = textheight((char*)label);
-
-  // rectangle(x - labelWidth / 2, y - labelHeight / 2, x + labelWidth / 2, y + labelHeight / 2);
-
   button b;
 
+  b.label = (char*)label;
+  b.x = x;
+  b.y = y;
+  // Get the width and height in pixel of the desired label
+  b.labelWidth = textwidth((char*)label);
+  b.labelHeight = textheight((char*)label);
+  return b;
+}
+
+void drawButton(button& b) {
+  // rectangle(b.x - b.labelWidth / 2, b.y - b.labelHeight / 2, b.x + b.labelWidth / 2, b.y + b.labelHeight / 2);
+
   // Verify if the mouse is inside the area of the button
-  if (mousex() > x - labelWidth / 2 && mousex() < x + labelWidth / 2 && mousey() > y - labelHeight / 2 && mousey() < y + labelHeight / 2) {
+  if (mousex() > b.x - b.labelWidth / 2 && mousex() < b.x + b.labelWidth / 2 && mousey() > b.y - b.labelHeight / 2 && mousey() < b.y + b.labelHeight / 2) {
     if (ismouseclick(WM_LBUTTONDOWN)) {
       clearmouseclick(WM_LBUTTONDOWN);
       b.isPressed = true;
@@ -25,12 +31,10 @@ button createButton(int x, int y, const char* label) {
     setcolor(WHITE);
   }
 
-  settextstyle(10, HORIZ_DIR, 5);
   // Draw the label text
-  outtextxy(x, y + 6, (char*)label);
+  outtextxy(b.x, b.y + 6, (char*)b.label);
   // Reset Color
   setcolor(WHITE);
-  return b;
 }
 
 void exitGame() {
