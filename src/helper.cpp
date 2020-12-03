@@ -4,36 +4,33 @@
 
 #include "graphics.h"
 
-// Create a button
+// Create a buttonz
 button createButton(int x, int y, const char* label) {
-  button b;
-  b.x = x;
-  b.y = y;
-
-  // Increase the font size
-  settextstyle(0, HORIZ_DIR, 3);
-  // Draw the label text
-  outtextxy(x, y + 6, (char*)label);
-
   // Get the width and height in pixel of the desired label
-  b.labelWidth = textwidth((char*)label);
-  b.labelHeight = textheight((char*)label);
+  int labelWidth = textwidth((char*)label);
+  int labelHeight = textheight((char*)label);
 
-  return b;
-}
+  // rectangle(x - labelWidth / 2, y - labelHeight / 2, x + labelWidth / 2, y + labelHeight / 2);
 
-void checkMousePressed(button& b) {
-  rectangle(b.x - b.labelWidth / 2, b.y - b.labelHeight / 2, b.x + b.labelWidth / 2, b.y + b.labelHeight / 2);
+  button b;
 
   // Verify if the mouse is inside the area of the button
-  if (mousex() > b.x - b.labelWidth / 2 && mousex() < b.x + b.labelWidth / 2 && mousey() > b.y - b.labelHeight / 2 && mousey() < b.y + b.labelHeight / 2 && ismouseclick(WM_LBUTTONDOWN)) {
-    clearmouseclick(WM_LBUTTONDOWN);
-    b.isPressed = true;
-    setcolor(15);
+  if (mousex() > x - labelWidth / 2 && mousex() < x + labelWidth / 2 && mousey() > y - labelHeight / 2 && mousey() < y + labelHeight / 2) {
+    if (ismouseclick(WM_LBUTTONDOWN)) {
+      clearmouseclick(WM_LBUTTONDOWN);
+      b.isPressed = true;
+    }
+    setcolor(3);
   } else {
-    setcolor(2);
-    clearmouseclick(WM_LBUTTONDOWN);
+    setcolor(WHITE);
   }
+
+  settextstyle(10, HORIZ_DIR, 5);
+  // Draw the label text
+  outtextxy(x, y + 6, (char*)label);
+  // Reset Color
+  setcolor(WHITE);
+  return b;
 }
 
 void exitGame() {
