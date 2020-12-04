@@ -29,19 +29,16 @@ void drawTable(int x, int y, int width, int height) {
   k = width / 8;
   for (i = 0; i < 8; i++)
     for (j = 0; j < 8; j++) {
-      if ((i+j)%2==0) {
+      if ((i + j) % 2 == 0) {
         setcolor(WHITE);
-        rectangle(x - (width / 2 - i * k), y - (width / 2 - j * k), x - (width / 2 - k - i * k), y - (width / 2 - k - j * k));
+        rectangle(x - (width / 2 - i * k), y - (width / 2 - j * k), x - (width / 2 - k - i * k) - 1, y - (width / 2 - k - j * k) - 1);
         setfillstyle(SOLID_FILL, WHITE);
-        floodfill(x - ((width / 2 - 1) - i * k), y - ((width / 2 - 1) - j * k), WHITE);
+        floodfill(x - ((width / 2 - 10) - i * k), y - ((width / 2 - 10) - j * k), WHITE);
+      } else {
+        setcolor(BLACK);
+        rectangle(x - (width / 2 - i * k), y - (width / 2 - j * k), x - (width / 2 - k - i * k) - 1, y - (width / 2 - k - j * k) - 1);
+        setfillstyle(SOLID_FILL, BLACK);
+        floodfill(x - ((width / 2 - 10) - i * k), y - ((width / 2 - 10) - j * k), BLACK);
       }
-        else 
-        {
-          setcolor(BLACK);
-          rectangle(x - (width / 2 - i * k)+1, y - (width / 2 - j * k)+1, x - (width / 2 - k - i * k)-1, y - (width / 2 - k - j * k)-1);
-          setfillstyle(SOLID_FILL, BLACK);
-          floodfill(x - ((width / 2 - 10) - i * k), y - ((width / 2 - 10) - j * k), BLACK);
-        }
-      
     }
 }
