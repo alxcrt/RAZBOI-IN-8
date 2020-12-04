@@ -2,13 +2,13 @@
 
 // Structs
 struct button {
-  bool isPressed = false;
   char* label;
-  int x, y, labelWidth, labelHeight;
+  void (*callFunction)();
+  int x, y, labelWidth, labelHeight, bkColor, fontColor, hoverColor;
 };
 
 // Button
-button createButton(int x, int y, const char* label);
+button createButton(int x, int y, const char* label, void(*callFunction)(), int bkColor, int fontColor, int hoverColor);
 void drawButton(button& b);
 
 // Others

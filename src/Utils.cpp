@@ -5,7 +5,7 @@
 #include "graphics.h"
 
 // Create a buttonz
-button createButton(int x, int y, const char* label) {
+button createButton(int x, int y, const char* label, void(*callFunction)(), int bkColor, int fontColor, int hoverColor) {
   button b;
 
   b.label = (char*)label;
@@ -14,6 +14,10 @@ button createButton(int x, int y, const char* label) {
   // Get the width and height in pixel of the desired label
   b.labelWidth = textwidth((char*)label);
   b.labelHeight = textheight((char*)label);
+  b.bkColor = bkColor;
+  b.fontColor = fontColor;
+  b.hoverColor = hoverColor;
+  b.callFunction = callFunction;
   return b;
 }
 
@@ -24,17 +28,17 @@ void drawButton(button& b) {
   if (mousex() > b.x - b.labelWidth / 2 && mousex() < b.x + b.labelWidth / 2 && mousey() > b.y - b.labelHeight / 2 && mousey() < b.y + b.labelHeight / 2) {
     if (ismouseclick(WM_LBUTTONDOWN)) {
       clearmouseclick(WM_LBUTTONDOWN);
-      b.isPressed = true;
+      b.callFunction();
     }
-    setcolor(3);
+    setcolor(b.hoverColor);
   } else {
-    setcolor(WHITE);
+    setcolor(b.fontColor);
   }
-
+  setbkcolor(b.bkColor);
   // Draw the label text
   outtextxy(b.x, b.y + 6, (char*)b.label);
   // Reset Color
-  setcolor(WHITE);
+  // setcolor(WHITE);
 }
 
 void exitGame() {

@@ -6,17 +6,13 @@
 
 void game() {
   cleardevice();
-  button menuButton = createButton(getmaxx() / 2, getmaxy() / 4, "Menu");
+  button menuButton = createButton(getmaxx() / 2 + 400, getmaxy() / 4, "Menu",menu, RED, WHITE, CYAN);
 
   while (1) {
-    //drawButton(menuButton);
-    // outtextxy(getmaxx() / 2, getmaxy() / 2 + 6, (char*)"Jocul este in constructie");
-    drawTable(getmaxx() / 2, getmaxy() / 2, 600, 600);
-    if (menuButton.isPressed) {
-      menu();
-    }
+    drawButton(menuButton);
+    drawTable(getmaxx() / 2 - 200, getmaxy() / 2, 600, 600);
 
-    delay(100);
+    delay(50);
   }
 }
 
@@ -25,7 +21,7 @@ void drawTable(int x, int y, int width, int height) {
   setcolor(RED);
   setfillstyle(SOLID_FILL, RED);
   rectangle(0, 0, getmaxx(), getmaxy());
-  floodfill(100, 100, RED);
+  floodfill(1, 1, RED);
   k = width / 8;
   for (i = 0; i < 8; i++)
     for (j = 0; j < 8; j++) {
