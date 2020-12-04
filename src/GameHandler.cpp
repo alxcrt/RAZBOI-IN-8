@@ -6,7 +6,7 @@
 #include "graphics.h"
 
 void start() {
-  initwindow(800, 800, "Razboi in 8", 0, 0);
+  initwindow(1200, 800, "Razboi in 8", 0, 0);
   settextstyle(10, HORIZ_DIR, 5);
   settextjustify(CENTER_TEXT, CENTER_TEXT);
   playSound("assets/buttercup.wav");
