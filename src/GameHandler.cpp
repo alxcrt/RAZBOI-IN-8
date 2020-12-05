@@ -34,9 +34,41 @@ void menu() {
 }
 
 void settings(){
-  return;
+  cleardevice();
+  readimagefile("./assets/startingimg.jpg", 0, 0, getmaxx(), getmaxy());
+  button languageGameButton, volumeGameButton, menuButton;
+  languageGameButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, "Language", language , BLACK, WHITE, CYAN);
+  volumeGameButton = createButton(getmaxx() / 2, getmaxy() / 2 , "Volume", volume , BLACK, WHITE, CYAN);
+  menuButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, "Menu",menu, BLACK, WHITE, CYAN);
+  while(1){
+    drawButton(languageGameButton);
+    drawButton(volumeGameButton);
+    drawButton(menuButton);
+
+    delay(50);
+  }
 }
 
 void rules(){
+  cleardevice();
+  readimagefile("./assets/rules.jpg", 0, 0, getmaxx(), getmaxy());
+  button menuButton;
+  menuButton = createButton(getmaxx() -100, getmaxy() - 100, "Menu",menu, BLACK, WHITE, CYAN);
+  setbkcolor(WHITE);
+  setcolor(BLACK);
+  settextstyle(10, HORIZ_DIR, 5);
+  outtextxy(100,100,(char*)"hatz gion text semnificativ");
+  while(1){
+    drawButton(menuButton);
+
+    delay(50);
+  }
+
+}
+void language(){
+  return;
+}
+
+void volume(){
   return;
 }

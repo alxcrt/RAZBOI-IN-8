@@ -46,6 +46,11 @@ void exitGame() {
   exit(0);
 }
 
+void stopSound()
+{
+   PlaySoundA(0, 0, 0);
+}
+
 void playSound(const char* path) {
   // Stops playback of a sound that is playing
   PlaySoundA(0, 0, 0);
