@@ -1,4 +1,17 @@
 #pragma once
 
+struct GameBoard {
+  int x, y, width;
+  int board[8][8] = {{0, 1, 0, 1, 0, 1, 0, 1},
+                     {1, 0, 1, 0, 1, 0, 1, 0},
+                     {0, 0, 0, 0, 0, 0, 0, 0},
+                     {0, 0, 0, 0, 0, 0, 0, 0},
+                     {0, 0, 0, 0, 0, 0, 0, 0},
+                     {0, 0, 2, 0, 0, 0, 0, 0},
+                     {0, 2, 0, 2, 0, 2, 0, 2},
+                     {2, 0, 2, 0, 2, 0, 2, 0}};
+};
+
 void game();
-void drawTable(int x, int y, int width, int height);  //x si y sunt coordonatele centrului tablei
+GameBoard createBoard(int x, int y, int width);
+void drawBoard(GameBoard& gameBoard);
