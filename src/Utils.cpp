@@ -5,7 +5,7 @@
 #include "graphics.h"
 
 // Create a buttonz
-button createButton(int x, int y, const char* label, void(*callFunction)(), int bkColor, int fontColor, int hoverColor) {
+button createButton(int x, int y, const char* label, void (*callFunction)(), int bkColor, int fontColor, int hoverColor) {
   button b;
 
   b.label = (char*)label;
@@ -34,6 +34,7 @@ void drawButton(button& b) {
   } else {
     setcolor(b.fontColor);
   }
+
   setbkcolor(b.bkColor);
   // Draw the label text
   outtextxy(b.x, b.y + 6, (char*)b.label);
@@ -55,5 +56,5 @@ void playSound(const char* path) {
   // Stops playback of a sound that is playing
   PlaySoundA(0, 0, 0);
   // Plays the sound
-  PlaySoundA(path, NULL, SND_ASYNC);
+  PlaySoundA(path, NULL, SND_LOOP | SND_ASYNC);
 }
