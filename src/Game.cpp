@@ -76,7 +76,7 @@ void drawBoard(GameBoard& gameBoard) {
   // Black border around table
   setcolor(BLACK);
   setlinestyle(0, 0, 6);
-  rectangle(gameBoard.x - gameBoard.width / 2 - 3, gameBoard.y - gameBoard.width / 2 - 3, gameBoard.x + gameBoard.width / 2 + 3, gameBoard.x + gameBoard.width / 2 + 3);
+  rectangle(gameBoard.x - gameBoard.width / 2 - 3, gameBoard.y - gameBoard.width / 2 - 3, gameBoard.x + gameBoard.width / 2 + 3, gameBoard.y + gameBoard.width / 2 + 3);
   setlinestyle(0, 0, 1);
 }
 
