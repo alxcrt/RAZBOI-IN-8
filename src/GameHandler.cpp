@@ -56,7 +56,7 @@ void settings() {
     //drawButton(volumeGameButton);
     drawButton(resolutionButton);
     drawButton(menuButton);
-
+    
     delay(50);
   }
 }

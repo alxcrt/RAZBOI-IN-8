@@ -10,6 +10,7 @@ struct button {
 
 // Button
 button createButton(int x, int y, const char* label, void (*callFunction)(), int bkColor, int fontColor, int hoverColor);
+
 void drawButton(button& b);
 
 // Others

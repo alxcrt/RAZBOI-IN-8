@@ -37,11 +37,12 @@ void drawButton(button& b) {
     setcolor(b.hoverColor);
   } else {
     setcolor(b.fontColor);
+    // clearmouseclick(WM_LBUTTONDOWN);
   }
 
   setbkcolor(b.bkColor);
   // Draw the label text
-  outtextxy(b.x, b.y + 6, (char*)b.label);
+  outtextxy(b.x, b.y + b.labelHeight / 4, (char*)b.label);
   // Reset Color
   // setcolor(WHITE);
 }
