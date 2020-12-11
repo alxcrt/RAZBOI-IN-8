@@ -15,3 +15,8 @@ struct GameBoard {
 void game();
 GameBoard createBoard(int x, int y, int width);
 void drawBoard(GameBoard& gameBoard);
+void drawPlayers(GameBoard& gameBoard);
+// void coordonatesToIndices();
+void delelePiece(GameBoard& gameBoard, int x, int y);
+void drawPlayer(GameBoard& gameBoard, int i, int j, int player);
+void markValidMove(GameBoard& gameBoard, int i, int j);
