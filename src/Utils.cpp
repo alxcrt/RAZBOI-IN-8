@@ -18,6 +18,7 @@ button createButton(int x, int y, const char* label, void (*callFunction)(), int
   b.fontColor = fontColor;
   b.hoverColor = hoverColor;
   b.callFunction = callFunction;
+  b.isPressed = false;
   return b;
 }
 
@@ -28,7 +29,10 @@ void drawButton(button& b) {
   if (mousex() > b.x - b.labelWidth / 2 && mousex() < b.x + b.labelWidth / 2 && mousey() > b.y - b.labelHeight / 2 && mousey() < b.y + b.labelHeight / 2) {
     if (ismouseclick(WM_LBUTTONDOWN)) {
       clearmouseclick(WM_LBUTTONDOWN);
-      b.callFunction();
+      b.isPressed=true;
+      if(b.callFunction != NULL){
+        b.callFunction();
+      }
     }
     setcolor(b.hoverColor);
   } else {
@@ -47,9 +51,8 @@ void exitGame() {
   exit(0);
 }
 
-void stopSound()
-{
-   PlaySoundA(0, 0, 0);
+void stopSound() {
+  PlaySoundA(0, 0, 0);
 }
 
 void playSound(const char* path) {
@@ -57,4 +60,17 @@ void playSound(const char* path) {
   PlaySoundA(0, 0, 0);
   // Plays the sound
   PlaySoundA(path, NULL, SND_LOOP | SND_ASYNC);
+}
+
+void setResolution(int width, int height) {
+  closegraph();
+  initwindow(width, height, "Razboi in 8", 0, 0);
+  if (width == 1200) {
+    settextstyle(10, HORIZ_DIR, 5);
+  } else if (width == 1366) {
+    settextstyle(10, HORIZ_DIR, 3);
+  } else if (width == 1024) {
+    settextstyle(10, HORIZ_DIR, 2);
+  }
+  settextjustify(CENTER_TEXT, CENTER_TEXT);
 }
