@@ -23,14 +23,14 @@ button createButton(int x, int y, const char* label, void (*callFunction)(), int
 }
 
 void drawButton(button& b) {
-  // rectangle(b.x - b.labelWidth / 2, b.y - b.labelHeight / 2, b.x + b.labelWidth / 2, b.y + b.labelHeight / 2);
+  //rectangle(b.x - b.labelWidth / 2, b.y - b.labelHeight / 2, b.x + b.labelWidth / 2, b.y + b.labelHeight / 2);
 
   // Verify if the mouse is inside the area of the button
   if (mousex() > b.x - b.labelWidth / 2 && mousex() < b.x + b.labelWidth / 2 && mousey() > b.y - b.labelHeight / 2 && mousey() < b.y + b.labelHeight / 2) {
     if (ismouseclick(WM_LBUTTONDOWN)) {
       clearmouseclick(WM_LBUTTONDOWN);
-      b.isPressed=true;
-      if(b.callFunction != NULL){
+      b.isPressed = true;
+      if (b.callFunction != NULL) {
         b.callFunction();
       }
     }
@@ -69,9 +69,9 @@ void setResolution(int width, int height) {
   if (width == 1200) {
     settextstyle(10, HORIZ_DIR, 5);
   } else if (width == 1366) {
-    settextstyle(10, HORIZ_DIR, 3);
+    settextstyle(10, HORIZ_DIR, 4);
   } else if (width == 1024) {
-    settextstyle(10, HORIZ_DIR, 2);
+    settextstyle(10, HORIZ_DIR, 3);
   }
   settextjustify(CENTER_TEXT, CENTER_TEXT);
 }

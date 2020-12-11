@@ -9,7 +9,7 @@ void start() {
   //initwindow(1366, 768, "Razboi in 8", 0, 0);
   //settextjustify(CENTER_TEXT, CENTER_TEXT);
   //playSound("assets/theme_hospital2.wav");
-  setResolution(1200,800);
+  setResolution(1200, 800);
 
   menu();
 }
@@ -17,7 +17,6 @@ void start() {
 void menu() {
   cleardevice();
   readimagefile("./assets/startingimg.jpg", 0, 0, getmaxx(), getmaxy());
-  settextstyle(10, HORIZ_DIR, 5);
   button startGameButton, exitGameButton, rulesGameButton, settingsGameButton;
   startGameButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, "Start Game", game, BLACK, WHITE, CYAN);
   rulesGameButton = createButton(getmaxx() / 2, getmaxy() / 2, "Rules", rules, BLACK, WHITE, CYAN);
@@ -37,10 +36,8 @@ void menu() {
 void settings() {
   cleardevice();
   readimagefile("./assets/startingimg.jpg", 0, 0, getmaxx(), getmaxy());
-  settextstyle(10, HORIZ_DIR, 5);
   setbkcolor(BLACK);
   setcolor(WHITE);
-  settextstyle(10, HORIZ_DIR, 5);
   outtextxy(getmaxx() / 2 - 70, getmaxy() / 2 + 5, (char*)"Volume:");
   button languageGameButton, /* volumeGameButton, */ menuButton, volumeOnGameButton, volumeOffGameButton, resolutionButton;
   languageGameButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, "Language", language, BLACK, WHITE, CYAN);
@@ -56,7 +53,7 @@ void settings() {
     //drawButton(volumeGameButton);
     drawButton(resolutionButton);
     drawButton(menuButton);
-    
+
     delay(50);
   }
 }
@@ -84,6 +81,7 @@ void rules() {
     drawButton(menuButton);
     settextstyle(10, HORIZ_DIR, 3);
     drawButton(rules2Button);
+    settextstyle(10, HORIZ_DIR, 5);
 
     delay(50);
   }
@@ -152,7 +150,6 @@ void language() {
   englishLanguageButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, "English", englishLanguage, BLACK, WHITE, CYAN);
   menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
   settingsButton = createButton(130, getmaxy() - 60, "<- Back", settings, BLACK, WHITE, CYAN);
-  settextstyle(10, HORIZ_DIR, 5);
   while (1) {
     drawButton(romanianLanguageButton);
     drawButton(franceLanguageButton);
@@ -189,7 +186,6 @@ void gameResolution() {
   rez1024x640Button = createButton(getmaxx() / 2 + 300, getmaxy() / 2 + 100, "1024x640", NULL, BLACK, WHITE, CYAN);
   menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
   settingsButton = createButton(130, getmaxy() - 60, "<- Back", settings, BLACK, WHITE, CYAN);
-  settextstyle(10, HORIZ_DIR, 5);
   while (1) {
     drawButton(rez1024x640Button);
     drawButton(rez1200x800Button);
