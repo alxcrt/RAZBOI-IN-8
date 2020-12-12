@@ -11,16 +11,27 @@
 #define PLAYER_2 2
 #define VALID_MOVE -1
 
+int currentPlayer;
+
 void game() {
   cleardevice();
   button menuButton = createButton(getmaxx() / 2 + 400, getmaxy() / 4, "Menu", menu, WHITE, BLACK, CYAN);
   readimagefile("./assets/blur-hospital.jpg", 0, 0, getmaxx(), getmaxy());
-  GameBoard gameBoard = createBoard(getmaxx() / 2, getmaxy() / 2, 600);
+  GameBoard gameBoard = createBoard(getmaxx() / 2 - 200, getmaxy() / 2, 600);
   drawBoard(gameBoard);
   drawPlayers(gameBoard);
 
+  currentPlayer = 1;
+
   while (1) {
     drawButton(menuButton);
+
+    setcolor(BLACK);
+    if (currentPlayer == 1) {
+      outtextxy(getmaxx() / 2 + 400, getmaxy() / 4 + 200, (char*)"P1's(vir) Turn");
+    } else {
+      outtextxy(getmaxx() / 2 + 400, getmaxy() / 4 + 200, (char*)"P2's(dok) Turn");
+    }
 
     if (ismouseclick(WM_LBUTTONDOWN)) {
       // clearmouseclick(WM_LBUTTONDOWN);
@@ -32,29 +43,53 @@ void game() {
       // std::cout << floor((x - (gameBoard.x - gameBoard.width / 2.)) / k) << "  " << floor((y - (gameBoard.y - gameBoard.width / 2.)) / k) << '\n';
       int j = floor((x - (gameBoard.x - gameBoard.width / 2.)) / k);
       int i = floor((y - (gameBoard.y - gameBoard.width / 2.)) / k);
-      std::cout << i << " " << j << "  " << k << '\n';
+      // std::cout << i << " " << j << "  " << k << '\n';
 
-      markValidMove(gameBoard, j - 1, i + 1);
-      markValidMove(gameBoard, j + 1, i + 1);
+      if (i < 0 || i > 7 || j < 0 || j > 7 || gameBoard.board[i][j] == 0 || currentPlayer != gameBoard.board[i][j]) {
+      } else {
+        isValidMove(gameBoard, i + 1, j - 1);
+        isValidMove(gameBoard, i + 1, j + 1);
+        isValidMove(gameBoard, i - 1, j - 1);
+        isValidMove(gameBoard, i - 1, j + 1);
 
-      while (!ismouseclick(WM_LBUTTONDOWN)) {
-        /* code */
+        while (!ismouseclick(WM_LBUTTONDOWN)) {
+          /* code */
+        }
+        getmouseclick(WM_LBUTTONDOWN, x, y);
+
+        int newJ = floor((x - (gameBoard.x - gameBoard.width / 2.)) / k);
+        int newI = floor((y - (gameBoard.y - gameBoard.width / 2.)) / k);
+        // std::cout << "second mouse click" << '\n';
+        // std::cout << newI << " " << newJ << "  " << k << "\n\n";
+
+        // std::cout << y / k - 6 << "  " << x / k - 3 << '\n';
+
+        // if ((i + 1 == newI && j - 1 == newJ) || (i + 1 == newI && j + 1 == newJ) || (i - 1 == newI && j - 1 == newJ) || (i - 1 == newI && j + 1 == newJ))
+
+        if ((newI < 0 || newI > 7 || newJ < 0 || newJ > 7 || gameBoard.board[newI][newJ] == gameBoard.board[i][j]) || !((i + 1 == newI && j - 1 == newJ) || (i + 1 == newI && j + 1 == newJ) || (i - 1 == newI && j - 1 == newJ) || (i - 1 == newI && j + 1 == newJ))) {
+          delelePiece(gameBoard, j - 1, i + 1);
+          delelePiece(gameBoard, j + 1, i + 1);
+          delelePiece(gameBoard, j - 1, i - 1);
+          delelePiece(gameBoard, j + 1, i - 1);
+        } else {
+          // gameBoard.board[5][5] = -1
+          gameBoard.board[i][j] = 0;
+          delelePiece(gameBoard, j, i);
+          delelePiece(gameBoard, j - 1, i + 1);
+          delelePiece(gameBoard, j + 1, i + 1);
+          delelePiece(gameBoard, j - 1, i - 1);
+          delelePiece(gameBoard, j + 1, i - 1);
+
+          gameBoard.board[newI][newJ] = currentPlayer;
+          drawPlayer(gameBoard, newJ, newI, currentPlayer);
+
+          if (currentPlayer == 1) {
+            currentPlayer = 2;
+          } else {
+            currentPlayer = 1;
+          }
+        }
       }
-      getmouseclick(WM_LBUTTONDOWN, x, y);
-
-      int newJ = floor((x - (gameBoard.x - gameBoard.width / 2.)) / k);
-      int newI = floor((y - (gameBoard.y - gameBoard.width / 2.)) / k);
-      // std::cout << "second mouse click" << '\n';
-      std::cout << newI << " " << newJ << "  " << k << "\n\n";
-
-      // std::cout << y / k - 6 << "  " << x / k - 3 << '\n';
-      gameBoard.board[i][j] = 0;
-      gameBoard.board[newI][newJ] = 1;
-      // gameBoard.board[5][5] = -1;
-      delelePiece(gameBoard, j, i);
-      delelePiece(gameBoard, j - 1, i + 1);
-      delelePiece(gameBoard, j + 1, i + 1);
-      drawPlayer(gameBoard, newJ, newI, 1);
     }
 
     delay(50);
@@ -125,17 +160,23 @@ void drawPlayers(GameBoard& gameBoard) {
 }
 
 void delelePiece(GameBoard& gameBoard, int i, int j) {
-  int k;
-  int cellX1, cellY1, cellX2, cellY2;
-  k = gameBoard.width / 8;
-  cellX1 = gameBoard.x - (gameBoard.width / 2 - i * k);
-  cellY1 = gameBoard.y - (gameBoard.width / 2 - j * k);
-  cellX2 = gameBoard.x - (gameBoard.width / 2 - k - i * k);
-  cellY2 = gameBoard.y - (gameBoard.width / 2 - k - j * k);
-  setcolor(COLOR(125, 135, 150));
-  rectangle(cellX1, cellY1, cellX2 - 1, cellY2 - 1);
-  setfillstyle(SOLID_FILL, COLOR(125, 135, 150));
-  floodfill(cellX1 + 10, cellY1 + 10, COLOR(125, 135, 150));
+  if (i < 0 || i > 7 || j < 0 || j > 7 || gameBoard.board[j][i] != 0) {
+    return;
+  } else {
+    // std::cout << i << " " << j << '\n';
+
+    int k;
+    int cellX1, cellY1, cellX2, cellY2;
+    k = gameBoard.width / 8;
+    cellX1 = gameBoard.x - (gameBoard.width / 2 - i * k);
+    cellY1 = gameBoard.y - (gameBoard.width / 2 - j * k);
+    cellX2 = gameBoard.x - (gameBoard.width / 2 - k - i * k);
+    cellY2 = gameBoard.y - (gameBoard.width / 2 - k - j * k);
+    setcolor(COLOR(125, 135, 150));
+    rectangle(cellX1, cellY1, cellX2 - 1, cellY2 - 1);
+    setfillstyle(SOLID_FILL, COLOR(125, 135, 150));
+    floodfill(cellX1 + 10, cellY1 + 10, COLOR(125, 135, 150));
+  }
 }
 
 void drawPlayer(GameBoard& gameBoard, int i, int j, int player) {
@@ -170,6 +211,25 @@ void markValidMove(GameBoard& gameBoard, int i, int j) {
   floodfill(cellX1 + 10, cellY1 + 10, COLOR(42, 219, 68));
 }
 
-/*
-doar daca cand apasa e ceva diferit de 0
-*/
+bool isValidMove(GameBoard& gameBoard, int i, int j) {
+  if (i < 0 || i > 7 || j < 0 || j > 7) {
+    return false;
+  }
+
+  // if (gameBoard.board[i][j] == 1 && currentPlayer == 2) {
+  //   markValidMove(gameBoard, j, i);
+  //   drawPlayer(gameBoard, j, i, 1);
+  // }
+
+  // if (gameBoard.board[i][j] == 2 && currentPlayer == 1) {
+  //   markValidMove(gameBoard, j, i);
+  //   drawPlayer(gameBoard, j, i, 2);
+  // }
+
+  if (gameBoard.board[i][j] != 0) {
+    return false;
+  }
+
+  markValidMove(gameBoard, j, i);
+  return true;
+}

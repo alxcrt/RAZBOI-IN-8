@@ -20,3 +20,4 @@ void drawPlayers(GameBoard& gameBoard);
 void delelePiece(GameBoard& gameBoard, int x, int y);
 void drawPlayer(GameBoard& gameBoard, int i, int j, int player);
 void markValidMove(GameBoard& gameBoard, int i, int j);
+bool isValidMove(GameBoard& gameboard, int i, int j);
