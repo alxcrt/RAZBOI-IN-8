@@ -1,7 +1,5 @@
 #include "Utils.hpp"
 
-#include <iostream>
-
 #include "graphics.h"
 
 // Create a buttonz
@@ -65,13 +63,19 @@ void playSound(const char* path) {
 
 void setResolution(int width, int height) {
   closegraph();
-  initwindow(width, height, "Razboi in 8", 0, 0);
+
   if (width == 1200) {
+    initwindow(width, height, "Razboi in 8", 0, 0);
     settextstyle(10, HORIZ_DIR, 5);
   } else if (width == 1366) {
+    initwindow(width, height, "Razboi in 8", 0, 0);
     settextstyle(10, HORIZ_DIR, 5);
   } else if (width == 1024) {
+    initwindow(width, height, "Razboi in 8", 0, 0);
     settextstyle(10, HORIZ_DIR, 4);
+  } else {
+    initwindow(getmaxwidth(), getmaxheight(), "Razboi in 8", 0, 0);
+    settextstyle(10, HORIZ_DIR, 5);
   }
   settextjustify(CENTER_TEXT, CENTER_TEXT);
 }

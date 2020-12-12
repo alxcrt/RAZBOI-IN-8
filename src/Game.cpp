@@ -1,7 +1,6 @@
 #include "Game.hpp"
 
 #include <cmath>
-#include <iostream>
 
 #include "GameHandler.hpp"
 #include "Utils.hpp"
@@ -9,28 +8,27 @@
 
 #define PLAYER_1 1
 #define PLAYER_2 2
-#define VALID_MOVE -1
 
 int currentPlayer;
 
 void game() {
   cleardevice();
-  button menuButton = createButton(getmaxx() / 2 + 400, getmaxy() / 4, "Menu", menu, WHITE, BLACK, CYAN);
+  button menuButton = createButton(getmaxx() / 2 + 300, getmaxy() / 4, "Menu", menu, WHITE, BLACK, CYAN);
   readimagefile("./assets/blur-hospital.jpg", 0, 0, getmaxx(), getmaxy());
-  GameBoard gameBoard = createBoard(getmaxx() / 2 - 200, getmaxy() / 2, 600);
+  GameBoard gameBoard = createBoard(getmaxx() / 2 - 200, getmaxy() / 2, 600, 8);
   drawBoard(gameBoard);
   drawPlayers(gameBoard);
 
-  currentPlayer = 1;
+  currentPlayer = PLAYER_1;
 
   while (1) {
     drawButton(menuButton);
 
     setcolor(BLACK);
-    if (currentPlayer == 1) {
-      outtextxy(getmaxx() / 2 + 400, getmaxy() / 4 + 200, (char*)"P1's(vir) Turn");
+    if (currentPlayer == PLAYER_1) {
+      outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1's Turn");
     } else {
-      outtextxy(getmaxx() / 2 + 400, getmaxy() / 4 + 200, (char*)"P2's(dok) Turn");
+      outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2's Turn");
     }
 
     if (ismouseclick(WM_LBUTTONDOWN)) {
@@ -38,14 +36,14 @@ void game() {
       int x, y;
       getmouseclick(WM_LBUTTONDOWN, x, y);
 
-      int k = gameBoard.width / 8;
+      int k = gameBoard.width / gameBoard.lines;
 
       // std::cout << floor((x - (gameBoard.x - gameBoard.width / 2.)) / k) << "  " << floor((y - (gameBoard.y - gameBoard.width / 2.)) / k) << '\n';
       int j = floor((x - (gameBoard.x - gameBoard.width / 2.)) / k);
       int i = floor((y - (gameBoard.y - gameBoard.width / 2.)) / k);
       // std::cout << i << " " << j << "  " << k << '\n';
 
-      if (i < 0 || i > 7 || j < 0 || j > 7 || gameBoard.board[i][j] == 0 || currentPlayer != gameBoard.board[i][j]) {
+      if (i < 0 || i > gameBoard.lines - 1 || j < 0 || j > gameBoard.lines - 1 || gameBoard.board[i][j] == 0 || currentPlayer != gameBoard.board[i][j]) {
       } else {
         isValidMove(gameBoard, i + 1, j - 1);
         isValidMove(gameBoard, i + 1, j + 1);
@@ -66,7 +64,7 @@ void game() {
 
         // if ((i + 1 == newI && j - 1 == newJ) || (i + 1 == newI && j + 1 == newJ) || (i - 1 == newI && j - 1 == newJ) || (i - 1 == newI && j + 1 == newJ))
 
-        if ((newI < 0 || newI > 7 || newJ < 0 || newJ > 7 || gameBoard.board[newI][newJ] == gameBoard.board[i][j]) || !((i + 1 == newI && j - 1 == newJ) || (i + 1 == newI && j + 1 == newJ) || (i - 1 == newI && j - 1 == newJ) || (i - 1 == newI && j + 1 == newJ))) {
+        if ((newI < 0 || newI > gameBoard.lines - 1 || newJ < 0 || newJ > gameBoard.lines - 1 || gameBoard.board[newI][newJ] != 0) || !((i + 1 == newI && j - 1 == newJ) || (i + 1 == newI && j + 1 == newJ) || (i - 1 == newI && j - 1 == newJ) || (i - 1 == newI && j + 1 == newJ))) {
           delelePiece(gameBoard, j - 1, i + 1);
           delelePiece(gameBoard, j + 1, i + 1);
           delelePiece(gameBoard, j - 1, i - 1);
@@ -83,10 +81,12 @@ void game() {
           gameBoard.board[newI][newJ] = currentPlayer;
           drawPlayer(gameBoard, newJ, newI, currentPlayer);
 
-          if (currentPlayer == 1) {
-            currentPlayer = 2;
+          // checkNeighbours(gameBoard);
+
+          if (currentPlayer == PLAYER_1) {
+            currentPlayer = PLAYER_2;
           } else {
-            currentPlayer = 1;
+            currentPlayer = PLAYER_1;
           }
         }
       }
@@ -100,11 +100,11 @@ void drawBoard(GameBoard& gameBoard) {
   int i,
       j, k;
   int cellX1, cellY1, cellX2, cellY2;
-  k = gameBoard.width / 8;
+  k = gameBoard.width / gameBoard.lines;
 
   // Draw the cells
-  for (i = 0; i < 8; i++)
-    for (j = 0; j < 8; j++) {
+  for (i = 0; i < gameBoard.lines; i++)
+    for (j = 0; j < gameBoard.lines; j++) {
       cellX1 = gameBoard.x - (gameBoard.width / 2 - i * k);
       cellY1 = gameBoard.y - (gameBoard.width / 2 - j * k);
       cellX2 = gameBoard.x - (gameBoard.width / 2 - k - i * k);
@@ -131,11 +131,32 @@ void drawBoard(GameBoard& gameBoard) {
   setlinestyle(0, 0, 1);
 }
 
-GameBoard createBoard(int x, int y, int width) {
+GameBoard createBoard(int x, int y, int width, int lines) {
   GameBoard gameBoard;
   gameBoard.x = x;
   gameBoard.y = y;
   gameBoard.width = width;
+  gameBoard.lines = lines;
+
+  int i;
+  gameBoard.board = (int**)malloc(gameBoard.lines * sizeof(int*));
+  for (i = 0; i < gameBoard.lines; i++)
+    gameBoard.board[i] = (int*)malloc(gameBoard.lines * sizeof(int));
+
+  for (i = 0; i < gameBoard.lines; i++)
+    for (int j = 0; j < gameBoard.lines; j++)
+      gameBoard.board[i][j] = 0;
+
+  for (i = 1; i < gameBoard.lines; i += 2) {
+    gameBoard.board[0][i] = PLAYER_1;
+    gameBoard.board[1][i - 1] = PLAYER_1;
+  }
+
+  for (i = 1; i < gameBoard.lines; i += 2) {
+    gameBoard.board[gameBoard.lines - 2][i] = PLAYER_2;
+    gameBoard.board[gameBoard.lines - 1][i - 1] = PLAYER_2;
+  }
+
   return gameBoard;
 }
 
@@ -143,10 +164,10 @@ void drawPlayers(GameBoard& gameBoard) {
   int i,
       j, k;
   int cellX1, cellY1, cellX2, cellY2;
-  k = gameBoard.width / 8;
+  k = gameBoard.width / gameBoard.lines;
 
-  for (i = 0; i < 8; i++)
-    for (j = 0; j < 8; j++) {
+  for (i = 0; i < gameBoard.lines; i++)
+    for (j = 0; j < gameBoard.lines; j++) {
       cellX1 = gameBoard.x - (gameBoard.width / 2 - i * k);
       cellY1 = gameBoard.y - (gameBoard.width / 2 - j * k);
       cellX2 = gameBoard.x - (gameBoard.width / 2 - k - i * k);
@@ -160,14 +181,14 @@ void drawPlayers(GameBoard& gameBoard) {
 }
 
 void delelePiece(GameBoard& gameBoard, int i, int j) {
-  if (i < 0 || i > 7 || j < 0 || j > 7 || gameBoard.board[j][i] != 0) {
+  if (i < 0 || i > gameBoard.lines - 1 || j < 0 || j > gameBoard.lines - 1 || gameBoard.board[j][i] != 0) {
     return;
   } else {
     // std::cout << i << " " << j << '\n';
 
     int k;
     int cellX1, cellY1, cellX2, cellY2;
-    k = gameBoard.width / 8;
+    k = gameBoard.width / gameBoard.lines;
     cellX1 = gameBoard.x - (gameBoard.width / 2 - i * k);
     cellY1 = gameBoard.y - (gameBoard.width / 2 - j * k);
     cellX2 = gameBoard.x - (gameBoard.width / 2 - k - i * k);
@@ -182,7 +203,7 @@ void delelePiece(GameBoard& gameBoard, int i, int j) {
 void drawPlayer(GameBoard& gameBoard, int i, int j, int player) {
   int k;
   int cellX1, cellY1, cellX2, cellY2;
-  k = gameBoard.width / 8;
+  k = gameBoard.width / gameBoard.lines;
 
   cellX1 = gameBoard.x - (gameBoard.width / 2 - i * k);
   cellY1 = gameBoard.y - (gameBoard.width / 2 - j * k);
@@ -198,7 +219,7 @@ void drawPlayer(GameBoard& gameBoard, int i, int j, int player) {
 void markValidMove(GameBoard& gameBoard, int i, int j) {
   int k;
   int cellX1, cellY1, cellX2, cellY2;
-  k = gameBoard.width / 8;
+  k = gameBoard.width / gameBoard.lines;
 
   cellX1 = gameBoard.x - (gameBoard.width / 2 - i * k);
   cellY1 = gameBoard.y - (gameBoard.width / 2 - j * k);
@@ -212,7 +233,7 @@ void markValidMove(GameBoard& gameBoard, int i, int j) {
 }
 
 bool isValidMove(GameBoard& gameBoard, int i, int j) {
-  if (i < 0 || i > 7 || j < 0 || j > 7) {
+  if (i < 0 || i > gameBoard.lines - 1 || j < 0 || j > gameBoard.lines - 1) {
     return false;
   }
 
@@ -233,3 +254,34 @@ bool isValidMove(GameBoard& gameBoard, int i, int j) {
   markValidMove(gameBoard, j, i);
   return true;
 }
+
+bool contains(GameBoard& gameBoard, int i, int j) {
+  return !(i < 0 || i > gameBoard.lines - 1 || j < 0 || j > gameBoard.lines - 1);
+}
+
+// void checkNeighbours(GameBoard& gameBoard) {
+//   for (int i = 0; i < 8; i++) {
+//     for (int j = 0; j < 8; j++) {
+//       int ok = true;
+//       if (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i][j] == currentPlayer) {
+//         if (gameBoard.board[i + 1][j - 1] == currentPlayer)
+//           ok = false;
+//       } else if (contains(gameBoard, i + 1, j + 1) && gameBoard.board[i][j] == currentPlayer) {
+//         if (gameBoard.board[i + 1][j + 1] == currentPlayer)
+//           ok = false;
+//       } else if (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i][j] == currentPlayer) {
+//         if (gameBoard.board[i - 1][j - 1] == currentPlayer)
+//           ok = false;
+//       } else if (contains(gameBoard, i - 1, j + 1) && gameBoard.board[i][j] == currentPlayer) {
+//         if (gameBoard.board[i - 1][j + 1] == currentPlayer)
+//           ok = false;
+//       }
+
+//       if (ok) {
+//         gameBoard.board[i][j] = 0;
+//         delelePiece(gameBoard, j, i);
+//         return;
+//       }
+//     }
+//   }
+// }

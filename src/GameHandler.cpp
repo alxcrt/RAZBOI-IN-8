@@ -60,7 +60,7 @@ void settings() {
 }
 
 void rules() {
-  int k=0;
+  int k = 0;
   cleardevice();
   if (getmaxx() == 1023) {
     settextstyle(10, HORIZ_DIR, 2);
@@ -99,7 +99,7 @@ void rules() {
 }
 
 void rules2() {
-  int k=0;
+  int k = 0;
   cleardevice();
   if (getmaxx() == 1023) {
     settextstyle(10, HORIZ_DIR, 2);
@@ -137,7 +137,7 @@ void rules2() {
 }
 
 void rules3() {
-  int k=0;
+  int k = 0;
   cleardevice();
   if (getmaxx() == 1023) {
     settextstyle(10, HORIZ_DIR, 2);
@@ -211,10 +211,11 @@ void gameResolution() {
   readimagefile("./assets/1200x800mini.jpg", getmaxx() / 2 - 400, getmaxy() / 2 - 60, getmaxx() / 2 - 200, getmaxy() / 2 + 60);
   readimagefile("./assets/1366x768mini.jpg", getmaxx() / 2 - 100, getmaxy() / 2 - 60, getmaxx() / 2 + 100, getmaxy() / 2 + 60);
   readimagefile("./assets/1024x640mini.jpg", getmaxx() / 2 + 200, getmaxy() / 2 - 60, getmaxx() / 2 + 400, getmaxy() / 2 + 60);
-  button rez1200x800Button, rez1366x768Button, rez1024x640Button, settingsButton, menuButton;
+  button rez1200x800Button, rez1366x768Button, rez1024x640Button, settingsButton, menuButton, rezFullScreenButton;
   rez1200x800Button = createButton(getmaxx() / 2 - 300, getmaxy() / 2 + 100, "1200x800", NULL, BLACK, WHITE, CYAN);
   rez1366x768Button = createButton(getmaxx() / 2, getmaxy() / 2 + 100, "1366x768", NULL, BLACK, WHITE, CYAN);
   rez1024x640Button = createButton(getmaxx() / 2 + 300, getmaxy() / 2 + 100, "1024x640", NULL, BLACK, WHITE, CYAN);
+  rezFullScreenButton = createButton(getmaxx() / 2, getmaxy() / 2 + 200, "FullScreen", NULL, BLACK, WHITE, CYAN);
   menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
   settingsButton = createButton(130, getmaxy() - 60, "<- Back", settings, BLACK, WHITE, CYAN);
   while (1) {
@@ -223,6 +224,7 @@ void gameResolution() {
     drawButton(rez1366x768Button);
     drawButton(menuButton);
     drawButton(settingsButton);
+    drawButton(rezFullScreenButton);
 
     if (rez1200x800Button.isPressed) {
       rez1200x800Button.isPressed = false;
@@ -237,6 +239,12 @@ void gameResolution() {
     if (rez1024x640Button.isPressed) {
       rez1024x640Button.isPressed = false;
       setResolution(1024, 640);
+      gameResolution();
+    }
+
+    if (rezFullScreenButton.isPressed) {
+      rezFullScreenButton.isPressed = false;
+      setResolution(1026, 640);
       gameResolution();
     }
 
