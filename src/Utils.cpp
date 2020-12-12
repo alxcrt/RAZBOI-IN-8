@@ -69,9 +69,9 @@ void setResolution(int width, int height) {
   if (width == 1200) {
     settextstyle(10, HORIZ_DIR, 5);
   } else if (width == 1366) {
-    settextstyle(10, HORIZ_DIR, 4);
+    settextstyle(10, HORIZ_DIR, 5);
   } else if (width == 1024) {
-    settextstyle(10, HORIZ_DIR, 3);
+    settextstyle(10, HORIZ_DIR, 4);
   }
   settextjustify(CENTER_TEXT, CENTER_TEXT);
 }

@@ -9,13 +9,14 @@ void start() {
   //initwindow(1366, 768, "Razboi in 8", 0, 0);
   //settextjustify(CENTER_TEXT, CENTER_TEXT);
   //playSound("assets/theme_hospital2.wav");
-  setResolution(1200, 800);
+  setResolution(1024, 640);
 
   menu();
 }
 
 void menu() {
   cleardevice();
+
   readimagefile("./assets/startingimg.jpg", 0, 0, getmaxx(), getmaxy());
   button startGameButton, exitGameButton, rulesGameButton, settingsGameButton;
   startGameButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, "Start Game", game, BLACK, WHITE, CYAN);
@@ -59,23 +60,33 @@ void settings() {
 }
 
 void rules() {
+  int k=0;
   cleardevice();
+  if (getmaxx() == 1023) {
+    settextstyle(10, HORIZ_DIR, 2);
+    k = 0;
+  } else if (getmaxx() == 1199) {
+    settextstyle(10, HORIZ_DIR, 3);
+    k = 4;
+  } else if (getmaxx() == 1365) {
+    settextstyle(10, HORIZ_DIR, 3);
+    k = 0;
+  }
   readimagefile("./assets/rules.jpg", 0, 0, getmaxx(), getmaxy());
   button menuButton, rules2Button;
   menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
   rules2Button = createButton(getmaxx() - 250, getmaxy() - 100, "next page ->", rules2, WHITE, BLACK, CYAN);
   setbkcolor(WHITE);
   setcolor(BLACK);
-  settextstyle(10, HORIZ_DIR, 2);
-  outtextxy(520, 200, (char*)"Jocul <Razboi in 8> (cu varianta sa <Razboi in 4>) este un joc         ");
-  outtextxy(520, 230, (char*)"rational pentru toate varstele. El solicita atentia si spiritul de     ");
-  outtextxy(520, 260, (char*)"observatie, favorizeaza analiza combinatorie a variantelor si dezvolta ");
-  outtextxy(520, 290, (char*)"obisnuinta de a duce lucrurile la bun sfarsit. Un joc asemanator -dar  ");
-  outtextxy(520, 320, (char*)"mai simplu- care faciliteaza invatarea si practicarea jocului <Razboi  ");
-  outtextxy(520, 350, (char*)"in 8> este <Cainii si vulpea>. Jocul ofera amatorilor un larg camp de  ");
-  outtextxy(520, 380, (char*)"studiu si analiza -nu prea simpla- fiind perfect adaptat pentru        ");
-  outtextxy(520, 410, (char*)"compunere si rezolvare de probleme, precum si pentru desfasurare       ");
-  outtextxy(520, 440, (char*)"prin corespondenta.                                                    ");
+  outtextxy((getmaxx() / 100) * (52 + k), 200 + (2 * k), (char*)"Jocul <Razboi in 8> (cu varianta sa <Razboi in 4>) este un joc         ");
+  outtextxy((getmaxx() / 100) * (52 + k), 230 + (2 * k), (char*)"rational pentru toate varstele. El solicita atentia si spiritul de     ");
+  outtextxy((getmaxx() / 100) * (52 + k), 260 + (2 * k), (char*)"observatie, favorizeaza analiza combinatorie a variantelor si dezvolta ");
+  outtextxy((getmaxx() / 100) * (52 + k), 290 + (2 * k), (char*)"obisnuinta de a duce lucrurile la bun sfarsit. Un joc asemanator -dar  ");
+  outtextxy((getmaxx() / 100) * (52 + k), 320 + (2 * k), (char*)"mai simplu- care faciliteaza invatarea si practicarea jocului <Razboi  ");
+  outtextxy((getmaxx() / 100) * (52 + k), 350 + (2 * k), (char*)"in 8> este <Cainii si vulpea>. Jocul ofera amatorilor un larg camp de  ");
+  outtextxy((getmaxx() / 100) * (52 + k), 380 + (2 * k), (char*)"studiu si analiza -nu prea simpla- fiind perfect adaptat pentru        ");
+  outtextxy((getmaxx() / 100) * (52 + k), 410 + (2 * k), (char*)"compunere si rezolvare de probleme, precum si pentru desfasurare       ");
+  outtextxy((getmaxx() / 100) * (52 + k), 440 + (2 * k), (char*)"prin corespondenta.                                                    ");
   while (1) {
     settextstyle(10, HORIZ_DIR, 5);
     drawButton(menuButton);
@@ -88,22 +99,32 @@ void rules() {
 }
 
 void rules2() {
+  int k=0;
   cleardevice();
+  if (getmaxx() == 1023) {
+    settextstyle(10, HORIZ_DIR, 2);
+    k = 0;
+  } else if (getmaxx() == 1199) {
+    settextstyle(10, HORIZ_DIR, 3);
+    k = 4;
+  } else if (getmaxx() == 1365) {
+    settextstyle(10, HORIZ_DIR, 3);
+    k = 0;
+  }
   readimagefile("./assets/rules.jpg", 0, 0, getmaxx(), getmaxy());
-  readimagefile("./assets/board2.jpg", getmaxx() / 2 - 370, getmaxy() / 2 - 40, getmaxx() / 2 - 100, getmaxy() / 2 + 200);
+  readimagefile("./assets/board2.jpg", getmaxx() / 2 - 370 - (16 * k), getmaxy() / 2 - 40 - (16 * k), getmaxx() / 2 - 100, getmaxy() / 2 + 200);
   button menuButton, rulesButton, rules3Button;
   menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
   rulesButton = createButton(250, getmaxy() - 100, "<- previous page", rules, WHITE, BLACK, CYAN);
   rules3Button = createButton(getmaxx() - 250, getmaxy() - 100, "next page ->", rules3, WHITE, BLACK, CYAN);
   setbkcolor(WHITE);
   setcolor(BLACK);
-  settextstyle(10, HORIZ_DIR, 2);
-  outtextxy(520, 110, (char*)"La joc iau parte doua persoane, care urmarese, fiecare, a scoate din   ");
-  outtextxy(520, 140, (char*)"lupta <armata> adversa. Jocul se poate incheia cu victoria unuia dintre");
-  outtextxy(520, 170, (char*)"jucatori, sau nedecis -remiza. Practicarea jocului reclama o tabla de  ");
-  outtextxy(520, 200, (char*)"joc de 8x8 patratele (tabla de sah) si cate 8 piese (pioni) pentru     ");
-  outtextxy(520, 230, (char*)"fiecare jucator - piese care vor fi de culori diferite. Sa numim cei   ");
-  outtextxy(520, 260, (char*)"doi jucatori: A si B, iar piesele -respectiv culorile lor: alb si negru.");
+  outtextxy((getmaxx() / 100) * (52 + k), 110 + (2 * k), (char*)"La joc iau parte doua persoane, care urmareste, fiecare, a scoate din   ");
+  outtextxy((getmaxx() / 100) * (52 + k), 140 + (2 * k), (char*)"lupta <armata> adversa. Jocul se poate incheia cu victoria unuia dintre");
+  outtextxy((getmaxx() / 100) * (52 + k), 170 + (2 * k), (char*)"jucatori, sau nedecis -remiza. Practicarea jocului reclama o tabla de  ");
+  outtextxy((getmaxx() / 100) * (52 + k), 200 + (2 * k), (char*)"joc de 8x8 patratele (tabla de sah) si cate 8 piese (pioni) pentru     ");
+  outtextxy((getmaxx() / 100) * (52 + k), 230 + (2 * k), (char*)"fiecare jucator - piese care vor fi de culori diferite. Sa numim cei   ");
+  outtextxy((getmaxx() / 100) * (52 + k), 260 + (2 * k), (char*)"doi jucatori: A si B, iar piesele -respectiv culorile lor: alb si negru.");
   while (1) {
     settextstyle(10, HORIZ_DIR, 3);
     drawButton(rulesButton);
@@ -116,15 +137,25 @@ void rules2() {
 }
 
 void rules3() {
+  int k=0;
   cleardevice();
+  if (getmaxx() == 1023) {
+    settextstyle(10, HORIZ_DIR, 2);
+    k = 0;
+  } else if (getmaxx() == 1199) {
+    settextstyle(10, HORIZ_DIR, 3);
+    k = 4;
+  } else if (getmaxx() == 1365) {
+    settextstyle(10, HORIZ_DIR, 3);
+    k = 0;
+  }
   readimagefile("./assets/rules.jpg", 0, 0, getmaxx(), getmaxy());
-  readimagefile("./assets/board.jpg", getmaxx() / 2 - 370, getmaxy() / 2 - 40, getmaxx() / 2 - 100, getmaxy() / 2 + 200);
-  readimagefile("./assets/board3.jpg", getmaxx() / 2, getmaxy() / 2 - 40, getmaxx() / 2 + 270, getmaxy() / 2 + 200);
-  settextstyle(10, HORIZ_DIR, 2);
-  outtextxy(520, 130, (char*)"Piesele se pot muta doar pe diagonala, scopul fiind acela de a         ");
-  outtextxy(520, 160, (char*)"inconjura piesa inamica pentru a o scoate de pe tabla. (img 1+2)       ");
-  outtextxy(520, 190, (char*)"Castiga jocul cel care reuseste sa scoata din lupta mai multi soldati  ");
-  outtextxy(520, 220, (char*)"adversi, deci cel care ramane cu mai multe piese pe tabla.             ");
+  readimagefile("./assets/board.jpg", getmaxx() / 2 - 370 - (16 * k), getmaxy() / 2 - 40 - (16 * k), getmaxx() / 2 - 100, getmaxy() / 2 + 200);
+  readimagefile("./assets/board3.jpg", getmaxx() / 2, getmaxy() / 2 - 40 - (16 * k), getmaxx() / 2 + 270 + (16 * k), getmaxy() / 2 + 200);
+  outtextxy((getmaxx() / 100) * (52 + k), 130 + (2 * k), (char*)"Piesele se pot muta doar pe diagonala, scopul fiind acela de a         ");
+  outtextxy((getmaxx() / 100) * (52 + k), 160 + (2 * k), (char*)"inconjura piesa inamica pentru a o scoate de pe tabla. (img 1+2)       ");
+  outtextxy((getmaxx() / 100) * (52 + k), 190 + (2 * k), (char*)"Castiga jocul cel care reuseste sa scoata din lupta mai multi soldati  ");
+  outtextxy((getmaxx() / 100) * (52 + k), 220 + (2 * k), (char*)"adversi, deci cel care ramane cu mai multe piese pe tabla.             ");
   button menuButton, rules2Button;
   menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
   rules2Button = createButton(250, getmaxy() - 100, "<- previous page", rules2, WHITE, BLACK, CYAN);
