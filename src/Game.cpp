@@ -3,7 +3,7 @@
 #include <time.h>
 
 #include <cmath>
-#include <iostream>
+// #include <iostream>
 
 #include "GameHandler.hpp"
 #include "Utils.hpp"
@@ -17,7 +17,6 @@ void game() {
   readimagefile("./assets/blur-hospital.jpg", 0, 0, getmaxx(), getmaxy());
   GameBoard gameBoard = createBoard(getmaxx() / 2 - 200, getmaxy() / 2, 600, 8);
   drawBoard(gameBoard);
-  drawPlayers(gameBoard);
 
   srand(time(NULL));
   currentPlayer = rand() % 2 + 1;
@@ -42,15 +41,15 @@ void game() {
       // std::cout << floor((x - (gameBoard.x - gameBoard.width / 2.)) / k) << "  " << floor((y - (gameBoard.y - gameBoard.width / 2.)) / k) << '\n';
       int j = floor((x - (gameBoard.x - gameBoard.width / 2.)) / k);
       int i = floor((y - (gameBoard.y - gameBoard.width / 2.)) / k);
-      std::cout << i << " " << j << "  " << k << '\n';
+      // std::cout << i << " " << j << "  " << k << '\n';
 
       // if (!contains(gameBoard, i, j) || currentPlayer != gameBoard.board[i][j]) {
       // }
-      if (contains(gameBoard, i, j) && currentPlayer == gameBoard.board[i][j]) {
-        markValidMove(gameBoard, i + 1, j - 1);
-        markValidMove(gameBoard, i + 1, j + 1);
-        markValidMove(gameBoard, i - 1, j - 1);
-        markValidMove(gameBoard, i - 1, j + 1);
+      if (contains(gameBoard, i, j) && currentPlayer == gameBoard.board[i][j].type) {
+        drawValidMove(gameBoard, i + 1, j - 1);
+        drawValidMove(gameBoard, i + 1, j + 1);
+        drawValidMove(gameBoard, i - 1, j - 1);
+        drawValidMove(gameBoard, i - 1, j + 1);
 
         while (!ismouseclick(WM_LBUTTONDOWN)) {
           /* code */
@@ -59,29 +58,21 @@ void game() {
 
         int newJ = floor((x - (gameBoard.x - gameBoard.width / 2.)) / k);
         int newI = floor((y - (gameBoard.y - gameBoard.width / 2.)) / k);
-        // std::cout << "second mouse click" << '\n';
-        // std::cout << newI << " " << newJ << "  " << k << "\n\n";
 
-        // std::cout << y / k - 6 << "  " << x / k - 3 << '\n';
-
-        // if ((i + 1 == newI && j - 1 == newJ) || (i + 1 == newI && j + 1 == newJ) || (i - 1 == newI && j - 1 == newJ) || (i - 1 == newI && j + 1 == newJ))
-
-        if ((!contains(gameBoard, newI, newJ) || gameBoard.board[newI][newJ] != 0) || !((i + 1 == newI && j - 1 == newJ) || (i + 1 == newI && j + 1 == newJ) || (i - 1 == newI && j - 1 == newJ) || (i - 1 == newI && j + 1 == newJ))) {
-          delelePiece(gameBoard, j - 1, i + 1);
-          delelePiece(gameBoard, j + 1, i + 1);
-          delelePiece(gameBoard, j - 1, i - 1);
-          delelePiece(gameBoard, j + 1, i - 1);
+        if ((!contains(gameBoard, newI, newJ) || gameBoard.board[newI][newJ].type != 0) || !((i + 1 == newI && j - 1 == newJ) || (i + 1 == newI && j + 1 == newJ) || (i - 1 == newI && j - 1 == newJ) || (i - 1 == newI && j + 1 == newJ))) {
+          remove(gameBoard, i + 1, j - 1);
+          remove(gameBoard, i + 1, j + 1);
+          remove(gameBoard, i - 1, j - 1);
+          remove(gameBoard, i - 1, j + 1);
         } else {
-          // gameBoard.board[5][5] = -1
-          gameBoard.board[i][j] = 0;
-          delelePiece(gameBoard, j, i);
-          delelePiece(gameBoard, j - 1, i + 1);
-          delelePiece(gameBoard, j + 1, i + 1);
-          delelePiece(gameBoard, j - 1, i - 1);
-          delelePiece(gameBoard, j + 1, i - 1);
+          gameBoard.board[i][j].type = EMPTY;
+          remove(gameBoard, i, j);
+          remove(gameBoard, i + 1, j - 1);
+          remove(gameBoard, i + 1, j + 1);
+          remove(gameBoard, i - 1, j - 1);
+          remove(gameBoard, i - 1, j + 1);
 
-          gameBoard.board[newI][newJ] = currentPlayer;
-          drawPlayer(gameBoard, newJ, newI, currentPlayer);
+          move(gameBoard, newI, newJ, currentPlayer);
 
           checkNeighbours(gameBoard);
 
@@ -99,29 +90,32 @@ void game() {
 }
 
 void drawBoard(GameBoard& gameBoard) {
-  int i,
-      j, k;
-  int cellX1, cellY1, cellX2, cellY2;
-  k = gameBoard.width / gameBoard.size;
-
+  int x1, x2, y1, y2;
   // Draw the cells
-  for (i = 0; i < gameBoard.size; i++)
-    for (j = 0; j < gameBoard.size; j++) {
-      cellX1 = gameBoard.x - (gameBoard.width / 2 - i * k);
-      cellY1 = gameBoard.y - (gameBoard.width / 2 - j * k);
-      cellX2 = gameBoard.x - (gameBoard.width / 2 - k - i * k);
-      cellY2 = gameBoard.y - (gameBoard.width / 2 - k - j * k);
+  for (int i = 0; i < gameBoard.size; i++)
+    for (int j = 0; j < gameBoard.size; j++) {
+      x1 = gameBoard.board[i][j].x1;
+      y1 = gameBoard.board[i][j].y1;
+      x2 = gameBoard.board[i][j].x2;
+      y2 = gameBoard.board[i][j].y2;
 
       if ((i + j) % 2 == 0) {
         setcolor(COLOR(232, 235, 239));
-        rectangle(cellX1, cellY1, cellX2 - 1, cellY2 - 1);
+        rectangle(x1, y1, x2 - 1, y2 - 1);
         setfillstyle(SOLID_FILL, COLOR(232, 235, 239));
-        floodfill(cellX1 + 10, cellY1 + 10, COLOR(232, 235, 239));
+        floodfill(x1 + 10, y1 + 10, COLOR(232, 235, 239));
       } else {
         setcolor(COLOR(125, 135, 150));
-        rectangle(cellX1, cellY1, cellX2 - 1, cellY2 - 1);
+        rectangle(x1, y1, x2 - 1, y2 - 1);
         setfillstyle(SOLID_FILL, COLOR(125, 135, 150));
-        floodfill(cellX1 + 10, cellY1 + 10, COLOR(125, 135, 150));
+        floodfill(x1 + 10, y1 + 10, COLOR(125, 135, 150));
+      }
+
+      // Draw pieces
+      if (gameBoard.board[i][j].type == PLAYER_1) {
+        readimagefile("./assets/virus_jpg.jpg", x1 + 10, y1 + 10, x2 - 10, y2 - 10);
+      } else if (gameBoard.board[i][j].type == PLAYER_2) {
+        readimagefile("./assets/dokter.jpg", x1 + 10, y1 + 10, x2 - 10, y2 - 10);
       }
     }
 
@@ -140,108 +134,87 @@ GameBoard createBoard(int x, int y, int width, int size) {
   gameBoard.width = width;
   gameBoard.size = size;
 
-  int i;
-  gameBoard.board = (int**)malloc(gameBoard.size * sizeof(int*));
-  for (i = 0; i < gameBoard.size; i++)
-    gameBoard.board[i] = (int*)malloc(gameBoard.size * sizeof(int));
+  gameBoard.board = (Piece**)malloc(gameBoard.size * sizeof(Piece*));
+  for (int i = 0; i < gameBoard.size; i++)
+    gameBoard.board[i] = (Piece*)malloc(gameBoard.size * sizeof(Piece));
 
-  for (i = 0; i < gameBoard.size; i++)
+  for (int i = 0; i < gameBoard.size; i++)
     for (int j = 0; j < gameBoard.size; j++)
-      gameBoard.board[i][j] = 0;
+      gameBoard.board[i][j].type = EMPTY;
 
-  for (i = 0; i < gameBoard.size; i++) {
+  for (int i = 0; i < gameBoard.size; i++) {
     if (i % 2 == 1) {
-      gameBoard.board[0][i] = PLAYER_1;
-      gameBoard.board[gameBoard.size - 2][i] = PLAYER_2;
+      gameBoard.board[0][i].type = PLAYER_1;
+      gameBoard.board[gameBoard.size - 2][i].type = PLAYER_2;
     } else {
-      gameBoard.board[1][i] = PLAYER_1;
-      gameBoard.board[gameBoard.size - 1][i] = PLAYER_2;
+      gameBoard.board[1][i].type = PLAYER_1;
+      gameBoard.board[gameBoard.size - 1][i].type = PLAYER_2;
     }
   }
 
-  for (i = 0; i < gameBoard.size; i++) {
+  int k = gameBoard.width / gameBoard.size;
+  for (int i = 0; i < gameBoard.size; i++) {
     for (int j = 0; j < gameBoard.size; j++) {
-      std::cout << gameBoard.board[i][j] << ' ';
+      gameBoard.board[i][j].x1 = gameBoard.x - (gameBoard.width / 2 - j * k);
+      gameBoard.board[i][j].y1 = gameBoard.y - (gameBoard.width / 2 - i * k);
+      gameBoard.board[i][j].x2 = gameBoard.x - (gameBoard.width / 2 - k - j * k);
+      gameBoard.board[i][j].y2 = gameBoard.y - (gameBoard.width / 2 - k - i * k);
     }
-    std::cout << '\n';
   }
 
   return gameBoard;
 }
 
-void drawPlayers(GameBoard& gameBoard) {
-  int i,
-      j, k;
-  int cellX1, cellY1, cellX2, cellY2;
-  k = gameBoard.width / gameBoard.size;
-
-  for (i = 0; i < gameBoard.size; i++)
-    for (j = 0; j < gameBoard.size; j++) {
-      cellX1 = gameBoard.x - (gameBoard.width / 2 - i * k);
-      cellY1 = gameBoard.y - (gameBoard.width / 2 - j * k);
-      cellX2 = gameBoard.x - (gameBoard.width / 2 - k - i * k);
-      cellY2 = gameBoard.y - (gameBoard.width / 2 - k - j * k);
-      if (gameBoard.board[j][i] == 1) {
-        readimagefile("./assets/virus_jpg.jpg", cellX1 + 10, cellY1 + 10, cellX2 - 10, cellY2 - 10);
-      } else if (gameBoard.board[j][i] == 2) {
-        readimagefile("./assets/dokter.jpg", cellX1 + 10, cellY1 + 10, cellX2 - 10, cellY2 - 10);
-      }
-    }
-}
-
-void delelePiece(GameBoard& gameBoard, int i, int j) {
-  if (!contains(gameBoard, i, j) || gameBoard.board[j][i] != 0) {
+void remove(GameBoard& gameBoard, int i, int j) {
+  if (!contains(gameBoard, i, j) || gameBoard.board[i][j].type != EMPTY) {
     return;
   } else {
-    // std::cout << i << " " << j << '\n';
-    int k;
-    int cellX1, cellY1, cellX2, cellY2;
-    k = gameBoard.width / gameBoard.size;
-    cellX1 = gameBoard.x - (gameBoard.width / 2 - i * k);
-    cellY1 = gameBoard.y - (gameBoard.width / 2 - j * k);
-    cellX2 = gameBoard.x - (gameBoard.width / 2 - k - i * k);
-    cellY2 = gameBoard.y - (gameBoard.width / 2 - k - j * k);
+    int x1, y1, x2, y2;
+
+    x1 = gameBoard.board[i][j].x1;
+    y1 = gameBoard.board[i][j].y1;
+    x2 = gameBoard.board[i][j].x2;
+    y2 = gameBoard.board[i][j].y2;
+
     setcolor(COLOR(125, 135, 150));
-    rectangle(cellX1, cellY1, cellX2 - 1, cellY2 - 1);
+    rectangle(x1, y1, x2 - 1, y2 - 1);
     setfillstyle(SOLID_FILL, COLOR(125, 135, 150));
-    floodfill(cellX1 + 10, cellY1 + 10, COLOR(125, 135, 150));
+    floodfill(x1 + 10, y1 + 10, COLOR(125, 135, 150));
   }
 }
 
-void drawPlayer(GameBoard& gameBoard, int i, int j, int player) {
-  int k;
-  int cellX1, cellY1, cellX2, cellY2;
-  k = gameBoard.width / gameBoard.size;
+void move(GameBoard& gameBoard, int i, int j, int player) {
+  int x1, y1, x2, y2;
 
-  cellX1 = gameBoard.x - (gameBoard.width / 2 - i * k);
-  cellY1 = gameBoard.y - (gameBoard.width / 2 - j * k);
-  cellX2 = gameBoard.x - (gameBoard.width / 2 - k - i * k);
-  cellY2 = gameBoard.y - (gameBoard.width / 2 - k - j * k);
-  if (player == 1) {
-    readimagefile("./assets/virus_jpg.jpg", cellX1 + 10, cellY1 + 10, cellX2 - 10, cellY2 - 10);
-  } else if (player == 2) {
-    readimagefile("./assets/dokter.jpg", cellX1 + 10, cellY1 + 10, cellX2 - 10, cellY2 - 10);
+  x1 = gameBoard.board[i][j].x1;
+  y1 = gameBoard.board[i][j].y1;
+  x2 = gameBoard.board[i][j].x2;
+  y2 = gameBoard.board[i][j].y2;
+
+  gameBoard.board[i][j].type = currentPlayer;
+
+  if (player == PLAYER_1) {
+    readimagefile("./assets/virus_jpg.jpg", x1 + 10, y1 + 10, x2 - 10, y2 - 10);
+  } else if (player == PLAYER_2) {
+    readimagefile("./assets/dokter.jpg", x1 + 10, y1 + 10, x2 - 10, y2 - 10);
   }
 }
 
-void markValidMove(GameBoard& gameBoard, int j, int i) {
-  if (!contains(gameBoard, i, j) || gameBoard.board[j][i] != 0) {
+void drawValidMove(GameBoard& gameBoard, int i, int j) {
+  if (!contains(gameBoard, i, j) || gameBoard.board[i][j].type != 0) {
     return;
   }
+  int x1, y1, x2, y2;
 
-  int k;
-  int cellX1, cellY1, cellX2, cellY2;
-  k = gameBoard.width / gameBoard.size;
-
-  cellX1 = gameBoard.x - (gameBoard.width / 2 - i * k);
-  cellY1 = gameBoard.y - (gameBoard.width / 2 - j * k);
-  cellX2 = gameBoard.x - (gameBoard.width / 2 - k - i * k);
-  cellY2 = gameBoard.y - (gameBoard.width / 2 - k - j * k);
+  x1 = gameBoard.board[i][j].x1;
+  y1 = gameBoard.board[i][j].y1;
+  x2 = gameBoard.board[i][j].x2;
+  y2 = gameBoard.board[i][j].y2;
 
   setcolor(COLOR(42, 219, 68));
-  rectangle(cellX1, cellY1, cellX2 - 1, cellY2 - 1);
+  rectangle(x1, y1, x2 - 1, y2 - 1);
   setfillstyle(SOLID_FILL, COLOR(42, 219, 68));
-  floodfill(cellX1 + 10, cellY1 + 10, COLOR(42, 219, 68));
+  floodfill(x1 + 10, y1 + 10, COLOR(42, 219, 68));
 }
 
 bool contains(GameBoard& gameBoard, int i, int j) {
@@ -251,24 +224,24 @@ bool contains(GameBoard& gameBoard, int i, int j) {
 void checkNeighbours(GameBoard& gameBoard) {
   for (int i = 0; i < gameBoard.size; i++) {
     for (int j = 0; j < gameBoard.size; j++) {
-      if (gameBoard.board[i][j] != 0) {
+      if (gameBoard.board[i][j].type != EMPTY) {
         int ok = true;
-        if (contains(gameBoard, i + 1, j - 1) && (gameBoard.board[i][j] == gameBoard.board[i + 1][j - 1] || gameBoard.board[i + 1][j - 1] == 0)) {
+        if (contains(gameBoard, i + 1, j - 1) && (gameBoard.board[i][j].type == gameBoard.board[i + 1][j - 1].type || gameBoard.board[i + 1][j - 1].type == EMPTY)) {
           ok = false;
         }
-        if (contains(gameBoard, i + 1, j + 1) && (gameBoard.board[i][j] == gameBoard.board[i + 1][j + 1] || gameBoard.board[i + 1][j + 1] == 0)) {
+        if (contains(gameBoard, i + 1, j + 1) && (gameBoard.board[i][j].type == gameBoard.board[i + 1][j + 1].type || gameBoard.board[i + 1][j + 1].type == EMPTY)) {
           ok = false;
         }
-        if (contains(gameBoard, i - 1, j - 1) && (gameBoard.board[i][j] == gameBoard.board[i - 1][j - 1] || gameBoard.board[i - 1][j - 1] == 0)) {
+        if (contains(gameBoard, i - 1, j - 1) && (gameBoard.board[i][j].type == gameBoard.board[i - 1][j - 1].type || gameBoard.board[i - 1][j - 1].type == EMPTY)) {
           ok = false;
         }
-        if (contains(gameBoard, i - 1, j + 1) && (gameBoard.board[i][j] == gameBoard.board[i - 1][j + 1] || gameBoard.board[i - 1][j + 1] == 0)) {
+        if (contains(gameBoard, i - 1, j + 1) && (gameBoard.board[i][j].type == gameBoard.board[i - 1][j + 1].type || gameBoard.board[i - 1][j + 1].type == EMPTY)) {
           ok = false;
         }
 
         if (ok) {
-          gameBoard.board[i][j] = 0;
-          delelePiece(gameBoard, j, i);
+          gameBoard.board[i][j].type = EMPTY;
+          remove(gameBoard, i, j);
         }
       }
     }
