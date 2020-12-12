@@ -244,7 +244,7 @@ void gameResolution() {
 
     if (rezFullScreenButton.isPressed) {
       rezFullScreenButton.isPressed = false;
-      setResolution(1026, 640);
+      setResolution(NULL, NULL);
       gameResolution();
     }
 
