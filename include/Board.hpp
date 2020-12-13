@@ -30,6 +30,7 @@ void checkNeighbours(GameBoard& gameBoard);
 bool isValidMove(GameBoard& gameBoard, int i, int j, int newI, int newJ);
 void changeTurn(GameBoard& gameBoard);
 int winner(GameBoard& gameBoard);
+void fillBoard(GameBoard& gameBoard, int player);
 
 void movePlayer(GameBoard& gameBoard);
 void moveAiEasy(GameBoard& gameBoard);

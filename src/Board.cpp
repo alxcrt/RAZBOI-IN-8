@@ -178,7 +178,13 @@ void checkNeighbours(GameBoard& gameBoard) {
         }
 
         if (ok) {
+          if (gameBoard.board[i][j].type == PLAYER_1) {
+            gameBoard.p1Left--;
+          } else if (gameBoard.board[i][j].type == PLAYER_2) {
+            gameBoard.p2Left--;
+          }
           gameBoard.board[i][j].type = EMPTY;
+
           remove(gameBoard, i, j);
         }
       } else if (gameBoard.board[i][j].type != EMPTY && gameBoard.board[i][j].moved == true) {
@@ -197,6 +203,11 @@ void checkNeighbours(GameBoard& gameBoard) {
         }
 
         if (ok) {
+          if (gameBoard.board[i][j].type == PLAYER_1) {
+            gameBoard.p1Left--;
+          } else if (gameBoard.board[i][j].type == PLAYER_2) {
+            gameBoard.p2Left--;
+          }
           gameBoard.board[i][j].type = EMPTY;
           remove(gameBoard, i, j);
         }
@@ -316,5 +327,37 @@ void moveAiEasy(GameBoard& gameBoard) {
 
     checkNeighbours(gameBoard);
     changeTurn(gameBoard);
+  }
+}
+
+void fillBoard(GameBoard& gameBoard, int player) {
+  int x1, x2, y1, y2;
+  // Draw the cells
+  for (int j = 0; j < gameBoard.size; j++) {
+    for (int i = 0; i < gameBoard.size; i++) {
+      x1 = gameBoard.board[i][j].x1;
+      y1 = gameBoard.board[i][j].y1;
+      x2 = gameBoard.board[i][j].x2;
+      y2 = gameBoard.board[i][j].y2;
+
+      if ((i + j) % 2 == 0) {
+        setcolor(COLOR(232, 235, 239));
+        rectangle(x1, y1, x2 - 1, y2 - 1);
+        setfillstyle(SOLID_FILL, COLOR(232, 235, 239));
+        floodfill(x1 + 10, y1 + 10, COLOR(232, 235, 239));
+      } else {
+        setcolor(COLOR(125, 135, 150));
+        rectangle(x1, y1, x2 - 1, y2 - 1);
+        setfillstyle(SOLID_FILL, COLOR(125, 135, 150));
+        floodfill(x1 + 10, y1 + 10, COLOR(125, 135, 150));
+      }
+
+      // Draw pieces
+      if (player == PLAYER_1) {
+        readimagefile("./assets/virus_jpg.jpg", x1 + 10, y1 + 10, x2 - 10, y2 - 10);
+      } else if (player == PLAYER_2) {
+        readimagefile("./assets/dokter.jpg", x1 + 10, y1 + 10, x2 - 10, y2 - 10);
+      }
+    }
   }
 }

@@ -34,13 +34,24 @@ void Pvp() {
     drawButton(menuButton);
 
     setcolor(BLACK);
-    if (gameBoard.currentPlayer == PLAYER_1) {
-      outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1's Turn");
+
+    if (!winner(gameBoard)) {
+      if (gameBoard.currentPlayer == PLAYER_1) {
+        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1 Turn");
+      } else {
+        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2 Turn");
+      }
     } else {
-      outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2's Turn");
+      if (winner(gameBoard) == PLAYER_1) {
+        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1 WINS");
+      } else {
+        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2 WINS");
+      }
+      fillBoard(gameBoard, winner(gameBoard));
     }
 
-    movePlayer(gameBoard);
+    if (!winner(gameBoard))
+      movePlayer(gameBoard);
 
     delay(50);
   }
@@ -57,16 +68,28 @@ void PvcEasy() {
     drawButton(menuButton);
 
     setcolor(BLACK);
-    if (gameBoard.currentPlayer == PLAYER_1) {
-      outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1's Turn");
+
+    if (!winner(gameBoard)) {
+      if (gameBoard.currentPlayer == PLAYER_1) {
+        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1 Turn");
+      } else {
+        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2 Turn");
+      }
     } else {
-      outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2's Turn");
+      if (winner(gameBoard) == PLAYER_1) {
+        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1 WINS");
+      } else {
+        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2 WINS");
+      }
+      fillBoard(gameBoard, winner(gameBoard));
     }
 
-    if (gameBoard.currentPlayer == PLAYER_2) {
-      movePlayer(gameBoard);
-    } else {
-      moveAiEasy(gameBoard);
+    if (!winner(gameBoard)) {
+      if (gameBoard.currentPlayer == PLAYER_2) {
+        movePlayer(gameBoard);
+      } else {
+        moveAiEasy(gameBoard);
+      }
     }
 
     delay(50);
