@@ -277,5 +277,6 @@ void moveAiEasy(GameBoard& gameBoard) {
 
   move(gameBoard, newI, newJ, gameBoard.currentPlayer);
 
+  checkNeighbours(gameBoard);
   changeTurn(gameBoard);
 }
