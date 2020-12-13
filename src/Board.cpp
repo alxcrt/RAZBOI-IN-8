@@ -53,6 +53,7 @@ GameBoard createBoard(int x, int y, int width, int size) {
   gameBoard.y = y;
   gameBoard.width = width;
   gameBoard.size = size;
+  gameBoard.p1Left = gameBoard.p2Left = gameBoard.size;
 
   srand(time(NULL));
   gameBoard.currentPlayer = rand() % 2 + 1;
@@ -62,8 +63,10 @@ GameBoard createBoard(int x, int y, int width, int size) {
     gameBoard.board[i] = (Piece*)malloc(gameBoard.size * sizeof(Piece));
 
   for (int i = 0; i < gameBoard.size; i++)
-    for (int j = 0; j < gameBoard.size; j++)
+    for (int j = 0; j < gameBoard.size; j++) {
       gameBoard.board[i][j].type = EMPTY;
+      gameBoard.board[i][j].moved = false;
+    }
 
   for (int i = 0; i < gameBoard.size; i++) {
     if (i % 2 == 1) {
@@ -102,6 +105,8 @@ void remove(GameBoard& gameBoard, int i, int j) {
   } else {
     int x1, y1, x2, y2;
 
+    gameBoard.board[i][j].moved = false;
+
     x1 = gameBoard.board[i][j].x1;
     y1 = gameBoard.board[i][j].y1;
     x2 = gameBoard.board[i][j].x2;
@@ -123,6 +128,7 @@ void move(GameBoard& gameBoard, int i, int j, int player) {
   y2 = gameBoard.board[i][j].y2;
 
   gameBoard.board[i][j].type = gameBoard.currentPlayer;
+  gameBoard.board[i][j].moved = true;
 
   if (player == PLAYER_1) {
     readimagefile("./assets/virus_jpg.jpg", x1 + 10, y1 + 10, x2 - 10, y2 - 10);
@@ -155,7 +161,8 @@ bool contains(GameBoard& gameBoard, int i, int j) {
 void checkNeighbours(GameBoard& gameBoard) {
   for (int i = 0; i < gameBoard.size; i++) {
     for (int j = 0; j < gameBoard.size; j++) {
-      if (gameBoard.board[i][j].type != EMPTY) {
+      // O piesa nemutata dar ea u m=ai are locuri de mutare
+      if (gameBoard.board[i][j].type != EMPTY && gameBoard.board[i][j].moved == false) {
         int ok = true;
         if (contains(gameBoard, i + 1, j - 1) && (gameBoard.board[i][j].type == gameBoard.board[i + 1][j - 1].type || gameBoard.board[i + 1][j - 1].type == EMPTY)) {
           ok = false;
@@ -167,6 +174,25 @@ void checkNeighbours(GameBoard& gameBoard) {
           ok = false;
         }
         if (contains(gameBoard, i - 1, j + 1) && (gameBoard.board[i][j].type == gameBoard.board[i - 1][j + 1].type || gameBoard.board[i - 1][j + 1].type == EMPTY)) {
+          ok = false;
+        }
+
+        if (ok) {
+          gameBoard.board[i][j].type = EMPTY;
+          remove(gameBoard, i, j);
+        }
+      } else if (gameBoard.board[i][j].type != EMPTY && gameBoard.board[i][j].moved == true) {
+        int ok = true;
+        if (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == EMPTY) {
+          ok = false;
+        }
+        if (contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j + 1].type == EMPTY) {
+          ok = false;
+        }
+        if (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i - 1][j - 1].type == EMPTY) {
+          ok = false;
+        }
+        if (contains(gameBoard, i - 1, j + 1) && gameBoard.board[i - 1][j + 1].type == EMPTY) {
           ok = false;
         }
 
@@ -191,8 +217,18 @@ void changeTurn(GameBoard& gameBoard) {
   }
 }
 
+int winner(GameBoard& gameBoard) {
+  if (gameBoard.p1Left <= 0) {
+    return PLAYER_2;
+  } else if (gameBoard.p2Left <= 0) {
+    return PLAYER_1;
+  }
+
+  return 0;
+}
+
 void movePlayer(GameBoard& gameBoard) {
-  if (ismouseclick(WM_LBUTTONDOWN)) {
+  if (ismouseclick(WM_LBUTTONDOWN) && !winner(gameBoard)) {
     int x, y;
     getmouseclick(WM_LBUTTONDOWN, x, y);
 
@@ -238,45 +274,47 @@ void movePlayer(GameBoard& gameBoard) {
 }
 
 void moveAiEasy(GameBoard& gameBoard) {
-  bool foundMove = false;
-  int newI = 0, newJ = 0, i = 0, j = 0;
+  if (!winner(gameBoard)) {
+    bool foundMove = false;
+    int newI = 0, newJ = 0, i = 0, j = 0;
 
-  while (!foundMove) {
-    i = rand() % gameBoard.size;
-    j = rand() % gameBoard.size;
-    if (gameBoard.board[i][j].type == gameBoard.currentPlayer) {
-      if (isValidMove(gameBoard, i, j, i + 1, j - 1)) {
-        foundMove = true;
-        newI = i + 1;
-        newJ = j - 1;
-        gameBoard.board[i][j].type = EMPTY;
-        remove(gameBoard, i, j);
-      } else if (isValidMove(gameBoard, i, j, i + 1, j + 1)) {
-        foundMove = true;
-        newI = i + 1;
-        newJ = j + 1;
-        gameBoard.board[i][j].type = EMPTY;
-        remove(gameBoard, i, j);
-      } else if (isValidMove(gameBoard, i, j, i - 1, j - 1)) {
-        foundMove = true;
-        newI = i - 1;
-        newJ = j - 1;
-        gameBoard.board[i][j].type = EMPTY;
-        remove(gameBoard, i, j);
-      } else if (isValidMove(gameBoard, i, j, i - 1, j + 1)) {
-        foundMove = true;
-        newI = i - 1;
-        newJ = j + 1;
-        gameBoard.board[i][j].type = EMPTY;
-        remove(gameBoard, i, j);
+    while (!foundMove) {
+      i = rand() % gameBoard.size;
+      j = rand() % gameBoard.size;
+      if (gameBoard.board[i][j].type == gameBoard.currentPlayer) {
+        if (isValidMove(gameBoard, i, j, i + 1, j - 1)) {
+          foundMove = true;
+          newI = i + 1;
+          newJ = j - 1;
+          gameBoard.board[i][j].type = EMPTY;
+          remove(gameBoard, i, j);
+        } else if (isValidMove(gameBoard, i, j, i + 1, j + 1)) {
+          foundMove = true;
+          newI = i + 1;
+          newJ = j + 1;
+          gameBoard.board[i][j].type = EMPTY;
+          remove(gameBoard, i, j);
+        } else if (isValidMove(gameBoard, i, j, i - 1, j - 1)) {
+          foundMove = true;
+          newI = i - 1;
+          newJ = j - 1;
+          gameBoard.board[i][j].type = EMPTY;
+          remove(gameBoard, i, j);
+        } else if (isValidMove(gameBoard, i, j, i - 1, j + 1)) {
+          foundMove = true;
+          newI = i - 1;
+          newJ = j + 1;
+          gameBoard.board[i][j].type = EMPTY;
+          remove(gameBoard, i, j);
+        }
       }
     }
+
+    // std::cout << i << " " << j << '\n';
+
+    move(gameBoard, newI, newJ, gameBoard.currentPlayer);
+
+    checkNeighbours(gameBoard);
+    changeTurn(gameBoard);
   }
-
-  std::cout << i << " " << j << '\n';
-
-  move(gameBoard, newI, newJ, gameBoard.currentPlayer);
-
-  checkNeighbours(gameBoard);
-  changeTurn(gameBoard);
 }

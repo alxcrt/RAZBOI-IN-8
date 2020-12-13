@@ -9,12 +9,14 @@
 struct Piece {
   float x1, y1, x2, y2;
   int type;
+  bool moved;
 };
 
 struct GameBoard {
   int x, y, width, size;
   Piece** board;
   int currentPlayer;
+  int p1Left, p2Left;
 };
 
 GameBoard createBoard(int x, int y, int width, int lines);
@@ -27,6 +29,7 @@ bool contains(GameBoard& gameBoard, int i, int j);
 void checkNeighbours(GameBoard& gameBoard);
 bool isValidMove(GameBoard& gameBoard, int i, int j, int newI, int newJ);
 void changeTurn(GameBoard& gameBoard);
+int winner(GameBoard& gameBoard);
 
 void movePlayer(GameBoard& gameBoard);
 void moveAiEasy(GameBoard& gameBoard);
