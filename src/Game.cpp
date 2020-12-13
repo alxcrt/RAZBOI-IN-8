@@ -9,9 +9,9 @@
 
 void game() {
   cleardevice();
-  readimagefile("./assets/startingimg.jpg", 0, 0, getmaxx(), getmaxy());
-  button pvpButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, "Player vs Player", Pvp, BLACK, WHITE, CYAN);
-  button pvcButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, "Player vs Computer", PvcEasy, BLACK, WHITE, CYAN);
+  // readimagefile("./assets/startingimg.jpg", 0, 0, getmaxx(), getmaxy());
+  button pvpButton = createButton(getmaxx() / 2, getmaxy() / 2 - 50, "Player vs Player", Pvp, BLACK, WHITE, CYAN);
+  button pvcButton = createButton(getmaxx() / 2, getmaxy() / 2 + 50, "Player vs Computer Easy", PvcEasy, BLACK, WHITE, CYAN);
   button menuButton = createButton(getmaxx() / 2, getmaxy() / 2 + 200, "Menu", menu, BLACK, WHITE, CYAN);
 
   while (1) {
