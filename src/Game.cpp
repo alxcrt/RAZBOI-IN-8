@@ -30,6 +30,8 @@ void Pvp() {
   GameBoard gameBoard = createBoard(getmaxx() / 2 - 200, getmaxy() / 2, 600, BOARD_SIZE);
   drawBoard(gameBoard);
 
+  bool b = false;
+
   while (1) {
     drawButton(menuButton);
 
@@ -41,13 +43,14 @@ void Pvp() {
       } else {
         outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2 Turn");
       }
-    } else {
+    } else if (winner(gameBoard) && !b) {
       if (winner(gameBoard) == PLAYER_1) {
         outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1 WINS");
       } else {
         outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2 WINS");
       }
       fillBoard(gameBoard, winner(gameBoard));
+      b = true;
     }
 
     if (!winner(gameBoard))
@@ -64,6 +67,8 @@ void PvcEasy() {
   GameBoard gameBoard = createBoard(getmaxx() / 2 - 200, getmaxy() / 2, 600, BOARD_SIZE);
   drawBoard(gameBoard);
 
+  bool b = false;
+
   while (1) {
     drawButton(menuButton);
 
@@ -75,13 +80,14 @@ void PvcEasy() {
       } else {
         outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2 Turn");
       }
-    } else {
+    } else if (winner(gameBoard) && !b) {
       if (winner(gameBoard) == PLAYER_1) {
         outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1 WINS");
       } else {
         outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2 WINS");
       }
       fillBoard(gameBoard, winner(gameBoard));
+      b = true;
     }
 
     if (!winner(gameBoard)) {
