@@ -68,10 +68,18 @@ GameBoard createBoard(int x, int y, int width, int size) {
   for (int i = 0; i < gameBoard.size; i++) {
     if (i % 2 == 1) {
       gameBoard.board[0][i].type = PLAYER_1;
-      gameBoard.board[gameBoard.size - 2][i].type = PLAYER_2;
+      if (BOARD_SIZE % 2 == 1) {
+        gameBoard.board[gameBoard.size - 1][i].type = PLAYER_2;
+      } else {
+        gameBoard.board[gameBoard.size - 2][i].type = PLAYER_2;
+      }
     } else {
       gameBoard.board[1][i].type = PLAYER_1;
-      gameBoard.board[gameBoard.size - 1][i].type = PLAYER_2;
+      if (BOARD_SIZE % 2 == 1) {
+        gameBoard.board[gameBoard.size - 2][i].type = PLAYER_2;
+      } else {
+        gameBoard.board[gameBoard.size - 1][i].type = PLAYER_2;
+      }
     }
   }
 

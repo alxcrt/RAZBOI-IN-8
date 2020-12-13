@@ -4,6 +4,8 @@
 #define PLAYER_2 2
 #define EMPTY 0
 
+#define BOARD_SIZE 8
+
 struct Piece {
   float x1, y1, x2, y2;
   int type;
