@@ -75,15 +75,15 @@ void rules() {
   setbkcolor(WHITE);
   setcolor(BLACK);
   settextjustify(LEFT_TEXT, CENTER_TEXT);
-  outtextxy((getmaxx() / 100) * 12, (getmaxy() / 100) * 20, (char*)"Jocul <Razboi in 8> (cu varianta sa <Razboi in 4>) este un joc");
-  outtextxy((getmaxx() / 100) * 12, (getmaxy() / 100) * 24, (char*)"rational pentru toate varstele. El solicita atentia si spiritul de");
-  outtextxy((getmaxx() / 100) * 12, (getmaxy() / 100) * 28, (char*)"observatie, favorizeaza analiza combinatorie a variantelor si dezvolta");
-  outtextxy((getmaxx() / 100) * 12, (getmaxy() / 100) * 32, (char*)"obisnuinta de a duce lucrurile la bun sfarsit. Un joc asemanator -dar");
-  outtextxy((getmaxx() / 100) * 12, (getmaxy() / 100) * 36, (char*)"mai simplu- care faciliteaza invatarea si practicarea jocului <Razboi");
-  outtextxy((getmaxx() / 100) * 12, (getmaxy() / 100) * 40, (char*)"in 8> este <Cainii si vulpea>. Jocul ofera amatorilor un larg camp de");
-  outtextxy((getmaxx() / 100) * 12, (getmaxy() / 100) * 44, (char*)"studiu si analiza -nu prea simpla- fiind perfect adaptat pentru");
-  outtextxy((getmaxx() / 100) * 12, (getmaxy() / 100) * 48, (char*)"compunere si rezolvare de probleme, precum si pentru desfasurare");
-  outtextxy((getmaxx() / 100) * 12, (getmaxy() / 100) * 52, (char*)"prin corespondenta.");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 20, (char*)"Jocul <Razboi in 8> (cu varianta sa <Razboi in 4>) este un joc");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 24, (char*)"rational pentru toate varstele. El solicita atentia si spiritul de");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 28, (char*)"observatie, favorizeaza analiza combinatorie a variantelor si dezvolta");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 32, (char*)"obisnuinta de a duce lucrurile la bun sfarsit. Un joc asemanator -dar");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 36, (char*)"mai simplu- care faciliteaza invatarea si practicarea jocului <Razboi");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 40, (char*)"in 8> este <Cainii si vulpea>. Jocul ofera amatorilor un larg camp de");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 44, (char*)"studiu si analiza -nu prea simpla- fiind perfect adaptat pentru");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 48, (char*)"compunere si rezolvare de probleme, precum si pentru desfasurare");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 52, (char*)"prin corespondenta.");
   settextjustify(CENTER_TEXT, CENTER_TEXT);
   while (1) {
     settextstyle(10, HORIZ_DIR, kk + 2);
@@ -110,12 +110,12 @@ void rules2() {
   setbkcolor(WHITE);
   setcolor(BLACK);
   settextjustify(LEFT_TEXT, CENTER_TEXT);
-  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 18, (char*)"La joc iau parte doua persoane, care urmareste, fiecare, a scoate din");
-  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 22, (char*)"lupta <armata> adversa. Jocul se poate incheia cu victoria unuia dintre");
-  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 26, (char*)"jucatori, sau nedecis -remiza. Practicarea jocului reclama o tabla de");
-  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 30, (char*)"joc de 8x8 patratele (tabla de sah) si cate 8 piese (pioni) pentru");
-  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 34, (char*)"fiecare jucator - piese care vor fi de culori diferite. Sa numim cei");
-  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 38, (char*)"doi jucatori: A si B, iar piesele -respectiv culorile lor: alb si negru.");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 18, (char*)"La joc iau parte doua persoane, care urmareste, fiecare, a scoate din");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 22, (char*)"lupta <armata> adversa. Jocul se poate incheia cu victoria unuia dintre");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 26, (char*)"jucatori, sau nedecis -remiza. Practicarea jocului reclama o tabla de");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 30, (char*)"joc de 8x8 patratele (tabla de sah) si cate 8 piese (pioni) pentru");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 34, (char*)"fiecare jucator - piese care vor fi de culori diferite. Sa numim cei");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 38, (char*)"doi jucatori: A si B, iar piesele -respectiv culorile lor: alb si negru.");
   settextjustify(CENTER_TEXT, CENTER_TEXT);
   while (1) {
     settextstyle(10, HORIZ_DIR, kk);
@@ -137,10 +137,10 @@ void rules3() {
   readimagefile("./assets/board.jpg", getmaxx() / 2 - 370 - 16, getmaxy() / 2 - 40 - 16, getmaxx() / 2 - 100, getmaxy() / 2 + 200);
   readimagefile("./assets/board3.jpg", getmaxx() / 2, getmaxy() / 2 - 40 - 16, getmaxx() / 2 + 270 + 16, getmaxy() / 2 + 200);
   settextjustify(LEFT_TEXT, CENTER_TEXT);
-  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 20, (char*)"Piesele se pot muta doar pe diagonala, scopul fiind acela de a");
-  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 24, (char*)"inconjura piesa inamica pentru a o scoate de pe tabla. (img 1+2)");
-  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 28, (char*)"Castiga jocul cel care reuseste sa scoata din lupta mai multi soldati");
-  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 32, (char*)"adversi, deci cel care ramane cu mai multe piese pe tabla.");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 20, (char*)"Piesele se pot muta doar pe diagonala, scopul fiind acela de a");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 24, (char*)"inconjura piesa inamica pentru a o scoate de pe tabla. (img 1+2)");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 28, (char*)"Castiga jocul cel care reuseste sa scoata din lupta mai multi soldati");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 32, (char*)"adversi, deci cel care ramane cu mai multe piese pe tabla.");
   settextjustify(CENTER_TEXT, CENTER_TEXT);
   button menuButton, rules2Button;
   menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
