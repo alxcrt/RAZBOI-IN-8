@@ -16,6 +16,8 @@ void start() {
 
 void menu() {
   cleardevice();
+  int kk=getmaxx() / 400;
+  settextstyle(10, HORIZ_DIR, kk+2);
 
   readimagefile("./assets/startingimg.jpg", 0, 0, getmaxx(), getmaxy());
   button startGameButton, exitGameButton, rulesGameButton, settingsGameButton;
@@ -36,15 +38,17 @@ void menu() {
 
 void settings() {
   cleardevice();
+  int kk=getmaxx() / 400;
+  settextstyle(10, HORIZ_DIR, kk+2);
   readimagefile("./assets/startingimg.jpg", 0, 0, getmaxx(), getmaxy());
   setbkcolor(BLACK);
   setcolor(WHITE);
-  outtextxy(getmaxx() / 2 - 70, getmaxy() / 2 + 5, (char*)"Volume:");
+  outtextxy(getmaxx() / 100 * 45, getmaxy() / 2 + 5, (char*)"Volume:");
   button languageGameButton, /* volumeGameButton, */ menuButton, volumeOnGameButton, volumeOffGameButton, resolutionButton;
   languageGameButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, "Language", language, BLACK, WHITE, CYAN);
   //volumeGameButton = createButton(getmaxx() / 2 - 70, getmaxy() / 2, "Volume:", volume, BLACK, WHITE, CYAN);
-  volumeOnGameButton = createButton(getmaxx() / 2 + 50, getmaxy() / 2, "ON", playyySound, BLACK, WHITE, CYAN);
-  volumeOffGameButton = createButton(getmaxx() / 2 + 130, getmaxy() / 2, "OFF", stopSound, BLACK, WHITE, CYAN);
+  volumeOnGameButton = createButton(getmaxx() / 100 * 55, getmaxy() / 2, "ON", playyySound, BLACK, WHITE, CYAN);
+  volumeOffGameButton = createButton(getmaxx() / 100 * 62, getmaxy() / 2, "OFF", stopSound, BLACK, WHITE, CYAN);
   menuButton = createButton(getmaxx() / 2, getmaxy() / 2 + 200, "Menu", menu, BLACK, WHITE, CYAN);
   resolutionButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, "Resolution", gameResolution, BLACK, WHITE, CYAN);
   while (1) {
@@ -60,76 +64,60 @@ void settings() {
 }
 
 void rules() {
-  int k = 0;
+  int kk=0;
   cleardevice();
-  if (getmaxx() == 1023) {
-    settextstyle(10, HORIZ_DIR, 2);
-    k = 0;
-  } else if (getmaxx() == 1199) {
-    settextstyle(10, HORIZ_DIR, 3);
-    k = 4;
-  } else if (getmaxx() == 1365) {
-    settextstyle(10, HORIZ_DIR, 3);
-    k = 0;
-  }
+  kk=getmaxx() / 400;
+  settextstyle(10, HORIZ_DIR,kk);
   readimagefile("./assets/rules.jpg", 0, 0, getmaxx(), getmaxy());
   button menuButton, rules2Button;
   menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
-  rules2Button = createButton(getmaxx() - 250, getmaxy() - 100, "next page ->", rules2, WHITE, BLACK, CYAN);
+  rules2Button = createButton((getmaxx() / 100) * 75, (getmaxy() / 100) * 90, "next page ->", rules2, WHITE, BLACK, CYAN);
   setbkcolor(WHITE);
   setcolor(BLACK);
-  outtextxy((getmaxx() / 100) * (52 + k), 200 + (2 * k), (char*)"Jocul <Razboi in 8> (cu varianta sa <Razboi in 4>) este un joc         ");
-  outtextxy((getmaxx() / 100) * (52 + k), 230 + (2 * k), (char*)"rational pentru toate varstele. El solicita atentia si spiritul de     ");
-  outtextxy((getmaxx() / 100) * (52 + k), 260 + (2 * k), (char*)"observatie, favorizeaza analiza combinatorie a variantelor si dezvolta ");
-  outtextxy((getmaxx() / 100) * (52 + k), 290 + (2 * k), (char*)"obisnuinta de a duce lucrurile la bun sfarsit. Un joc asemanator -dar  ");
-  outtextxy((getmaxx() / 100) * (52 + k), 320 + (2 * k), (char*)"mai simplu- care faciliteaza invatarea si practicarea jocului <Razboi  ");
-  outtextxy((getmaxx() / 100) * (52 + k), 350 + (2 * k), (char*)"in 8> este <Cainii si vulpea>. Jocul ofera amatorilor un larg camp de  ");
-  outtextxy((getmaxx() / 100) * (52 + k), 380 + (2 * k), (char*)"studiu si analiza -nu prea simpla- fiind perfect adaptat pentru        ");
-  outtextxy((getmaxx() / 100) * (52 + k), 410 + (2 * k), (char*)"compunere si rezolvare de probleme, precum si pentru desfasurare       ");
-  outtextxy((getmaxx() / 100) * (52 + k), 440 + (2 * k), (char*)"prin corespondenta.                                                    ");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 20, (char*)"Jocul <Razboi in 8> (cu varianta sa <Razboi in 4>) este un joc         ");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 24, (char*)"rational pentru toate varstele. El solicita atentia si spiritul de     ");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 28, (char*)"observatie, favorizeaza analiza combinatorie a variantelor si dezvolta ");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 32, (char*)"obisnuinta de a duce lucrurile la bun sfarsit. Un joc asemanator -dar  ");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 36, (char*)"mai simplu- care faciliteaza invatarea si practicarea jocului <Razboi  ");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 40, (char*)"in 8> este <Cainii si vulpea>. Jocul ofera amatorilor un larg camp de  ");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 44, (char*)"studiu si analiza -nu prea simpla- fiind perfect adaptat pentru        ");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 48, (char*)"compunere si rezolvare de probleme, precum si pentru desfasurare       ");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 52, (char*)"prin corespondenta.                                                    ");
   while (1) {
-    settextstyle(10, HORIZ_DIR, 5);
+    settextstyle(10, HORIZ_DIR, kk+2);
     drawButton(menuButton);
-    settextstyle(10, HORIZ_DIR, 3);
+    settextstyle(10, HORIZ_DIR, kk);
     drawButton(rules2Button);
-    settextstyle(10, HORIZ_DIR, 5);
+    settextstyle(10, HORIZ_DIR, kk+2);
 
     delay(50);
   }
 }
 
 void rules2() {
-  int k = 0;
+  int kk=0;
   cleardevice();
-  if (getmaxx() == 1023) {
-    settextstyle(10, HORIZ_DIR, 2);
-    k = 0;
-  } else if (getmaxx() == 1199) {
-    settextstyle(10, HORIZ_DIR, 3);
-    k = 4;
-  } else if (getmaxx() == 1365) {
-    settextstyle(10, HORIZ_DIR, 3);
-    k = 0;
-  }
+  kk=getmaxx() / 400;
+  settextstyle(10, HORIZ_DIR, kk);
   readimagefile("./assets/rules.jpg", 0, 0, getmaxx(), getmaxy());
-  readimagefile("./assets/board2.jpg", getmaxx() / 2 - 370 - (16 * k), getmaxy() / 2 - 40 - (16 * k), getmaxx() / 2 - 100, getmaxy() / 2 + 200);
+  readimagefile("./assets/board2.jpg", getmaxx() / 2 - 370 - 16, getmaxy() / 2 - 40 - 16, getmaxx() / 2 - 100, getmaxy() / 2 + 200);
   button menuButton, rulesButton, rules3Button;
   menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
-  rulesButton = createButton(250, getmaxy() - 100, "<- previous page", rules, WHITE, BLACK, CYAN);
-  rules3Button = createButton(getmaxx() - 250, getmaxy() - 100, "next page ->", rules3, WHITE, BLACK, CYAN);
+  rulesButton = createButton((getmaxx() / 100) * 25, (getmaxy() / 100) * 90, "<- previous page", rules, WHITE, BLACK, CYAN);
+  rules3Button = createButton((getmaxx() / 100) * 75, (getmaxy() / 100) * 90, "next page ->", rules3, WHITE, BLACK, CYAN);
   setbkcolor(WHITE);
   setcolor(BLACK);
-  outtextxy((getmaxx() / 100) * (52 + k), 110 + (2 * k), (char*)"La joc iau parte doua persoane, care urmareste, fiecare, a scoate din   ");
-  outtextxy((getmaxx() / 100) * (52 + k), 140 + (2 * k), (char*)"lupta <armata> adversa. Jocul se poate incheia cu victoria unuia dintre");
-  outtextxy((getmaxx() / 100) * (52 + k), 170 + (2 * k), (char*)"jucatori, sau nedecis -remiza. Practicarea jocului reclama o tabla de  ");
-  outtextxy((getmaxx() / 100) * (52 + k), 200 + (2 * k), (char*)"joc de 8x8 patratele (tabla de sah) si cate 8 piese (pioni) pentru     ");
-  outtextxy((getmaxx() / 100) * (52 + k), 230 + (2 * k), (char*)"fiecare jucator - piese care vor fi de culori diferite. Sa numim cei   ");
-  outtextxy((getmaxx() / 100) * (52 + k), 260 + (2 * k), (char*)"doi jucatori: A si B, iar piesele -respectiv culorile lor: alb si negru.");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 18, (char*)"La joc iau parte doua persoane, care urmareste, fiecare, a scoate din   ");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 22, (char*)"lupta <armata> adversa. Jocul se poate incheia cu victoria unuia dintre");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 26, (char*)"jucatori, sau nedecis -remiza. Practicarea jocului reclama o tabla de  ");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 30, (char*)"joc de 8x8 patratele (tabla de sah) si cate 8 piese (pioni) pentru     ");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 34, (char*)"fiecare jucator - piese care vor fi de culori diferite. Sa numim cei   ");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 38, (char*)"doi jucatori: A si B, iar piesele -respectiv culorile lor: alb si negru.");
   while (1) {
-    settextstyle(10, HORIZ_DIR, 3);
+    settextstyle(10, HORIZ_DIR, kk);
     drawButton(rulesButton);
     drawButton(rules3Button);
-    settextstyle(10, HORIZ_DIR, 5);
+    settextstyle(10, HORIZ_DIR, kk+2);
     drawButton(menuButton);
 
     delay(50);
@@ -137,33 +125,25 @@ void rules2() {
 }
 
 void rules3() {
-  int k = 0;
+  int kk=0;
   cleardevice();
-  if (getmaxx() == 1023) {
-    settextstyle(10, HORIZ_DIR, 2);
-    k = 0;
-  } else if (getmaxx() == 1199) {
-    settextstyle(10, HORIZ_DIR, 3);
-    k = 4;
-  } else if (getmaxx() == 1365) {
-    settextstyle(10, HORIZ_DIR, 3);
-    k = 0;
-  }
+  kk=getmaxx() / 400;
+  settextstyle(10, HORIZ_DIR, kk);
   readimagefile("./assets/rules.jpg", 0, 0, getmaxx(), getmaxy());
-  readimagefile("./assets/board.jpg", getmaxx() / 2 - 370 - (16 * k), getmaxy() / 2 - 40 - (16 * k), getmaxx() / 2 - 100, getmaxy() / 2 + 200);
-  readimagefile("./assets/board3.jpg", getmaxx() / 2, getmaxy() / 2 - 40 - (16 * k), getmaxx() / 2 + 270 + (16 * k), getmaxy() / 2 + 200);
-  outtextxy((getmaxx() / 100) * (52 + k), 130 + (2 * k), (char*)"Piesele se pot muta doar pe diagonala, scopul fiind acela de a         ");
-  outtextxy((getmaxx() / 100) * (52 + k), 160 + (2 * k), (char*)"inconjura piesa inamica pentru a o scoate de pe tabla. (img 1+2)       ");
-  outtextxy((getmaxx() / 100) * (52 + k), 190 + (2 * k), (char*)"Castiga jocul cel care reuseste sa scoata din lupta mai multi soldati  ");
-  outtextxy((getmaxx() / 100) * (52 + k), 220 + (2 * k), (char*)"adversi, deci cel care ramane cu mai multe piese pe tabla.             ");
+  readimagefile("./assets/board.jpg", getmaxx() / 2 - 370 - 16, getmaxy() / 2 - 40 - 16, getmaxx() / 2 - 100, getmaxy() / 2 + 200);
+  readimagefile("./assets/board3.jpg", getmaxx() / 2, getmaxy() / 2 - 40 - 16, getmaxx() / 2 + 270 + 16, getmaxy() / 2 + 200);
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 20, (char*)"Piesele se pot muta doar pe diagonala, scopul fiind acela de a         ");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 24, (char*)"inconjura piesa inamica pentru a o scoate de pe tabla. (img 1+2)       ");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 28, (char*)"Castiga jocul cel care reuseste sa scoata din lupta mai multi soldati  ");
+  outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 32, (char*)"adversi, deci cel care ramane cu mai multe piese pe tabla.             ");
   button menuButton, rules2Button;
   menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
-  rules2Button = createButton(250, getmaxy() - 100, "<- previous page", rules2, WHITE, BLACK, CYAN);
+  rules2Button = createButton((getmaxx() / 100) * 25,(getmaxy() / 100) * 90, "<- previous page", rules2, WHITE, BLACK, CYAN);
   settextstyle(10, HORIZ_DIR, 3);
   while (1) {
-    settextstyle(10, HORIZ_DIR, 3);
+    settextstyle(10, HORIZ_DIR, kk);
     drawButton(rules2Button);
-    settextstyle(10, HORIZ_DIR, 5);
+    settextstyle(10, HORIZ_DIR, kk+2);
     drawButton(menuButton);
 
     delay(50);
@@ -172,6 +152,8 @@ void rules3() {
 
 void language() {
   cleardevice();
+  int kk=getmaxx() / 400;
+  settextstyle(10, HORIZ_DIR, kk+2);
   readimagefile("./assets/romaniaFlag.jpg", getmaxx() / 2 - 400, getmaxy() / 2 - 60, getmaxx() / 2 - 200, getmaxy() / 2 + 60);
   readimagefile("./assets/ukFlag.jpg", getmaxx() / 2 - 100, getmaxy() / 2 - 60, getmaxx() / 2 + 100, getmaxy() / 2 + 60);
   readimagefile("./assets/franceFlag.jpg", getmaxx() / 2 + 200, getmaxy() / 2 - 60, getmaxx() / 2 + 400, getmaxy() / 2 + 60);
