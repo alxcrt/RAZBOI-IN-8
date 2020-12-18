@@ -1,0 +1,44 @@
+démarrer jeu
+règles
+réglages
+sortie
+langue
+le volume
+ouvrir
+vide
+la résolution
+le menu
+roumaine
+anglaise
+francais
+plein écran
+<-retour
+page suivante ->
+<- page précédente
+joueur contre joueur
+joueur contre ordinateur facile
+tour du premier joueur	
+
+Le jeu <War in 8> (avec sa version <War in 4>) est un jeu rationnel
+pour tous les âges. Il réclame attention et esprit d'observation,
+favorise l'analyse combinatoire des variantes et développe
+l'habitude de porter les choses jusqu'au bout. Un jeu similaire
+- mais plus simple - qui facilite l'apprentissage et la pratique du
+jeu <War in 8> est <Dogs and fox>. Le jeu offre aux amateurs un large
+champ d'étude et d'analyse - pas trop simple - parfaitement adapté
+pour la composition et la résolution de problèmes, ainsi que pour
+la correspondance.
+
+Deux personnes participent au jeu, chacune visant à faire sortir le
+combat <armé> adverse. Le jeu peut se terminer par la victoire de
+l'un des joueurs, ou indécis - le tirage au sort. La pratique du jeu
+nécessite un plateau de jeu de 8x8 carrés (échiquier) et 8 pièces
+(pions) pour chaque joueur - des pièces qui seront de couleurs
+différentes. Nommons les deux joueurs: A et B, et les pièces
+- respectivement leurs couleurs: blanc et noir.
+
+Les pièces ne peuvent être déplacées qu'en diagonale, le but étant
+d'entourer la pièce ennemie pour la retirer du plateau. (img 1&2)
+Celui qui parvient à faire sortir plus de soldats de la bataille
+remporte la partie adversaires, donc celui qui reste avec plus de
+pièces sur le plateau.

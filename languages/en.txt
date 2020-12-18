@@ -1,0 +1,42 @@
+start game
+rules
+settings
+exit
+language
+volume
+on
+off
+resolution
+menu
+romanian
+english
+france
+fullscreen
+<- back
+next page ->
+<- previous page
+player vs player
+player vs computer easy
+player one's turn
+
+The game <War in 8> (with its version <War in 4>) is a rational game
+for all ages. It demands attention and the spirit of observation,
+favors the combinatorial analysis of the variants and develops the
+habit of carrying things to the end. A similar game - but simpler -
+that facilitates learning and practicing the game <War in 8> is
+<Dogs and fox>. The game offers amateurs a wide field of study and
+analysis - not too simple - being perfectly adapted for composing and
+solving problems, as well as for correspondence.
+
+Two people take part in the game, each of whom aimed to get the
+opposing <armed> fight out. The game can end with the victory of one
+of the players, or undecided - the draw. Practicing the game requires
+a game board of 8x8 squares (chessboard) and 8 pieces (pawns) for 
+each player - pieces that will be different colors. Let's name the two
+players: A and B, and the pieces - respectively their colors: white
+and black.
+
+The pieces can only be moved diagonally, the goal being to surround
+the enemy piece to remove it from the board. (img 1&2)
+The one who manages to get more soldiers out of the battle wins the game
+opponents, so the one who stays with more pieces on the board.
