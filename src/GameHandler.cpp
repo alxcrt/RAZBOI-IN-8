@@ -43,7 +43,7 @@ void settings() {
   readimagefile("./assets/startingimg.jpg", 0, 0, getmaxx(), getmaxy());
   setbkcolor(BLACK);
   setcolor(WHITE);
-  outtextxy(getmaxx() / 100 * 45, getmaxy() / 2 + 5, (char*)"Volume:");
+  outtextxy(getmaxx() / 100 * 45, getmaxy() / 2 + 5, (char*)"Music:");
   button languageGameButton, /* volumeGameButton, */ menuButton, volumeOnGameButton, volumeOffGameButton, resolutionButton;
   languageGameButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, "Language", language, BLACK, WHITE, CYAN);
   //volumeGameButton = createButton(getmaxx() / 2 - 70, getmaxy() / 2, "Volume:", volume, BLACK, WHITE, CYAN);
@@ -86,11 +86,10 @@ void rules() {
   outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 52, (char*)"prin corespondenta.");
   settextjustify(CENTER_TEXT, CENTER_TEXT);
   while (1) {
-    settextstyle(10, HORIZ_DIR, kk + 2);
+    // settextstyle(10, HORIZ_DIR, kk + 2);
     drawButton(menuButton);
-    settextstyle(10, HORIZ_DIR, kk);
+    // settextstyle(10, HORIZ_DIR, kk);
     drawButton(rules2Button);
-    settextstyle(10, HORIZ_DIR, kk + 2);
 
     wait(50);
   }
@@ -118,10 +117,10 @@ void rules2() {
   outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 38, (char*)"doi jucatori: A si B, iar piesele -respectiv culorile lor: alb si negru.");
   settextjustify(CENTER_TEXT, CENTER_TEXT);
   while (1) {
-    settextstyle(10, HORIZ_DIR, kk);
+    // settextstyle(10, HORIZ_DIR, kk);
     drawButton(rulesButton);
     drawButton(rules3Button);
-    settextstyle(10, HORIZ_DIR, kk + 2);
+    // settextstyle(10, HORIZ_DIR, kk + 2);
     drawButton(menuButton);
 
     wait(50);
@@ -145,11 +144,10 @@ void rules3() {
   button menuButton, rules2Button;
   menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
   rules2Button = createButton((getmaxx() / 100) * 25, (getmaxy() / 100) * 90, "<- previous page", rules2, WHITE, BLACK, CYAN);
-  settextstyle(10, HORIZ_DIR, 3);
   while (1) {
-    settextstyle(10, HORIZ_DIR, kk);
+    // settextstyle(10, HORIZ_DIR, kk);
     drawButton(rules2Button);
-    settextstyle(10, HORIZ_DIR, kk + 2);
+    // settextstyle(10, HORIZ_DIR, kk + 2);
     drawButton(menuButton);
 
     wait(50);

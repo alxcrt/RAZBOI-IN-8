@@ -137,7 +137,7 @@ void move(GameBoard& gameBoard, int i, int j, int player) {
   }
 }
 
-void drawValidMove(GameBoard& gameBoard, int i, int j) {
+void drawValidMoves(GameBoard& gameBoard, int i, int j) {
   if (!contains(gameBoard, i, j) || gameBoard.board[i][j].type != 0) {
     return;
   }
@@ -238,6 +238,38 @@ int winner(GameBoard& gameBoard) {
   return 0;
 }
 
+void fillBoard(GameBoard& gameBoard, int player) {
+  int x1, x2, y1, y2;
+  // Draw the cells
+  for (int j = 0; j < gameBoard.size; j++) {
+    for (int i = 0; i < gameBoard.size; i++) {
+      x1 = gameBoard.board[i][j].x1;
+      y1 = gameBoard.board[i][j].y1;
+      x2 = gameBoard.board[i][j].x2;
+      y2 = gameBoard.board[i][j].y2;
+
+      if ((i + j) % 2 == 0) {
+        setcolor(COLOR(232, 235, 239));
+        rectangle(x1, y1, x2 - 1, y2 - 1);
+        setfillstyle(SOLID_FILL, COLOR(232, 235, 239));
+        floodfill(x1 + 10, y1 + 10, COLOR(232, 235, 239));
+      } else {
+        setcolor(COLOR(125, 135, 150));
+        rectangle(x1, y1, x2 - 1, y2 - 1);
+        setfillstyle(SOLID_FILL, COLOR(125, 135, 150));
+        floodfill(x1 + 10, y1 + 10, COLOR(125, 135, 150));
+      }
+
+      // Draw pieces
+      if (player == PLAYER_1) {
+        readimagefile("./assets/virus_jpg.jpg", x1 + 10, y1 + 10, x2 - 10, y2 - 10);
+      } else if (player == PLAYER_2) {
+        readimagefile("./assets/dokter.jpg", x1 + 10, y1 + 10, x2 - 10, y2 - 10);
+      }
+    }
+  }
+}
+
 void movePlayer(GameBoard& gameBoard) {
   if (ismouseclick(WM_LBUTTONDOWN) && !winner(gameBoard)) {
     int x, y;
@@ -249,10 +281,10 @@ void movePlayer(GameBoard& gameBoard) {
     int i = floor((y - (gameBoard.y - gameBoard.width / 2.)) / k);
 
     if (contains(gameBoard, i, j) && gameBoard.board[i][j].type == gameBoard.currentPlayer) {
-      drawValidMove(gameBoard, i + 1, j - 1);
-      drawValidMove(gameBoard, i + 1, j + 1);
-      drawValidMove(gameBoard, i - 1, j - 1);
-      drawValidMove(gameBoard, i - 1, j + 1);
+      drawValidMoves(gameBoard, i + 1, j - 1);
+      drawValidMoves(gameBoard, i + 1, j + 1);
+      drawValidMoves(gameBoard, i - 1, j - 1);
+      drawValidMoves(gameBoard, i - 1, j + 1);
 
       while (!ismouseclick(WM_LBUTTONDOWN)) {
         /* code */
@@ -330,34 +362,5 @@ void moveAiEasy(GameBoard& gameBoard) {
   }
 }
 
-void fillBoard(GameBoard& gameBoard, int player) {
-  int x1, x2, y1, y2;
-  // Draw the cells
-  for (int j = 0; j < gameBoard.size; j++) {
-    for (int i = 0; i < gameBoard.size; i++) {
-      x1 = gameBoard.board[i][j].x1;
-      y1 = gameBoard.board[i][j].y1;
-      x2 = gameBoard.board[i][j].x2;
-      y2 = gameBoard.board[i][j].y2;
-
-      if ((i + j) % 2 == 0) {
-        setcolor(COLOR(232, 235, 239));
-        rectangle(x1, y1, x2 - 1, y2 - 1);
-        setfillstyle(SOLID_FILL, COLOR(232, 235, 239));
-        floodfill(x1 + 10, y1 + 10, COLOR(232, 235, 239));
-      } else {
-        setcolor(COLOR(125, 135, 150));
-        rectangle(x1, y1, x2 - 1, y2 - 1);
-        setfillstyle(SOLID_FILL, COLOR(125, 135, 150));
-        floodfill(x1 + 10, y1 + 10, COLOR(125, 135, 150));
-      }
-
-      // Draw pieces
-      if (player == PLAYER_1) {
-        readimagefile("./assets/virus_jpg.jpg", x1 + 10, y1 + 10, x2 - 10, y2 - 10);
-      } else if (player == PLAYER_2) {
-        readimagefile("./assets/dokter.jpg", x1 + 10, y1 + 10, x2 - 10, y2 - 10);
-      }
-    }
-  }
+void moveAiHard(GameBoard& gameBoard) {
 }

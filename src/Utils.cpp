@@ -21,7 +21,7 @@ button createButton(int x, int y, const char* label, void (*callFunction)(), int
 }
 
 void drawButton(button& b) {
-  //rectangle(b.x - b.labelWidth / 2, b.y - b.labelHeight / 2, b.x + b.labelWidth / 2, b.y + b.labelHeight / 2);
+  rectangle(b.x - b.labelWidth / 2, b.y - b.labelHeight / 2, b.x + b.labelWidth / 2, b.y + b.labelHeight / 2);
 
   // Verify if the mouse is inside the area of the button
   if (mousex() > b.x - b.labelWidth / 2 && mousex() < b.x + b.labelWidth / 2 && mousey() > b.y - b.labelHeight / 2 && mousey() < b.y + b.labelHeight / 2) {

@@ -1,5 +1,6 @@
 #pragma once
 
+// Game Menu
 void game();
 
 // Type of games

@@ -21,7 +21,7 @@ struct GameBoard {
 
 GameBoard createBoard(int x, int y, int width, int lines);
 void drawBoard(GameBoard& gameBoard);
-void drawValidMove(GameBoard& gameBoard, int i, int j);
+void drawValidMoves(GameBoard& gameBoard, int i, int j);
 
 void remove(GameBoard& gameBoard, int x, int y);
 void move(GameBoard& gameBoard, int i, int j, int player);
@@ -34,3 +34,4 @@ void fillBoard(GameBoard& gameBoard, int player);
 
 void movePlayer(GameBoard& gameBoard);
 void moveAiEasy(GameBoard& gameBoard);
+void moveAiHard(GameBoard& gameBoard);
