@@ -26,9 +26,9 @@ void drawButton(button& b) {
   // Verify if the mouse is inside the area of the button
   if (mousex() > b.x - b.labelWidth / 2 && mousex() < b.x + b.labelWidth / 2 && mousey() > b.y - b.labelHeight / 2 && mousey() < b.y + b.labelHeight / 2) {
     if (ismouseclick(WM_LBUTTONDOWN)) {
-      clearmouseclick(WM_LBUTTONDOWN);
       b.isPressed = true;
       if (b.callFunction != NULL) {
+        clearmouseclick(WM_LBUTTONDOWN);
         b.callFunction();
       }
     }
@@ -36,6 +36,7 @@ void drawButton(button& b) {
   } else {
     setcolor(b.fontColor);
     // clearmouseclick(WM_LBUTTONDOWN);
+    // if (ismouseclick(WM_LBUTTONDOWN))
   }
 
   setbkcolor(b.bkColor);
@@ -59,6 +60,11 @@ void playSound(const char* path) {
   PlaySoundA(0, 0, 0);
   // Plays the sound
   PlaySoundA(path, NULL, SND_LOOP | SND_ASYNC);
+}
+
+void wait(int x) {
+  clearmouseclick(WM_LBUTTONDOWN);
+  delay(x);
 }
 
 void setResolution(int width, int height) {

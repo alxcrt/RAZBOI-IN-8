@@ -18,3 +18,4 @@ void exitGame();
 void playSound(const char* path);
 void stopSound();
 void setResolution(int width, int height);
+void wait(int t);

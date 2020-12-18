@@ -19,7 +19,7 @@ void game() {
     drawButton(pvcButton);
     drawButton(menuButton);
 
-    delay(50);
+    wait(50);
   }
 }
 
@@ -56,7 +56,7 @@ void Pvp() {
     if (!winner(gameBoard))
       movePlayer(gameBoard);
 
-    delay(50);
+    wait(50);
   }
 }
 
@@ -98,6 +98,6 @@ void PvcEasy() {
       }
     }
 
-    delay(50);
+    wait(50);
   }
 }

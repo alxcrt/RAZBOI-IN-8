@@ -16,8 +16,8 @@ void start() {
 
 void menu() {
   cleardevice();
-  int kk=getmaxx() / 400;
-  settextstyle(10, HORIZ_DIR, kk+2);
+  int kk = getmaxx() / 400;
+  settextstyle(10, HORIZ_DIR, kk + 2);
 
   readimagefile("./assets/startingimg.jpg", 0, 0, getmaxx(), getmaxy());
   button startGameButton, exitGameButton, rulesGameButton, settingsGameButton;
@@ -32,14 +32,14 @@ void menu() {
     drawButton(rulesGameButton);
     drawButton(settingsGameButton);
 
-    delay(50);
+    wait(50);
   }
 }
 
 void settings() {
   cleardevice();
-  int kk=getmaxx() / 400;
-  settextstyle(10, HORIZ_DIR, kk+2);
+  int kk = getmaxx() / 400;
+  settextstyle(10, HORIZ_DIR, kk + 2);
   readimagefile("./assets/startingimg.jpg", 0, 0, getmaxx(), getmaxy());
   setbkcolor(BLACK);
   setcolor(WHITE);
@@ -59,15 +59,15 @@ void settings() {
     drawButton(resolutionButton);
     drawButton(menuButton);
 
-    delay(50);
+    wait(50);
   }
 }
 
 void rules() {
-  int kk=0;
+  int kk = 0;
   cleardevice();
-  kk=getmaxx() / 400;
-  settextstyle(10, HORIZ_DIR,kk);
+  kk = getmaxx() / 400;
+  settextstyle(10, HORIZ_DIR, kk);
   readimagefile("./assets/rules.jpg", 0, 0, getmaxx(), getmaxy());
   button menuButton, rules2Button;
   menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
@@ -84,20 +84,20 @@ void rules() {
   outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 48, (char*)"compunere si rezolvare de probleme, precum si pentru desfasurare       ");
   outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 52, (char*)"prin corespondenta.                                                    ");
   while (1) {
-    settextstyle(10, HORIZ_DIR, kk+2);
+    settextstyle(10, HORIZ_DIR, kk + 2);
     drawButton(menuButton);
     settextstyle(10, HORIZ_DIR, kk);
     drawButton(rules2Button);
-    settextstyle(10, HORIZ_DIR, kk+2);
+    settextstyle(10, HORIZ_DIR, kk + 2);
 
-    delay(50);
+    wait(50);
   }
 }
 
 void rules2() {
-  int kk=0;
+  int kk = 0;
   cleardevice();
-  kk=getmaxx() / 400;
+  kk = getmaxx() / 400;
   settextstyle(10, HORIZ_DIR, kk);
   readimagefile("./assets/rules.jpg", 0, 0, getmaxx(), getmaxy());
   readimagefile("./assets/board2.jpg", getmaxx() / 2 - 370 - 16, getmaxy() / 2 - 40 - 16, getmaxx() / 2 - 100, getmaxy() / 2 + 200);
@@ -117,17 +117,17 @@ void rules2() {
     settextstyle(10, HORIZ_DIR, kk);
     drawButton(rulesButton);
     drawButton(rules3Button);
-    settextstyle(10, HORIZ_DIR, kk+2);
+    settextstyle(10, HORIZ_DIR, kk + 2);
     drawButton(menuButton);
 
-    delay(50);
+    wait(50);
   }
 }
 
 void rules3() {
-  int kk=0;
+  int kk = 0;
   cleardevice();
-  kk=getmaxx() / 400;
+  kk = getmaxx() / 400;
   settextstyle(10, HORIZ_DIR, kk);
   readimagefile("./assets/rules.jpg", 0, 0, getmaxx(), getmaxy());
   readimagefile("./assets/board.jpg", getmaxx() / 2 - 370 - 16, getmaxy() / 2 - 40 - 16, getmaxx() / 2 - 100, getmaxy() / 2 + 200);
@@ -138,22 +138,22 @@ void rules3() {
   outtextxy((getmaxx() / 100) * 54, (getmaxy() / 100) * 32, (char*)"adversi, deci cel care ramane cu mai multe piese pe tabla.             ");
   button menuButton, rules2Button;
   menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
-  rules2Button = createButton((getmaxx() / 100) * 25,(getmaxy() / 100) * 90, "<- previous page", rules2, WHITE, BLACK, CYAN);
+  rules2Button = createButton((getmaxx() / 100) * 25, (getmaxy() / 100) * 90, "<- previous page", rules2, WHITE, BLACK, CYAN);
   settextstyle(10, HORIZ_DIR, 3);
   while (1) {
     settextstyle(10, HORIZ_DIR, kk);
     drawButton(rules2Button);
-    settextstyle(10, HORIZ_DIR, kk+2);
+    settextstyle(10, HORIZ_DIR, kk + 2);
     drawButton(menuButton);
 
-    delay(50);
+    wait(50);
   }
 }
 
 void language() {
   cleardevice();
-  int kk=getmaxx() / 400;
-  settextstyle(10, HORIZ_DIR, kk+2);
+  int kk = getmaxx() / 400;
+  settextstyle(10, HORIZ_DIR, kk + 2);
   readimagefile("./assets/romaniaFlag.jpg", getmaxx() / 2 - 400, getmaxy() / 2 - 60, getmaxx() / 2 - 200, getmaxy() / 2 + 60);
   readimagefile("./assets/ukFlag.jpg", getmaxx() / 2 - 100, getmaxy() / 2 - 60, getmaxx() / 2 + 100, getmaxy() / 2 + 60);
   readimagefile("./assets/franceFlag.jpg", getmaxx() / 2 + 200, getmaxy() / 2 - 60, getmaxx() / 2 + 400, getmaxy() / 2 + 60);
@@ -170,7 +170,7 @@ void language() {
     drawButton(menuButton);
     drawButton(settingsButton);
 
-    delay(50);
+    wait(50);
   }
 }
 
@@ -231,6 +231,6 @@ void gameResolution() {
       gameResolution();
     }
 
-    delay(50);
+    wait(50);
   }
 }
