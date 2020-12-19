@@ -17,11 +17,23 @@ struct GameBoard {
   Piece** board;
   int currentPlayer;
   int p1Left, p2Left;
+
+  ~GameBoard() {
+    for (int i = 0; i < size; ++i) {
+      delete board[i];
+    }
+
+    delete[] board;
+  }
+};
+
+struct Move {
+  int i, j;
 };
 
 GameBoard createBoard(int x, int y, int width, int lines);
 void drawBoard(GameBoard& gameBoard);
-void drawValidMoves(GameBoard& gameBoard, int i, int j);
+void drawValidMove(GameBoard& gameBoard, int i, int j);
 
 void remove(GameBoard& gameBoard, int x, int y);
 void move(GameBoard& gameBoard, int i, int j, int player);

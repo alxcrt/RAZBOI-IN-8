@@ -6,6 +6,7 @@
 #include <cmath>
 #include <iostream>
 
+#include "MiniMax.hpp"
 #include "graphics.h"
 
 void drawBoard(GameBoard& gameBoard) {
@@ -137,7 +138,7 @@ void move(GameBoard& gameBoard, int i, int j, int player) {
   }
 }
 
-void drawValidMoves(GameBoard& gameBoard, int i, int j) {
+void drawValidMove(GameBoard& gameBoard, int i, int j) {
   if (!contains(gameBoard, i, j) || gameBoard.board[i][j].type != 0) {
     return;
   }
@@ -281,10 +282,10 @@ void movePlayer(GameBoard& gameBoard) {
     int i = floor((y - (gameBoard.y - gameBoard.width / 2.)) / k);
 
     if (contains(gameBoard, i, j) && gameBoard.board[i][j].type == gameBoard.currentPlayer) {
-      drawValidMoves(gameBoard, i + 1, j - 1);
-      drawValidMoves(gameBoard, i + 1, j + 1);
-      drawValidMoves(gameBoard, i - 1, j - 1);
-      drawValidMoves(gameBoard, i - 1, j + 1);
+      drawValidMove(gameBoard, i + 1, j - 1);
+      drawValidMove(gameBoard, i + 1, j + 1);
+      drawValidMove(gameBoard, i - 1, j - 1);
+      drawValidMove(gameBoard, i - 1, j + 1);
 
       while (!ismouseclick(WM_LBUTTONDOWN)) {
         /* code */
@@ -363,4 +364,100 @@ void moveAiEasy(GameBoard& gameBoard) {
 }
 
 void moveAiHard(GameBoard& gameBoard) {
+  if (!winner(gameBoard)) {
+    // Move bestMove = minimax(gameBoard, 3, false);
+    Move initMove = {0, 0};
+    Move nextMove = {0, 0};
+    int bestScore = INT_MIN;
+
+    // std::vector<std::vector<int>> board;
+    // for (int i = 0; i < gameBoard.size; i++) {
+    //   std::vector<int> v1;
+    //   for (int j = 0; j < gameBoard.size; j++) {
+    //     v1.push_back(gameBoard.board[i][j].type);
+    //   }
+    //   board.push_back(v1);
+    // }
+
+    for (int i = 0; i < gameBoard.size; i++) {
+      for (int j = 0; j < gameBoard.size; j++) {
+        if (gameBoard.board[i][j].type == PLAYER_1) {
+          std::vector<Move> validMoves = getValidMoves(gameBoard, i, j);
+          if (!validMoves.empty()) {
+            for (Move& m : validMoves) {
+              // std::cout << m.i << ' ' << m.j << '\n';
+              GameBoard tmpBoard = copyGameBoard(gameBoard);
+              simulateMove(tmpBoard, i, j, m.i, m.j, PLAYER_1);
+              int score = minimax(tmpBoard, 3, false);
+              // gameBoard.board[m.i][m.j].type = EMPTY;
+              // gameBoard.board[i][j].type = PLAYER_1;
+
+              if (score > bestScore) {
+                bestScore = score;
+                initMove.i = i;
+                initMove.j = j;
+                nextMove.i = m.i;
+                nextMove.j = m.j;
+              }
+            }
+          }
+        }
+      }
+    }
+    // std::cout << "Hello";
+    gameBoard.board[initMove.i][initMove.j].type = EMPTY;
+    remove(gameBoard, initMove.i, initMove.j);
+
+    move(gameBoard, nextMove.i, nextMove.j, gameBoard.currentPlayer);
+    checkNeighbours(gameBoard);
+    changeTurn(gameBoard);
+
+    // std::cout << "##############################" << '\n';
+    // for (int i = 0; i < gameBoard.size; i++) {
+    //   for (int j = 0; j < gameBoard.size; j++) {
+    //     std::cout << gameBoard.board[i][j].type << ' ';
+    //   }
+    //   std::cout << '\n';
+    // }'
+    // std::cout << gameBoard.p1Left << " " << gameBoard.p2Left << '\n';
+    // std::cout << "##############################" << '\n';
+  }
 }
+
+/*
+   std::vector<GameBoard> boards;
+    std::vector<Move> validMoves;
+    for (int i = 0; i < gameBoard.size; i++) {
+      for (int j = 0; j < gameBoard.size; j++) {
+        if (gameBoard.board[i][j].type == PLAYER_1) {
+          validMoves = getValidMoves(gameBoard, i, j);
+          if (!validMoves.empty()) {
+            for (Move& m : validMoves) {
+              // std::cout << m.i << ' ' << m.j << '\n';
+              GameBoard tmpBoard = copyGameBoard(gameBoard);
+              simulateMove(tmpBoard, i, j, m.i, m.j, PLAYER_1);
+              boards.push_back(tmpBoard);
+            }
+          }
+        }
+      }
+    }
+
+    if (!boards.empty()) {
+      for (GameBoard& gb : boards) {
+        // std::cout << m.i << ' ' << m.j << '\n';
+
+        int score = minimax(gb, 4, false);
+        // gameBoard.board[m.i][m.j].type = EMPTY;
+        // gameBoard.board[i][j].type = PLAYER_1;
+
+        if (score > bestScore) {
+          bestScore = score;
+          initMove.i = i;
+          initMove.j = j;
+          nextMove.i = m.i;
+          nextMove.j = m.j;
+        }
+      }
+    }
+*/
