@@ -163,32 +163,33 @@ void checkNeighbours(GameBoard& gameBoard) {
   for (int i = 0; i < gameBoard.size; i++) {
     for (int j = 0; j < gameBoard.size; j++) {
       // O piesa nemutata dar ea u m=ai are locuri de mutare
-      if (gameBoard.board[i][j].type != EMPTY && gameBoard.board[i][j].moved == false) {
-        int ok = true;
-        if (contains(gameBoard, i + 1, j - 1) && (gameBoard.board[i][j].type == gameBoard.board[i + 1][j - 1].type || gameBoard.board[i + 1][j - 1].type == EMPTY)) {
-          ok = false;
-        }
-        if (contains(gameBoard, i + 1, j + 1) && (gameBoard.board[i][j].type == gameBoard.board[i + 1][j + 1].type || gameBoard.board[i + 1][j + 1].type == EMPTY)) {
-          ok = false;
-        }
-        if (contains(gameBoard, i - 1, j - 1) && (gameBoard.board[i][j].type == gameBoard.board[i - 1][j - 1].type || gameBoard.board[i - 1][j - 1].type == EMPTY)) {
-          ok = false;
-        }
-        if (contains(gameBoard, i - 1, j + 1) && (gameBoard.board[i][j].type == gameBoard.board[i - 1][j + 1].type || gameBoard.board[i - 1][j + 1].type == EMPTY)) {
-          ok = false;
-        }
+      // if (gameBoard.board[i][j].type != EMPTY && gameBoard.board[i][j].moved == false) {
+      //   int ok = true;
+      //   if (contains(gameBoard, i + 1, j - 1) && (gameBoard.board[i][j].type == gameBoard.board[i + 1][j - 1].type || gameBoard.board[i + 1][j - 1].type == EMPTY)) {
+      //     ok = false;
+      //   }
+      //   if (contains(gameBoard, i + 1, j + 1) && (gameBoard.board[i][j].type == gameBoard.board[i + 1][j + 1].type || gameBoard.board[i + 1][j + 1].type == EMPTY)) {
+      //     ok = false;
+      //   }
+      //   if (contains(gameBoard, i - 1, j - 1) && (gameBoard.board[i][j].type == gameBoard.board[i - 1][j - 1].type || gameBoard.board[i - 1][j - 1].type == EMPTY)) {
+      //     ok = false;
+      //   }
+      //   if (contains(gameBoard, i - 1, j + 1) && (gameBoard.board[i][j].type == gameBoard.board[i - 1][j + 1].type || gameBoard.board[i - 1][j + 1].type == EMPTY)) {
+      //     ok = false;
+      //   }
 
-        if (ok) {
-          if (gameBoard.board[i][j].type == PLAYER_1) {
-            gameBoard.p1Left--;
-          } else if (gameBoard.board[i][j].type == PLAYER_2) {
-            gameBoard.p2Left--;
-          }
-          gameBoard.board[i][j].type = EMPTY;
+      //   if (ok) {
+      //     if (gameBoard.board[i][j].type == PLAYER_1) {
+      //       gameBoard.p1Left--;
+      //     } else if (gameBoard.board[i][j].type == PLAYER_2) {
+      //       gameBoard.p2Left--;
+      //     }
+      //     gameBoard.board[i][j].type = EMPTY;
 
-          remove(gameBoard, i, j);
-        }
-      } else if (gameBoard.board[i][j].type != EMPTY && gameBoard.board[i][j].moved == true) {
+      //     remove(gameBoard, i, j);
+      //   }
+      // } else
+      if (gameBoard.board[i][j].type != EMPTY && gameBoard.board[i][j].moved == true) {
         int ok = true;
         if (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == EMPTY) {
           ok = false;
@@ -388,7 +389,7 @@ void moveAiHard(GameBoard& gameBoard) {
               // std::cout << m.i << ' ' << m.j << '\n';
               GameBoard tmpBoard = copyGameBoard(gameBoard);
               simulateMove(tmpBoard, i, j, m.i, m.j, PLAYER_1);
-              int score = minimax(tmpBoard, 3, false);
+              int score = minimax(tmpBoard, 4, false);
               // gameBoard.board[m.i][m.j].type = EMPTY;
               // gameBoard.board[i][j].type = PLAYER_1;
 
