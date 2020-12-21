@@ -5,6 +5,7 @@
 #define EMPTY 0
 
 #define BOARD_SIZE 8
+#define MAX_MOVES BOARD_SIZE / 2
 
 struct Piece {
   float x1, y1, x2, y2;
@@ -17,6 +18,7 @@ struct GameBoard {
   Piece** board;
   int currentPlayer;
   int p1Left, p2Left;
+  int p1Moves, p2Moves;
 
   ~GameBoard() {
     for (int i = 0; i < size; ++i) {

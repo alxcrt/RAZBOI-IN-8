@@ -158,6 +158,24 @@ void simulateMove(GameBoard& gameBoard, int _i, int _j, int _newI, int _newJ, in
   gameBoard.board[_newI][_newJ].type = player;
   gameBoard.board[_newI][_newJ].moved = true;
 
+  if (gameBoard.p1Moves >= MAX_MOVES) {
+    for (int i = 0; i < gameBoard.size; i++) {
+      for (int j = 0; j < gameBoard.size; j++) {
+        if (gameBoard.board[i][j].type == PLAYER_1)
+          gameBoard.board[i][j].moved = true;
+      }
+    }
+  }
+
+  if (gameBoard.p2Moves >= MAX_MOVES) {
+    for (int i = 0; i < gameBoard.size; i++) {
+      for (int j = 0; j < gameBoard.size; j++) {
+        if (gameBoard.board[i][j].type == PLAYER_2)
+          gameBoard.board[i][j].moved = true;
+      }
+    }
+  }
+
   for (int i = 0; i < gameBoard.size; i++) {
     for (int j = 0; j < gameBoard.size; j++) {
       // O piesa nemutata dar ea u m=ai are locuri de mutare
@@ -219,6 +237,9 @@ GameBoard copyGameBoard(GameBoard& gameBoard) {
   GameBoard newBoard = createBoard(getmaxx() / 2 - 200, getmaxy() / 2, 600, BOARD_SIZE);
   newBoard.p1Left = gameBoard.p1Left;
   newBoard.p2Left = gameBoard.p2Left;
+
+  newBoard.p1Moves = gameBoard.p1Moves;
+  newBoard.p2Moves = gameBoard.p2Moves;
 
   for (int i = 0; i < BOARD_SIZE; i++) {
     for (int j = 0; j < BOARD_SIZE; j++) {

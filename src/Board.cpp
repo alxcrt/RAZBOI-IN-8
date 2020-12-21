@@ -55,6 +55,7 @@ GameBoard createBoard(int x, int y, int width, int size) {
   gameBoard.width = width;
   gameBoard.size = size;
   gameBoard.p1Left = gameBoard.p2Left = gameBoard.size;
+  gameBoard.p1Moves = gameBoard.p2Moves = 0;
 
   srand(time(NULL));
   gameBoard.currentPlayer = rand() % 2 + 1;
@@ -132,6 +133,12 @@ void move(GameBoard& gameBoard, int i, int j, int player) {
   gameBoard.board[i][j].moved = true;
 
   if (player == PLAYER_1) {
+    gameBoard.p1Moves++;
+  } else if (player == PLAYER_2) {
+    gameBoard.p2Moves++;
+  }
+
+  if (player == PLAYER_1) {
     readimagefile("./assets/virus_jpg.jpg", x1 + 10, y1 + 10, x2 - 10, y2 - 10);
   } else if (player == PLAYER_2) {
     readimagefile("./assets/dokter.jpg", x1 + 10, y1 + 10, x2 - 10, y2 - 10);
@@ -160,6 +167,25 @@ bool contains(GameBoard& gameBoard, int i, int j) {
 }
 
 void checkNeighbours(GameBoard& gameBoard) {
+  std::cout << gameBoard.p1Moves << ' ' << gameBoard.p2Moves << '\n';
+  if (gameBoard.p1Moves >= MAX_MOVES) {
+    for (int i = 0; i < gameBoard.size; i++) {
+      for (int j = 0; j < gameBoard.size; j++) {
+        if (gameBoard.board[i][j].type == PLAYER_1)
+          gameBoard.board[i][j].moved = true;
+      }
+    }
+  }
+
+  if (gameBoard.p2Moves >= MAX_MOVES) {
+    for (int i = 0; i < gameBoard.size; i++) {
+      for (int j = 0; j < gameBoard.size; j++) {
+        if (gameBoard.board[i][j].type == PLAYER_2)
+          gameBoard.board[i][j].moved = true;
+      }
+    }
+  }
+
   for (int i = 0; i < gameBoard.size; i++) {
     for (int j = 0; j < gameBoard.size; j++) {
       // O piesa nemutata dar ea u m=ai are locuri de mutare
