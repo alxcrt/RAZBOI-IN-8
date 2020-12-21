@@ -126,7 +126,7 @@ int evaluateBoard(GameBoard& gameBoard) {
   //   std::cout << c1 << '\n';
   // return c1 - c2;
 
-  return -(gameBoard.p2Left);
+  return (gameBoard.p1Left - gameBoard.p2Left) * 100 + (c2 - c1) * 50;
 }
 
 std::vector<Move> getValidMoves(GameBoard& gameBoard, int i, int j) {
