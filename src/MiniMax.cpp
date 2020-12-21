@@ -126,7 +126,7 @@ int evaluateBoard(GameBoard& gameBoard) {
   //   std::cout << c1 << '\n';
   // return c1 - c2;
 
-  return (gameBoard.p1Left - gameBoard.p2Left) * 100 + (c1 - c2) * 50;
+  return (gameBoard.p1Left - gameBoard.p2Left);
 }
 
 std::vector<Move> getValidMoves(GameBoard& gameBoard, int i, int j) {
@@ -158,6 +158,12 @@ void simulateMove(GameBoard& gameBoard, int _i, int _j, int _newI, int _newJ, in
   gameBoard.board[_newI][_newJ].type = player;
   gameBoard.board[_newI][_newJ].moved = true;
 
+  if (player == PLAYER_1) {
+    gameBoard.p1Moves++;
+  } else if (player == PLAYER_2) {
+    gameBoard.p2Moves++;
+  }
+
   if (gameBoard.p1Moves >= MAX_MOVES) {
     for (int i = 0; i < gameBoard.size; i++) {
       for (int j = 0; j < gameBoard.size; j++) {
@@ -172,6 +178,15 @@ void simulateMove(GameBoard& gameBoard, int _i, int _j, int _newI, int _newJ, in
       for (int j = 0; j < gameBoard.size; j++) {
         if (gameBoard.board[i][j].type == PLAYER_2)
           gameBoard.board[i][j].moved = true;
+      }
+    }
+  }
+
+  if (gameBoard.p2Moves >= MAX_MOVES) {
+    for (int i = 0; i < gameBoard.size; i++) {
+      for (int j = 0; j < gameBoard.size; j++) {
+        if (gameBoard.board[i][j].type == EMPTY)
+          gameBoard.board[i][j].moved = false;
       }
     }
   }
