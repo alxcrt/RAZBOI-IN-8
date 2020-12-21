@@ -88,45 +88,45 @@ int minimax(GameBoard& gameBoard, int depth, bool maxPlayer) {
 //TODO Find a better function
 int evaluateBoard(GameBoard& gameBoard) {
   // Cate piese virus inconjura un doctor
-  // int c1 = 0;
-  // int c2 = 0;
+  int c1 = 0;
+  int c2 = 0;
 
-  // for (int i = 0; i < BOARD_SIZE; i++) {
-  //   for (int j = 0; j < BOARD_SIZE; j++) {
-  //     if (gameBoard.board[i][j].type == PLAYER_2) {
-  //       if (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == PLAYER_1) {
-  //         c1++;
-  //       }
-  //       if (contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j + 1].type == PLAYER_1) {
-  //         c1++;
-  //       }
-  //       if (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i - 1][j - 1].type == PLAYER_1) {
-  //         c1++;
-  //       }
-  //       if (contains(gameBoard, i - 1, j + 1) && gameBoard.board[i - 1][j + 1].type == PLAYER_1) {
-  //         c1++;
-  //       }
-  //     } else if (gameBoard.board[i][j].type == PLAYER_1) {
-  //       if (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == PLAYER_2) {
-  //         c2++;
-  //       }
-  //       if (contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j + 1].type == PLAYER_2) {
-  //         c2++;
-  //       }
-  //       if (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i - 1][j - 1].type == PLAYER_2) {
-  //         c2++;
-  //       }
-  //       if (contains(gameBoard, i - 1, j + 1) && gameBoard.board[i - 1][j + 1].type == PLAYER_2) {
-  //         c2++;
-  //       }
-  //     }
-  //   }
-  // }
+  for (int i = 0; i < BOARD_SIZE; i++) {
+    for (int j = 0; j < BOARD_SIZE; j++) {
+      if (gameBoard.board[i][j].type == PLAYER_2) {
+        if (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == PLAYER_1) {
+          c1++;
+        }
+        if (contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j + 1].type == PLAYER_1) {
+          c1++;
+        }
+        if (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i - 1][j - 1].type == PLAYER_1) {
+          c1++;
+        }
+        if (contains(gameBoard, i - 1, j + 1) && gameBoard.board[i - 1][j + 1].type == PLAYER_1) {
+          c1++;
+        }
+      } else if (gameBoard.board[i][j].type == PLAYER_1) {
+        if (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == PLAYER_2) {
+          c2++;
+        }
+        if (contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j + 1].type == PLAYER_2) {
+          c2++;
+        }
+        if (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i - 1][j - 1].type == PLAYER_2) {
+          c2++;
+        }
+        if (contains(gameBoard, i - 1, j + 1) && gameBoard.board[i - 1][j + 1].type == PLAYER_2) {
+          c2++;
+        }
+      }
+    }
+  }
   // if (c1 != 0)
   //   std::cout << c1 << '\n';
   // return c1 - c2;
 
-  return (gameBoard.p1Left - (gameBoard.p2Left * gameBoard.p2Left));
+  return (gameBoard.p1Left - gameBoard.p2Left) * 100 + (c1 - c2) * 50;
 }
 
 std::vector<Move> getValidMoves(GameBoard& gameBoard, int i, int j) {
