@@ -29,7 +29,7 @@ champ d'étude et d'analyse - pas trop simple - parfaitement adapté
 pour la composition et la résolution de problèmes, ainsi que pour
 la correspondance.
 
-Deux personnes participent au jeu, chacune visant à faire sortir le
+Deux personnes participent au jeu, chacune visant a faire sortir le
 combat <armé> adverse. Le jeu peut se terminer par la victoire de
 l'un des joueurs, ou indécis - le tirage au sort. La pratique du jeu
 nécessite un plateau de jeu de 8x8 carrés (échiquier) et 8 pièces

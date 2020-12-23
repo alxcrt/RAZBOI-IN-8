@@ -1,6 +1,8 @@
 
 #include "GameHandler.hpp"
 
+#include <iostream>
+
 #include "Game.hpp"
 #include "Utils.hpp"
 #include "graphics.h"
@@ -10,6 +12,14 @@ void start() {
   //settextjustify(CENTER_TEXT, CENTER_TEXT);
   //playSound("assets/theme_hospital2.wav");
   setResolution(1024, 640);
+  readimagefile("./assets/startingScreen.jpg", 0, 0, getmaxx(), getmaxy());
+  while (1) {
+    if (ismouseclick(WM_LBUTTONDOWN)) {
+      clearmouseclick(WM_LBUTTONDOWN);
+      menu();
+    }
+    wait(50);
+  }
 
   menu();
 }
@@ -17,9 +27,9 @@ void start() {
 void menu() {
   cleardevice();
   int kk = getmaxx() / 400;
-  settextstyle(10, HORIZ_DIR, kk + 2);
+  settextstyle(6, HORIZ_DIR, kk + 2);
 
-  readimagefile("./assets/startingimg.jpg", 0, 0, getmaxx(), getmaxy());
+  readimagefile("./assets/backgroundGame.jpg", 0, 0, getmaxx(), getmaxy());
   button startGameButton, exitGameButton, rulesGameButton, settingsGameButton;
   startGameButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, "Start Game", game, BLACK, WHITE, CYAN);
   rulesGameButton = createButton(getmaxx() / 2, getmaxy() / 2, "Rules", rules, BLACK, WHITE, CYAN);
@@ -40,7 +50,7 @@ void settings() {
   cleardevice();
   int kk = getmaxx() / 400;
   settextstyle(10, HORIZ_DIR, kk + 2);
-  readimagefile("./assets/startingimg.jpg", 0, 0, getmaxx(), getmaxy());
+  readimagefile("./assets/backgroundGame.jpg", 0, 0, getmaxx(), getmaxy());
   setbkcolor(BLACK);
   setcolor(WHITE);
   outtextxy(getmaxx() / 100 * 45, getmaxy() / 2 + 5, (char*)"Music:");
