@@ -4,7 +4,7 @@
 
 #include "Board.hpp"
 
-int minimax(GameBoard& gameBoard, int depth, bool maxPlayer);
+int minimax(GameBoard& gameBoard, int depth, int alpha, int beta, bool maxPlayer);
 int evaluateBoard(GameBoard& gameBoard);
 std::vector<Move> getValidMoves(GameBoard& gameBoard, int i, int j);
 

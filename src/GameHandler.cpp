@@ -12,14 +12,14 @@ void start() {
   //settextjustify(CENTER_TEXT, CENTER_TEXT);
   //playSound("assets/theme_hospital2.wav");
   setResolution(1024, 640);
-  readimagefile("./assets/startingScreen.jpg", 0, 0, getmaxx(), getmaxy());
-  while (1) {
-    if (ismouseclick(WM_LBUTTONDOWN)) {
-      clearmouseclick(WM_LBUTTONDOWN);
-      menu();
-    }
-    wait(50);
-  }
+  // readimagefile("./assets/startingScreen.jpg", 0, 0, getmaxx(), getmaxy());
+  // while (1) {
+  //   if (ismouseclick(WM_LBUTTONDOWN)) {
+  //     clearmouseclick(WM_LBUTTONDOWN);
+  //     menu();
+  //   }
+  //   wait(50);
+  // }
 
   menu();
 }
@@ -27,7 +27,7 @@ void start() {
 void menu() {
   cleardevice();
   int kk = getmaxx() / 400;
-  settextstyle(6, HORIZ_DIR, kk + 2);
+  settextstyle(10, HORIZ_DIR, kk + 2);
 
   readimagefile("./assets/backgroundGame.jpg", 0, 0, getmaxx(), getmaxy());
   button startGameButton, exitGameButton, rulesGameButton, settingsGameButton;

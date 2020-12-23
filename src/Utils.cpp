@@ -59,7 +59,10 @@ void playSound(const char* path) {
   // Stops playback of a sound that is playing
   PlaySoundA(0, 0, 0);
   // Plays the sound
-  PlaySoundA(path, NULL, SND_LOOP | SND_ASYNC);
+  // waveOutSetVolume(NULL, 0xFFFF);
+  // PlaySoundA(path, NULL, SND_LOOP | SND_ASYNC);
+  PlaySoundA(path, GetModuleHandle(NULL), SND_FILENAME | SND_ASYNC | SND_LOOP);
+  // mciSendString("play mp3", NULL, 0, NULL);
 }
 
 void wait(int x) {
