@@ -243,37 +243,37 @@ void checkNeighbours(GameBoard& gameBoard) {
     }
   }
 
-  int p1Pieces = 0;
-  int p2Pieces = 0;
-  // verify two lines
-  for (int i = 0; i < gameBoard.size - 1; i++) {
-    p1Pieces = p2Pieces = 0;
-    for (int j = 0; j < gameBoard.size; j++) {
-      if (gameBoard.board[i][j].type == PLAYER_1 && ((contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j].type == PLAYER_2) || (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i][j].type == PLAYER_2))) {
-        p1Pieces++;
-      }
-      if (gameBoard.board[i + 1][j].type == PLAYER_2 && ((contains(gameBoard, i - 1, j + 1) && gameBoard.board[i][j].type == PLAYER_1) || (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i][j].type == PLAYER_1))) {
-        p2Pieces++;
-      }
-    }
+  // int p1Pieces = 0;
+  // int p2Pieces = 0;
+  // // verify two lines
+  // for (int i = 0; i < gameBoard.size - 1; i++) {
+  //   p1Pieces = p2Pieces = 0;
+  //   for (int j = 0; j < gameBoard.size; j++) {
+  //     if (gameBoard.board[i][j].type == PLAYER_1 && ((contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j].type == PLAYER_2) || (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i][j].type == PLAYER_2))) {
+  //       p1Pieces++;
+  //     }
+  //     if (gameBoard.board[i + 1][j].type == PLAYER_2 && ((contains(gameBoard, i - 1, j + 1) && gameBoard.board[i][j].type == PLAYER_1) || (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i][j].type == PLAYER_1))) {
+  //       p2Pieces++;
+  //     }
+  //   }
 
-    if (p1Pieces == p2Pieces && p1Pieces == BOARD_SIZE / 2) {
-      break;
-    }
-  }
+  //   if (p1Pieces == p2Pieces && p1Pieces == BOARD_SIZE / 2) {
+  //     break;
+  //   }
+  // }
 
-  if (p1Pieces == p2Pieces && p1Pieces == BOARD_SIZE / 2) {
-    bool removed = false;
-    for (int i = 0; i < gameBoard.size && !removed; i++) {
-      for (int j = 0; j < gameBoard.size && !removed; j++) {
-        if (gameBoard.board[i][j].type == PLAYER_1) {
-          gameBoard.p1Left--;
-          gameBoard.board[i][j].type = EMPTY;
-          gameBoard.board[i][j].moved = false;
-        }
-      }
-    }
-  }
+  // if (p1Pieces == p2Pieces && p1Pieces == BOARD_SIZE / 2) {
+  //   bool removed = false;
+  //   for (int i = 0; i < gameBoard.size && !removed; i++) {
+  //     for (int j = 0; j < gameBoard.size && !removed; j++) {
+  //       if (gameBoard.board[i][j].type == PLAYER_1) {
+  //         gameBoard.p1Left--;
+  //         gameBoard.board[i][j].type = EMPTY;
+  //         gameBoard.board[i][j].moved = false;
+  //       }
+  //     }
+  //   }
+  // }
 
   // int p1Pieces;
   // int p2Pieces;

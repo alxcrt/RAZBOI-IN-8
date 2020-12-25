@@ -92,42 +92,52 @@ int evaluateBoard(GameBoard& gameBoard) {
   int c1 = 0;
   int c2 = 0;
 
+  // for (int i = 0; i < BOARD_SIZE; i++) {
+  //   for (int j = 0; j < BOARD_SIZE; j++) {
+  //     if (gameBoard.board[i][j].type == PLAYER_2) {
+  //       if (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == PLAYER_1) {
+  //         c1++;
+  //       }
+  //       if (contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j + 1].type == PLAYER_1) {
+  //         c1++;
+  //       }
+  //       if (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i - 1][j - 1].type == PLAYER_1) {
+  //         c1++;
+  //       }
+  //       if (contains(gameBoard, i - 1, j + 1) && gameBoard.board[i - 1][j + 1].type == PLAYER_1) {
+  //         c1++;
+  //       }
+  //     } else if (gameBoard.board[i][j].type == PLAYER_1) {
+  //       if (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == PLAYER_2) {
+  //         c2++;
+  //       }
+  //       if (contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j + 1].type == PLAYER_2) {
+  //         c2++;
+  //       }
+  //       if (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i - 1][j - 1].type == PLAYER_2) {
+  //         c2++;
+  //       }
+  //       if (contains(gameBoard, i - 1, j + 1) && gameBoard.board[i - 1][j + 1].type == PLAYER_2) {
+  //         c2++;
+  //       }
+  //     }
+  //   }
+  // }
+
   for (int i = 0; i < BOARD_SIZE; i++) {
     for (int j = 0; j < BOARD_SIZE; j++) {
       if (gameBoard.board[i][j].type == PLAYER_2) {
-        if (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == PLAYER_1) {
-          c1++;
-        }
-        if (contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j + 1].type == PLAYER_1) {
-          c1++;
-        }
-        if (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i - 1][j - 1].type == PLAYER_1) {
-          c1++;
-        }
-        if (contains(gameBoard, i - 1, j + 1) && gameBoard.board[i - 1][j + 1].type == PLAYER_1) {
-          c1++;
-        }
       } else if (gameBoard.board[i][j].type == PLAYER_1) {
-        if (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == PLAYER_2) {
-          c2++;
-        }
-        if (contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j + 1].type == PLAYER_2) {
-          c2++;
-        }
-        if (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i - 1][j - 1].type == PLAYER_2) {
-          c2++;
-        }
-        if (contains(gameBoard, i - 1, j + 1) && gameBoard.board[i - 1][j + 1].type == PLAYER_2) {
-          c2++;
-        }
+        c2 += i + 1;
       }
     }
   }
+
   // if (c1 != 0)
   //   std::cout << c1 << '\n';
   // return c1 - c2;
 
-  return (gameBoard.p1Left - gameBoard.p2Left);
+  return (gameBoard.p1Left - gameBoard.p2Left) + c2;
 }
 
 std::vector<Move> getValidMoves(GameBoard& gameBoard, int i, int j) {
@@ -248,38 +258,105 @@ void simulateMove(GameBoard& gameBoard, int _i, int _j, int _newI, int _newJ, in
     }
   }
 
-  int p1Pieces = 0;
-  int p2Pieces = 0;
-  // verify two lines
-  for (int i = 0; i < gameBoard.size - 1; i++) {
-    for (int j = 0; j < gameBoard.size; j++) {
-      if (gameBoard.board[i][j].type == PLAYER_1 && ((contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j + 1].type == PLAYER_2) || (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == PLAYER_2))) {
-        p1Pieces++;
-      }
-    }
-  }
+  /// * player1 a mutat si veridicam daca dupa m-ai poate face vreo miscare
+  // if (player == PLAYER_1) {
+  //   int maxRow = 0;
+  //   for (int i = 0; i < gameBoard.size; i++) {
+  //     for (int j = 0; j < gameBoard.size; j++) {
+  //       if (gameBoard.board[i][j].type == PLAYER_1) {
+  //         maxRow = std::max(i, maxRow);
+  //       }
+  //     }
+  //   }
 
-  for (int i = 0; i < gameBoard.size - 1; i++) {
-    for (int j = 0; j < gameBoard.size; j++) {
-      if (gameBoard.board[i][j].type == PLAYER_2 && ((contains(gameBoard, i - 1, j + 1) && gameBoard.board[i - 1][j + 1].type == PLAYER_1) || (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i - 1][j - 1].type == PLAYER_1))) {
-        p2Pieces++;
-      }
-    }
-  }
+  //   bool isOk = false;
+  //   for (int i = 0; i < gameBoard.size; i++) {
+  //     for (int j = 0; j < gameBoard.size; j++) {
+  //       if (gameBoard.board[i][j].type == PLAYER_1 && i == maxRow && (isValidMove(gameBoard, i, j, i + 1, j + 1) || isValidMove(gameBoard, i, j, i + 1, j - 1))) {
+  //         isOk = true;
+  //       }
+  //     }
+  //   }
 
-  if (p1Pieces == p2Pieces && p1Pieces == BOARD_SIZE / 2) {
-    bool removed = false;
-    for (int i = 0; i < gameBoard.size && !removed; i++) {
-      for (int j = 0; j < gameBoard.size && !removed; j++) {
-        if (gameBoard.board[i][j].type == PLAYER_1) {
-          gameBoard.p1Left--;
-          gameBoard.board[i][j].type = EMPTY;
-          gameBoard.board[i][j].moved = false;
-          removed = true;
-        }
-      }
-    }
-  }
+  //   if (!isOk) {
+  //     for (int i = gameBoard.size - 1 && !isOk; i >= 0; i--) {
+  //       for (int j = gameBoard.size - 1 && !isOk; j >= 0; j--) {
+  //         if (gameBoard.board[i][j].type == PLAYER_2) {
+  //           gameBoard.p2Left--;
+  //           gameBoard.board[i][j].type = EMPTY;
+  //           gameBoard.board[i][j].moved = false;
+  //           // remove(gameBoard, i, j);
+  //           isOk = true;
+  //         }
+  //       }
+  //     }
+  //   }
+  // } else {
+  //   int minRow = BOARD_SIZE;
+  //   for (int i = 0; i < gameBoard.size; i++) {
+  //     for (int j = 0; j < gameBoard.size; j++) {
+  //       if (gameBoard.board[i][j].type == PLAYER_2) {
+  //         minRow = std::min(i, minRow);
+  //       }
+  //     }
+  //   }
+
+  //   bool isOk = false;
+  //   for (int i = 0; i < gameBoard.size; i++) {
+  //     for (int j = 0; j < gameBoard.size; j++) {
+  //       if (gameBoard.board[i][j].type == PLAYER_2 && i == minRow && (isValidMove(gameBoard, i, j, i - 1, j + 1) || isValidMove(gameBoard, i, j, i - 1, j - 1))) {
+  //         isOk = true;
+  //       }
+  //     }
+  //   }
+
+  //   if (!isOk) {
+  //     for (int i = 0; i < gameBoard.size && !isOk; i++) {
+  //       for (int j = 0; j < gameBoard.size && !isOk; j++) {
+  //         if (gameBoard.board[i][j].type == PLAYER_1) {
+  //           gameBoard.p1Left--;
+  //           gameBoard.board[i][j].type = EMPTY;
+  //           gameBoard.board[i][j].moved = false;
+  //           // remove(gameBoard, i, j);
+  //           isOk = true;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
+  // int p1Pieces = 0;
+  // int p2Pieces = 0;
+  // // verify two lines
+  // for (int i = 0; i < gameBoard.size - 1; i++) {
+  //   for (int j = 0; j < gameBoard.size; j++) {
+  //     if (gameBoard.board[i][j].type == PLAYER_1 && ((contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j + 1].type == PLAYER_2) || (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == PLAYER_2))) {
+  //       p1Pieces++;
+  //     }
+  //   }
+  // }
+
+  // for (int i = 0; i < gameBoard.size - 1; i++) {
+  //   for (int j = 0; j < gameBoard.size; j++) {
+  //     if (gameBoard.board[i][j].type == PLAYER_2 && ((contains(gameBoard, i - 1, j + 1) && gameBoard.board[i - 1][j + 1].type == PLAYER_1) || (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i - 1][j - 1].type == PLAYER_1))) {
+  //       p2Pieces++;
+  //     }
+  //   }
+  // }
+
+  // if (p1Pieces == p2Pieces && p1Pieces == BOARD_SIZE / 2) {
+  //   bool removed = false;
+  //   for (int i = 0; i < gameBoard.size && !removed; i++) {
+  //     for (int j = 0; j < gameBoard.size && !removed; j++) {
+  //       if (gameBoard.board[i][j].type == PLAYER_1) {
+  //         gameBoard.p1Left--;
+  //         gameBoard.board[i][j].type = EMPTY;
+  //         gameBoard.board[i][j].moved = false;
+  //         removed = true;
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 GameBoard copyGameBoard(GameBoard& gameBoard) {
