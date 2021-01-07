@@ -13,14 +13,14 @@ void start() {
   //settextjustify(CENTER_TEXT, CENTER_TEXT);
   //playSound("assets/theme_hospital2.wav");
   setResolution(1024, 640);
-  // readimagefile("./assets/startingScreen.jpg", 0, 0, getmaxx(), getmaxy());
-  // while (1) {
-  //   if (ismouseclick(WM_LBUTTONDOWN)) {
-  //     clearmouseclick(WM_LBUTTONDOWN);
-  //     menu();
-  //   }
-  //   wait(50);
-  // }
+  readimagefile("./assets/startingScreen.jpg", 0, 0, getmaxx(), getmaxy());
+  while (1) {
+    if (ismouseclick(WM_LBUTTONDOWN)) {
+      clearmouseclick(WM_LBUTTONDOWN);
+      menu();
+    }
+    wait(50);
+  }
 
   menu();
 }
@@ -54,12 +54,12 @@ void settings() {
   readimagefile("./assets/backgroundGame.jpg", 0, 0, getmaxx(), getmaxy());
   setbkcolor(BLACK);
   setcolor(WHITE);
-  outtextxy(getmaxx() / 100 * 45, getmaxy() / 2 + 5, (char*)dict["Music"][LAN].c_str());
+  outtextxy(getmaxx() / 100 * 46, getmaxy() / 2 + 5, (char*)dict["Music"][LAN].c_str());
   button languageGameButton, /* volumeGameButton, */ menuButton, volumeOnGameButton, volumeOffGameButton, resolutionButton;
   languageGameButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, dict["Language"][LAN].c_str(), language, BLACK, WHITE, CYAN);
   //volumeGameButton = createButton(getmaxx() / 2 - 70, getmaxy() / 2, "Volume:", volume, BLACK, WHITE, CYAN);
-  volumeOnGameButton = createButton(getmaxx() / 100 * 60, getmaxy() / 2, dict["On"][LAN].c_str(), playyySound, BLACK, WHITE, CYAN);
-  volumeOffGameButton = createButton(getmaxx() / 100 * 60, getmaxy() / 2 + 50, dict["Off"][LAN].c_str(), stopSound, BLACK, WHITE, CYAN);
+  volumeOnGameButton = createButton(getmaxx() / 100 * 59, getmaxy() * 47 / 100, dict["On"][LAN].c_str(), playyySound, BLACK, WHITE, CYAN);
+  volumeOffGameButton = createButton(getmaxx() / 100 * 59, getmaxy() * 53 / 100, dict["Off"][LAN].c_str(), stopSound, BLACK, WHITE, CYAN);
   menuButton = createButton(getmaxx() / 2, getmaxy() / 2 + 200, dict["Menu"][LAN].c_str(), menu, BLACK, WHITE, CYAN);
   resolutionButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, dict["Resolution"][LAN].c_str(), gameResolution, BLACK, WHITE, CYAN);
   while (1) {
@@ -176,8 +176,8 @@ void language() {
   romanianLanguageButton = createButton(getmaxx() / 2 - 300, getmaxy() / 2 + 100, dict["Romanian"][LAN].c_str(), romanianLanguage, BLACK, WHITE, CYAN);
   franceLanguageButton = createButton(getmaxx() / 2 + 300, getmaxy() / 2 + 100, dict["France"][LAN].c_str(), franceLanguage, BLACK, WHITE, CYAN);
   englishLanguageButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, dict["English"][LAN].c_str(), englishLanguage, BLACK, WHITE, CYAN);
-  menuButton = createButton(getmaxx() - 100, getmaxy() - 60, dict["Menu"][LAN].c_str(), menu, BLACK, WHITE, CYAN);
-  settingsButton = createButton(130, getmaxy() - 60, dict["<- Back"][LAN].c_str(), settings, BLACK, WHITE, CYAN);
+  menuButton = createButton(getmaxx()*93/100, getmaxy() - 60, dict["Menu"][LAN].c_str(), menu, BLACK, WHITE, CYAN);
+  settingsButton = createButton(getmaxx()*7/100, getmaxy() - 60, dict["<- Back"][LAN].c_str(), settings, BLACK, WHITE, CYAN);
   while (1) {
     drawButton(romanianLanguageButton);
     drawButton(franceLanguageButton);
