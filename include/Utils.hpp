@@ -1,5 +1,11 @@
 #pragma once
 
+#define EN 0
+#define FR 1
+#define RO 2
+
+extern int LAN;
+
 // Structs
 struct button {
   bool isPressed;

@@ -7,7 +7,7 @@
 #include "graphics.h"
 
 int minimax(GameBoard& gameBoard, int depth, int alpha, int beta, bool maxPlayer) {
-  if (depth == 0 || winner(gameBoard)) {
+  if (depth == 0 || winner(gameBoard) != 0) {
     // std::cout << evaluateBoard(gameBoard) << '\n';
     return evaluateBoard(gameBoard);
   }
@@ -89,7 +89,7 @@ int minimax(GameBoard& gameBoard, int depth, int alpha, int beta, bool maxPlayer
 //TODO Find a better function
 int evaluateBoard(GameBoard& gameBoard) {
   // Cate piese virus inconjura un doctor
-  int c1 = 0;
+  // int c1 = 0;
   int c2 = 0;
 
   // for (int i = 0; i < BOARD_SIZE; i++) {
@@ -127,6 +127,7 @@ int evaluateBoard(GameBoard& gameBoard) {
   for (int i = 0; i < BOARD_SIZE; i++) {
     for (int j = 0; j < BOARD_SIZE; j++) {
       if (gameBoard.board[i][j].type == PLAYER_2) {
+        // c1 -= i - 1;
       } else if (gameBoard.board[i][j].type == PLAYER_1) {
         c2 += i + 1;
       }
@@ -137,7 +138,16 @@ int evaluateBoard(GameBoard& gameBoard) {
   //   std::cout << c1 << '\n';
   // return c1 - c2;
 
-  return (gameBoard.p1Left - gameBoard.p2Left) + c2;
+  if (winner(gameBoard) == PLAYER_1) {
+    return INT_MAX;
+  } else if (winner(gameBoard) == PLAYER_2) {
+    return INT_MIN;
+  }
+
+  // if (gameBoard.p2Left == gameBoard.size)
+  return (gameBoard.p1Left - gameBoard.p2Left * 10) + c2 * 5;
+
+  // return (gameBoard.p1Left - gameBoard.p2Left) * 100 + c2 * 5;
 }
 
 std::vector<Move> getValidMoves(GameBoard& gameBoard, int i, int j) {

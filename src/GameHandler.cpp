@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+#include "Dictionary.hpp"
 #include "Game.hpp"
 #include "Utils.hpp"
 #include "graphics.h"
@@ -31,10 +32,10 @@ void menu() {
 
   readimagefile("./assets/backgroundGame.jpg", 0, 0, getmaxx(), getmaxy());
   button startGameButton, exitGameButton, rulesGameButton, settingsGameButton;
-  startGameButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, "Start Game", game, BLACK, WHITE, CYAN);
-  rulesGameButton = createButton(getmaxx() / 2, getmaxy() / 2, "Rules", rules, BLACK, WHITE, CYAN);
-  settingsGameButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, "Settings", settings, BLACK, WHITE, CYAN);
-  exitGameButton = createButton(getmaxx() / 2, getmaxy() / 2 + 200, "Exit", exitGame, BLACK, WHITE, CYAN);
+  startGameButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, dict["Start Game"][LAN].c_str(), game, BLACK, WHITE, CYAN);
+  rulesGameButton = createButton(getmaxx() / 2, getmaxy() / 2, dict["Rules"][LAN].c_str(), rules, BLACK, WHITE, CYAN);
+  settingsGameButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, dict["Settings"][LAN].c_str(), settings, BLACK, WHITE, CYAN);
+  exitGameButton = createButton(getmaxx() / 2, getmaxy() / 2 + 200, dict["Exit"][LAN].c_str(), exitGame, BLACK, WHITE, CYAN);
 
   while (1) {
     drawButton(startGameButton);
@@ -53,14 +54,14 @@ void settings() {
   readimagefile("./assets/backgroundGame.jpg", 0, 0, getmaxx(), getmaxy());
   setbkcolor(BLACK);
   setcolor(WHITE);
-  outtextxy(getmaxx() / 100 * 45, getmaxy() / 2 + 5, (char*)"Music:");
+  outtextxy(getmaxx() / 100 * 45, getmaxy() / 2 + 5, (char*)dict["Music"][LAN].c_str());
   button languageGameButton, /* volumeGameButton, */ menuButton, volumeOnGameButton, volumeOffGameButton, resolutionButton;
-  languageGameButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, "Language", language, BLACK, WHITE, CYAN);
+  languageGameButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, dict["Language"][LAN].c_str(), language, BLACK, WHITE, CYAN);
   //volumeGameButton = createButton(getmaxx() / 2 - 70, getmaxy() / 2, "Volume:", volume, BLACK, WHITE, CYAN);
-  volumeOnGameButton = createButton(getmaxx() / 100 * 55, getmaxy() / 2, "ON", playyySound, BLACK, WHITE, CYAN);
-  volumeOffGameButton = createButton(getmaxx() / 100 * 62, getmaxy() / 2, "OFF", stopSound, BLACK, WHITE, CYAN);
-  menuButton = createButton(getmaxx() / 2, getmaxy() / 2 + 200, "Menu", menu, BLACK, WHITE, CYAN);
-  resolutionButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, "Resolution", gameResolution, BLACK, WHITE, CYAN);
+  volumeOnGameButton = createButton(getmaxx() / 100 * 60, getmaxy() / 2, dict["On"][LAN].c_str(), playyySound, BLACK, WHITE, CYAN);
+  volumeOffGameButton = createButton(getmaxx() / 100 * 60, getmaxy() / 2 + 50, dict["Off"][LAN].c_str(), stopSound, BLACK, WHITE, CYAN);
+  menuButton = createButton(getmaxx() / 2, getmaxy() / 2 + 200, dict["Menu"][LAN].c_str(), menu, BLACK, WHITE, CYAN);
+  resolutionButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, dict["Resolution"][LAN].c_str(), gameResolution, BLACK, WHITE, CYAN);
   while (1) {
     drawButton(languageGameButton);
     drawButton(volumeOnGameButton);
@@ -80,8 +81,8 @@ void rules() {
   settextstyle(10, HORIZ_DIR, kk);
   readimagefile("./assets/rules.jpg", 0, 0, getmaxx(), getmaxy());
   button menuButton, rules2Button;
-  menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
-  rules2Button = createButton((getmaxx() / 100) * 75, (getmaxy() / 100) * 90, "next page ->", rules2, WHITE, BLACK, CYAN);
+  menuButton = createButton(getmaxx() - 100, getmaxy() - 60, dict["Menu"][LAN].c_str(), menu, BLACK, WHITE, CYAN);
+  rules2Button = createButton((getmaxx() / 100) * 75, (getmaxy() / 100) * 90, dict["Next page ->"][LAN].c_str(), rules2, WHITE, BLACK, CYAN);
   setbkcolor(WHITE);
   setcolor(BLACK);
   settextjustify(LEFT_TEXT, CENTER_TEXT);
@@ -114,8 +115,8 @@ void rules2() {
   readimagefile("./assets/board2.jpg", getmaxx() / 2 - 370 - 16, getmaxy() / 2 - 40 - 16, getmaxx() / 2 - 100, getmaxy() / 2 + 200);
   button menuButton, rulesButton, rules3Button;
   menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
-  rulesButton = createButton((getmaxx() / 100) * 25, (getmaxy() / 100) * 90, "<- previous page", rules, WHITE, BLACK, CYAN);
-  rules3Button = createButton((getmaxx() / 100) * 75, (getmaxy() / 100) * 90, "next page ->", rules3, WHITE, BLACK, CYAN);
+  rulesButton = createButton((getmaxx() / 100) * 25, (getmaxy() / 100) * 90, dict["<- Previous page"][LAN].c_str(), rules, WHITE, BLACK, CYAN);
+  rules3Button = createButton((getmaxx() / 100) * 75, (getmaxy() / 100) * 90, dict["Next page ->"][LAN].c_str(), rules3, WHITE, BLACK, CYAN);
   setbkcolor(WHITE);
   setcolor(BLACK);
   settextjustify(LEFT_TEXT, CENTER_TEXT);
@@ -152,8 +153,8 @@ void rules3() {
   outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 32, (char*)"adversi, deci cel care ramane cu mai multe piese pe tabla.");
   settextjustify(CENTER_TEXT, CENTER_TEXT);
   button menuButton, rules2Button;
-  menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
-  rules2Button = createButton((getmaxx() / 100) * 25, (getmaxy() / 100) * 90, "<- previous page", rules2, WHITE, BLACK, CYAN);
+  menuButton = createButton(getmaxx() - 100, getmaxy() - 60, dict["<- Back"][LAN].c_str(), menu, BLACK, WHITE, CYAN);
+  rules2Button = createButton((getmaxx() / 100) * 25, (getmaxy() / 100) * 90, dict["<- Previous page"][LAN].c_str(), rules2, WHITE, BLACK, CYAN);
   while (1) {
     // settextstyle(10, HORIZ_DIR, kk);
     drawButton(rules2Button);
@@ -172,11 +173,11 @@ void language() {
   readimagefile("./assets/ukFlag.jpg", getmaxx() / 2 - 100, getmaxy() / 2 - 60, getmaxx() / 2 + 100, getmaxy() / 2 + 60);
   readimagefile("./assets/franceFlag.jpg", getmaxx() / 2 + 200, getmaxy() / 2 - 60, getmaxx() / 2 + 400, getmaxy() / 2 + 60);
   button romanianLanguageButton, franceLanguageButton, englishLanguageButton, menuButton, settingsButton;
-  romanianLanguageButton = createButton(getmaxx() / 2 - 300, getmaxy() / 2 + 100, "Romanian", romanianLanguage, BLACK, WHITE, CYAN);
-  franceLanguageButton = createButton(getmaxx() / 2 + 300, getmaxy() / 2 + 100, "France", franceLanguage, BLACK, WHITE, CYAN);
-  englishLanguageButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, "English", englishLanguage, BLACK, WHITE, CYAN);
-  menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
-  settingsButton = createButton(130, getmaxy() - 60, "<- Back", settings, BLACK, WHITE, CYAN);
+  romanianLanguageButton = createButton(getmaxx() / 2 - 300, getmaxy() / 2 + 100, dict["Romanian"][LAN].c_str(), romanianLanguage, BLACK, WHITE, CYAN);
+  franceLanguageButton = createButton(getmaxx() / 2 + 300, getmaxy() / 2 + 100, dict["France"][LAN].c_str(), franceLanguage, BLACK, WHITE, CYAN);
+  englishLanguageButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, dict["English"][LAN].c_str(), englishLanguage, BLACK, WHITE, CYAN);
+  menuButton = createButton(getmaxx() - 100, getmaxy() - 60, dict["Menu"][LAN].c_str(), menu, BLACK, WHITE, CYAN);
+  settingsButton = createButton(130, getmaxy() - 60, dict["<- Back"][LAN].c_str(), settings, BLACK, WHITE, CYAN);
   while (1) {
     drawButton(romanianLanguageButton);
     drawButton(franceLanguageButton);
@@ -193,13 +194,16 @@ void playyySound() {
 }
 
 void romanianLanguage() {
-  return;
+  LAN = RO;
+  language();
 }
 void franceLanguage() {
-  return;
+  LAN = FR;
+  language();
 }
 void englishLanguage() {
-  return;
+  LAN = EN;
+  language();
 }
 
 void gameResolution() {
@@ -211,9 +215,9 @@ void gameResolution() {
   rez1200x800Button = createButton(getmaxx() / 2 - 300, getmaxy() / 2 + 100, "1200x800", NULL, BLACK, WHITE, CYAN);
   rez1366x768Button = createButton(getmaxx() / 2, getmaxy() / 2 + 100, "1366x768", NULL, BLACK, WHITE, CYAN);
   rez1024x640Button = createButton(getmaxx() / 2 + 300, getmaxy() / 2 + 100, "1024x640", NULL, BLACK, WHITE, CYAN);
-  rezFullScreenButton = createButton(getmaxx() / 2, getmaxy() / 2 + 200, "FullScreen", NULL, BLACK, WHITE, CYAN);
-  menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
-  settingsButton = createButton(130, getmaxy() - 60, "<- Back", settings, BLACK, WHITE, CYAN);
+  rezFullScreenButton = createButton(getmaxx() / 2, getmaxy() / 2 + 200, dict["Fullscreen"][LAN].c_str(), NULL, BLACK, WHITE, CYAN);
+  menuButton = createButton(getmaxx() - 100, getmaxy() - 60, dict["Menu"][LAN].c_str(), menu, BLACK, WHITE, CYAN);
+  settingsButton = createButton(130, getmaxy() - 60, dict["<- Back"][LAN].c_str(), settings, BLACK, WHITE, CYAN);
   while (1) {
     drawButton(rez1024x640Button);
     drawButton(rez1200x800Button);

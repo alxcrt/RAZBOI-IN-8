@@ -53,6 +53,7 @@ void Pvp() {
       }
       fillBoard(gameBoard, winner(gameBoard));
       b = true;
+      playSound("assets/winning.wav");
     }
 
     if (!winner(gameBoard))
@@ -85,6 +86,7 @@ void PvcEasy() {
     } else if (winner(gameBoard) && !b) {
       if (winner(gameBoard) == PLAYER_1) {
         outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1 WINS");
+        playSound("assets/losing.wav");
       } else {
         outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2 WINS");
       }
@@ -127,6 +129,8 @@ void PvcHard() {
     } else if (winner(gameBoard) && !b) {
       if (winner(gameBoard) == PLAYER_1) {
         outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1 WINS");
+        playSound("assets/losing.wav");
+
       } else {
         outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2 WINS");
       }

@@ -2,6 +2,8 @@
 
 #include "graphics.h"
 
+int LAN = EN;
+
 // Create a buttonz
 button createButton(int x, int y, const char* label, void (*callFunction)(), int bkColor, int fontColor, int hoverColor) {
   button b;
@@ -61,7 +63,7 @@ void playSound(const char* path) {
   // Plays the sound
   // waveOutSetVolume(NULL, 0xFFFF);
   // PlaySoundA(path, NULL, SND_LOOP | SND_ASYNC);
-  PlaySoundA(path, GetModuleHandle(NULL), SND_FILENAME | SND_ASYNC | SND_LOOP);
+  PlaySoundA(path, GetModuleHandle(NULL), SND_FILENAME | SND_ASYNC);
   // mciSendString("play mp3", NULL, 0, NULL);
 }
 

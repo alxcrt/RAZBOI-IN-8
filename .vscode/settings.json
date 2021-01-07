@@ -40,6 +40,11 @@
     "sstream": "cpp",
     "stdexcept": "cpp",
     "streambuf": "cpp",
-    "typeinfo": "cpp"
+    "typeinfo": "cpp",
+    "bit": "cpp",
+    "cstring": "cpp",
+    "map": "cpp",
+    "optional": "cpp",
+    "string_view": "cpp"
   }
 }

@@ -2,11 +2,13 @@
 #include "Board.hpp"
 
 #include <time.h>
+#include <windows.h>
 
 #include <cmath>
 #include <iostream>
 
 #include "MiniMax.hpp"
+#include "Utils.hpp"
 #include "graphics.h"
 
 void drawBoard(GameBoard& gameBoard) {
@@ -163,11 +165,11 @@ void drawValidMove(GameBoard& gameBoard, int i, int j) {
 }
 
 bool contains(GameBoard& gameBoard, int i, int j) {
-  return (i >= 0 && i < gameBoard.size && j >= 0 && j < gameBoard.size);
+  return (i >= 0 && i < BOARD_SIZE && j >= 0 && j < BOARD_SIZE);
 }
 
 void checkNeighbours(GameBoard& gameBoard) {
-  std::cout << gameBoard.p1Moves << ' ' << gameBoard.p2Moves << '\n';
+  // std::cout << gameBoard.p1Moves << ' ' << gameBoard.p2Moves << '\n';
   if (gameBoard.p1Moves >= MAX_MOVES) {
     for (int i = 0; i < gameBoard.size; i++) {
       for (int j = 0; j < gameBoard.size; j++) {
@@ -469,6 +471,7 @@ void movePlayer(GameBoard& gameBoard) {
 
         checkNeighbours(gameBoard);
         changeTurn(gameBoard);
+        playSound("assets/moving_piece.wav");
       }
     }
   }
@@ -517,6 +520,7 @@ void moveAiEasy(GameBoard& gameBoard) {
 
     checkNeighbours(gameBoard);
     changeTurn(gameBoard);
+    playSound("assets/moving_piece.wav");
   }
 }
 
@@ -580,6 +584,7 @@ void moveAiHard(GameBoard& gameBoard) {
     // std::cout << gameBoard.p1Left << " " << gameBoard.p2Left << '\n';
     // std::cout << "##############################" << '\n';
   }
+  playSound("assets/moving_piece.wav");
 }
 
 /*
