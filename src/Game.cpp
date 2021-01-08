@@ -1,6 +1,7 @@
 #include "Game.hpp"
 
 #include <cmath>
+#include <cstring>
 
 #include "Board.hpp"
 #include "GameHandler.hpp"
@@ -10,10 +11,10 @@
 void game() {
   cleardevice();
   // readimagefile("./assets/startingimg.jpg", 0, 0, getmaxx(), getmaxy());
-  button pvpButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, "Player vs Player", Pvp, BLACK, WHITE, CYAN);
-  button pvcEasyButton = createButton(getmaxx() / 2, getmaxy() / 2, "Player vs Cpu Easy", PvcEasy, BLACK, WHITE, CYAN);
-  button pvcHardButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, "Player vs Cpu Hard", PvcHard, BLACK, WHITE, CYAN);
-  button menuButton = createButton(getmaxx() / 2, getmaxy() / 2 + 200, "Menu", menu, BLACK, WHITE, CYAN);
+  button pvpButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, dict["Player vs Player"][LAN].c_str(), Pvp, BLACK, WHITE, CYAN);
+  button pvcEasyButton = createButton(getmaxx() / 2, getmaxy() / 2, dict["Player vs Computer Easy"][LAN].c_str(), PvcEasy, BLACK, WHITE, CYAN);
+  button pvcHardButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, dict["Player vs Computer Hard"][LAN].c_str(), PvcHard, BLACK, WHITE, CYAN);
+  button menuButton = createButton(getmaxx() / 2, getmaxy() / 2 + 200, dict["Menu"][LAN].c_str(), menu, BLACK, WHITE, CYAN);
 
   while (1) {
     drawButton(pvpButton);
@@ -27,10 +28,13 @@ void game() {
 
 void Pvp() {
   cleardevice();
-  button menuButton = createButton(getmaxx() / 2 + 300, getmaxy() / 4, "Menu", menu, WHITE, BLACK, CYAN);
+  int xSideBar = getmaxx() / 2 + (getmaxx() - getmaxx() / 2 + 150) / 2;
+  button menuButton = createButton(xSideBar, getmaxy() - 100, dict["Menu"][LAN].c_str(), menu, COLOR(232, 235, 239), BLACK, CYAN);
   readimagefile("./assets/blur-hospital.jpg", 0, 0, getmaxx(), getmaxy());
+
   GameBoard gameBoard = createBoard(getmaxx() / 2 - 200, getmaxy() / 2, 600, BOARD_SIZE);
   drawBoard(gameBoard);
+  clearSideBar();
 
   bool b = false;
 
@@ -38,23 +42,32 @@ void Pvp() {
     drawButton(menuButton);
 
     setcolor(BLACK);
-
     if (!winner(gameBoard)) {
       if (gameBoard.currentPlayer == PLAYER_1) {
-        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1 Turn");
+        outtextxy(xSideBar, getmaxy() / 4 + 200, (char*)dict["Virus Moves"][LAN].c_str());
       } else {
-        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2 Turn");
+        outtextxy(xSideBar, getmaxy() / 4 + 200, (char*)dict["Dokter Moves"][LAN].c_str());
       }
+
     } else if (winner(gameBoard) && !b) {
+      stopSoundTrack();
+
       if (winner(gameBoard) == PLAYER_1) {
-        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1 WINS");
+        outtextxy(xSideBar, getmaxy() / 4 + 200, (char*)dict["Virus Wins"][LAN].c_str());
       } else {
-        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2 WINS");
+        outtextxy(xSideBar, getmaxy() / 4 + 200, (char*)dict["Dokter Wins"][LAN].c_str());
       }
       fillBoard(gameBoard, winner(gameBoard));
       b = true;
       playSound("assets/winning.wav");
     }
+
+    std::string m = dict["Virus"][LAN] + " " + std::to_string(gameBoard.p1Moves) + " " + dict["moves"][LAN] + " " + std::to_string(gameBoard.p1Left) + " " + dict["pieces"][LAN];
+    settextstyle(10, HORIZ_DIR, 3);
+    outtextxy(xSideBar, getmaxy() / 4 - 100, (char*)m.c_str());
+    m = dict["Dokter"][LAN] + " " + std::to_string(gameBoard.p2Moves) + " " + dict["moves"][LAN] + " " + std::to_string(gameBoard.p2Left) + " " + dict["pieces"][LAN];
+    outtextxy(xSideBar, getmaxy() / 4 - 50, (char*)m.c_str());
+    settextstyle(10, HORIZ_DIR, 4);
 
     if (!winner(gameBoard))
       movePlayer(gameBoard);
@@ -65,10 +78,13 @@ void Pvp() {
 
 void PvcEasy() {
   cleardevice();
-  button menuButton = createButton(getmaxx() / 2 + 300, getmaxy() / 4, "Menu", menu, WHITE, BLACK, CYAN);
+  int xSideBar = getmaxx() / 2 + (getmaxx() - getmaxx() / 2 + 150) / 2;
+
+  button menuButton = createButton(xSideBar, getmaxy() - 100, dict["Menu"][LAN].c_str(), menu, COLOR(232, 235, 239), BLACK, CYAN);
   readimagefile("./assets/blur-hospital.jpg", 0, 0, getmaxx(), getmaxy());
   GameBoard gameBoard = createBoard(getmaxx() / 2 - 200, getmaxy() / 2, 600, BOARD_SIZE);
   drawBoard(gameBoard);
+  clearSideBar();
 
   bool b = false;
 
@@ -76,23 +92,34 @@ void PvcEasy() {
     drawButton(menuButton);
 
     setcolor(BLACK);
-
     if (!winner(gameBoard)) {
       if (gameBoard.currentPlayer == PLAYER_1) {
-        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1 Turn");
+        outtextxy(xSideBar, getmaxy() / 4 + 200, (char*)dict["Virus Moves"][LAN].c_str());
       } else {
-        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2 Turn");
+        outtextxy(xSideBar, getmaxy() / 4 + 200, (char*)dict["Dokter Moves"][LAN].c_str());
       }
+
     } else if (winner(gameBoard) && !b) {
+      stopSoundTrack();
+
       if (winner(gameBoard) == PLAYER_1) {
-        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1 WINS");
+        outtextxy(xSideBar, getmaxy() / 4 + 200, (char*)dict["Virus Wins"][LAN].c_str());
         playSound("assets/losing.wav");
+
       } else {
-        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2 WINS");
+        outtextxy(xSideBar, getmaxy() / 4 + 200, (char*)dict["Dokter Wins"][LAN].c_str());
+        playSound("assets/winning.wav");
       }
       fillBoard(gameBoard, winner(gameBoard));
       b = true;
     }
+
+    std::string m = dict["Virus"][LAN] + " " + std::to_string(gameBoard.p1Moves) + " " + dict["moves"][LAN] + " " + std::to_string(gameBoard.p1Left) + " " + dict["pieces"][LAN];
+    settextstyle(10, HORIZ_DIR, 3);
+    outtextxy(xSideBar, getmaxy() / 4 - 100, (char*)m.c_str());
+    m = dict["Dokter"][LAN] + " " + std::to_string(gameBoard.p2Moves) + " " + dict["moves"][LAN] + " " + std::to_string(gameBoard.p2Left) + " " + dict["pieces"][LAN];
+    outtextxy(xSideBar, getmaxy() / 4 - 50, (char*)m.c_str());
+    settextstyle(10, HORIZ_DIR, 4);
 
     if (!winner(gameBoard)) {
       if (gameBoard.currentPlayer == PLAYER_2) {
@@ -108,10 +135,13 @@ void PvcEasy() {
 
 void PvcHard() {
   cleardevice();
-  button menuButton = createButton(getmaxx() / 2 + 300, getmaxy() / 4, "Menu", menu, WHITE, BLACK, CYAN);
+  int xSideBar = getmaxx() / 2 + (getmaxx() - getmaxx() / 2 + 150) / 2;
+
+  button menuButton = createButton(xSideBar, getmaxy() - 100, dict["Menu"][LAN].c_str(), menu, COLOR(232, 235, 239), BLACK, CYAN);
   readimagefile("./assets/blur-hospital.jpg", 0, 0, getmaxx(), getmaxy());
   GameBoard gameBoard = createBoard(getmaxx() / 2 - 200, getmaxy() / 2, 600, BOARD_SIZE);
   drawBoard(gameBoard);
+  clearSideBar();
 
   bool b = false;
 
@@ -119,24 +149,34 @@ void PvcHard() {
     drawButton(menuButton);
 
     setcolor(BLACK);
-
     if (!winner(gameBoard)) {
       if (gameBoard.currentPlayer == PLAYER_1) {
-        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1 Turn");
+        outtextxy(xSideBar, getmaxy() / 4 + 200, (char*)dict["Virus Moves"][LAN].c_str());
       } else {
-        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2 Turn");
+        outtextxy(xSideBar, getmaxy() / 4 + 200, (char*)dict["Dokter Moves"][LAN].c_str());
       }
+
     } else if (winner(gameBoard) && !b) {
+      stopSoundTrack();
+
       if (winner(gameBoard) == PLAYER_1) {
-        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P1 WINS");
+        outtextxy(xSideBar, getmaxy() / 4 + 200, (char*)dict["Virus Wins"][LAN].c_str());
         playSound("assets/losing.wav");
 
       } else {
-        outtextxy(getmaxx() / 2 + 300, getmaxy() / 4 + 200, (char*)"P2 WINS");
+        outtextxy(xSideBar, getmaxy() / 4 + 200, (char*)dict["Dokter Wins"][LAN].c_str());
+        playSound("assets/winning.wav");
       }
       fillBoard(gameBoard, winner(gameBoard));
       b = true;
     }
+
+    std::string m = dict["Virus"][LAN] + " " + std::to_string(gameBoard.p1Moves) + " " + dict["moves"][LAN] + " " + std::to_string(gameBoard.p1Left) + " " + dict["pieces"][LAN];
+    settextstyle(10, HORIZ_DIR, 3);
+    outtextxy(xSideBar, getmaxy() / 4 - 100, (char*)m.c_str());
+    m = dict["Dokter"][LAN] + " " + std::to_string(gameBoard.p2Moves) + " " + dict["moves"][LAN] + " " + std::to_string(gameBoard.p2Left) + " " + dict["pieces"][LAN];
+    outtextxy(xSideBar, getmaxy() / 4 - 50, (char*)m.c_str());
+    settextstyle(10, HORIZ_DIR, 4);
 
     if (!winner(gameBoard)) {
       if (gameBoard.currentPlayer == PLAYER_2) {

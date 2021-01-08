@@ -1,18 +1,17 @@
 
 #include "GameHandler.hpp"
 
+#include <windows.h>
+
 #include <iostream>
 
-#include "Dictionary.hpp"
 #include "Game.hpp"
 #include "Utils.hpp"
 #include "graphics.h"
 
 void start() {
-  //initwindow(1366, 768, "Razboi in 8", 0, 0);
-  //settextjustify(CENTER_TEXT, CENTER_TEXT);
-  //playSound("assets/theme_hospital2.wav");
   setResolution(1024, 640);
+  playSound("assets/theme_hospital2.wav");
   readimagefile("./assets/startingScreen.jpg", 0, 0, getmaxx(), getmaxy());
   while (1) {
     if (ismouseclick(WM_LBUTTONDOWN)) {
@@ -55,18 +54,16 @@ void settings() {
   setbkcolor(BLACK);
   setcolor(WHITE);
   outtextxy(getmaxx() / 100 * 46, getmaxy() / 2 + 5, (char*)dict["Music"][LAN].c_str());
-  button languageGameButton, /* volumeGameButton, */ menuButton, volumeOnGameButton, volumeOffGameButton, resolutionButton;
+  button languageGameButton, menuButton, volumeOnGameButton, volumeOffGameButton, resolutionButton;
   languageGameButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, dict["Language"][LAN].c_str(), language, BLACK, WHITE, CYAN);
-  //volumeGameButton = createButton(getmaxx() / 2 - 70, getmaxy() / 2, "Volume:", volume, BLACK, WHITE, CYAN);
-  volumeOnGameButton = createButton(getmaxx() / 100 * 59, getmaxy() * 47 / 100, dict["On"][LAN].c_str(), playyySound, BLACK, WHITE, CYAN);
-  volumeOffGameButton = createButton(getmaxx() / 100 * 59, getmaxy() * 53 / 100, dict["Off"][LAN].c_str(), stopSound, BLACK, WHITE, CYAN);
+  volumeOnGameButton = createButton(getmaxx() / 100 * 59, getmaxy() * 47 / 100, dict["On"][LAN].c_str(), playSoundTrack, BLACK, WHITE, CYAN);
+  volumeOffGameButton = createButton(getmaxx() / 100 * 59, getmaxy() * 53 / 100, dict["Off"][LAN].c_str(), stopSoundTrack, BLACK, WHITE, CYAN);
   menuButton = createButton(getmaxx() / 2, getmaxy() / 2 + 200, dict["Menu"][LAN].c_str(), menu, BLACK, WHITE, CYAN);
   resolutionButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, dict["Resolution"][LAN].c_str(), gameResolution, BLACK, WHITE, CYAN);
   while (1) {
     drawButton(languageGameButton);
     drawButton(volumeOnGameButton);
     drawButton(volumeOffGameButton);
-    //drawButton(volumeGameButton);
     drawButton(resolutionButton);
     drawButton(menuButton);
 
@@ -86,20 +83,18 @@ void rules() {
   setbkcolor(WHITE);
   setcolor(BLACK);
   settextjustify(LEFT_TEXT, CENTER_TEXT);
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 20, (char*)"Jocul <Razboi in 8> (cu varianta sa <Razboi in 4>) este un joc");
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 24, (char*)"rational pentru toate varstele. El solicita atentia si spiritul de");
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 28, (char*)"observatie, favorizeaza analiza combinatorie a variantelor si dezvolta");
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 32, (char*)"obisnuinta de a duce lucrurile la bun sfarsit. Un joc asemanator -dar");
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 36, (char*)"mai simplu- care faciliteaza invatarea si practicarea jocului <Razboi");
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 40, (char*)"in 8> este <Cainii si vulpea>. Jocul ofera amatorilor un larg camp de");
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 44, (char*)"studiu si analiza -nu prea simpla- fiind perfect adaptat pentru");
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 48, (char*)"compunere si rezolvare de probleme, precum si pentru desfasurare");
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 52, (char*)"prin corespondenta.");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 20, (char*)dict["The game <War in 8> (with its version <War in 4>) is a rational game"][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 24, (char*)dict["for all ages. It demands attention and the spirit of observation,"][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 28, (char*)dict["favors the combinatorial analysis of the variants and develops the"][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 32, (char*)dict["habit of carrying things to the end. A similar game - but simpler -"][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 36, (char*)dict["that facilitates learning and practicing the game <War in 8> is"][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 40, (char*)dict["<Dogs and fox>. The game offers amateurs a wide field of study and"][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 44, (char*)dict["analysis - not too simple - being perfectly adapted for composing and"][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 48, (char*)dict["solving problems, as well as for correspondence."][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 52, (char*)dict["Jocul <Razboi in 8> (cu varianta sa <Razboi in 4>) este un joc"][LAN].c_str());
   settextjustify(CENTER_TEXT, CENTER_TEXT);
   while (1) {
-    // settextstyle(10, HORIZ_DIR, kk + 2);
     drawButton(menuButton);
-    // settextstyle(10, HORIZ_DIR, kk);
     drawButton(rules2Button);
 
     wait(50);
@@ -112,7 +107,7 @@ void rules2() {
   kk = getmaxx() / 400;
   settextstyle(10, HORIZ_DIR, kk);
   readimagefile("./assets/rules.jpg", 0, 0, getmaxx(), getmaxy());
-  readimagefile("./assets/board2.jpg", getmaxx() / 2 - 370 - 16, getmaxy() / 2 - 40 - 16, getmaxx() / 2 - 100, getmaxy() / 2 + 200);
+  readimagefile("./assets/board2.jpg", getmaxx() / 2 - 370, getmaxy() / 2 - 40, getmaxx() / 2 - 100, getmaxy() / 2 + 200);
   button menuButton, rulesButton, rules3Button;
   menuButton = createButton(getmaxx() - 100, getmaxy() - 60, "Menu", menu, BLACK, WHITE, CYAN);
   rulesButton = createButton((getmaxx() / 100) * 25, (getmaxy() / 100) * 90, dict["<- Previous page"][LAN].c_str(), rules, WHITE, BLACK, CYAN);
@@ -120,18 +115,18 @@ void rules2() {
   setbkcolor(WHITE);
   setcolor(BLACK);
   settextjustify(LEFT_TEXT, CENTER_TEXT);
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 18, (char*)"La joc iau parte doua persoane, care urmareste, fiecare, a scoate din");
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 22, (char*)"lupta <armata> adversa. Jocul se poate incheia cu victoria unuia dintre");
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 26, (char*)"jucatori, sau nedecis -remiza. Practicarea jocului reclama o tabla de");
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 30, (char*)"joc de 8x8 patratele (tabla de sah) si cate 8 piese (pioni) pentru");
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 34, (char*)"fiecare jucator - piese care vor fi de culori diferite. Sa numim cei");
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 38, (char*)"doi jucatori: A si B, iar piesele -respectiv culorile lor: alb si negru.");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 18, (char*)dict["Two people take part in the game, each of whom aimed to get the"][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 22, (char*)dict["opposing <armed> fight out. The game can end with the victory of one"][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 26, (char*)dict["of the players, or undecided - the draw. Practicing the game requires"][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 30, (char*)dict["a game board of 8x8 squares (chessboard) and 8 pieces (pawns) for "][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 34, (char*)dict["each player - pieces that will be different colors. Let's name the two"][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 38, (char*)dict["players: A and B, and the pieces - respectively their colors: white"][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 42, (char*)dict["and black."][LAN].c_str());
+
   settextjustify(CENTER_TEXT, CENTER_TEXT);
   while (1) {
-    // settextstyle(10, HORIZ_DIR, kk);
     drawButton(rulesButton);
     drawButton(rules3Button);
-    // settextstyle(10, HORIZ_DIR, kk + 2);
     drawButton(menuButton);
 
     wait(50);
@@ -147,18 +142,16 @@ void rules3() {
   readimagefile("./assets/board.jpg", getmaxx() / 2 - 370 - 16, getmaxy() / 2 - 40 - 16, getmaxx() / 2 - 100, getmaxy() / 2 + 200);
   readimagefile("./assets/board3.jpg", getmaxx() / 2, getmaxy() / 2 - 40 - 16, getmaxx() / 2 + 270 + 16, getmaxy() / 2 + 200);
   settextjustify(LEFT_TEXT, CENTER_TEXT);
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 20, (char*)"Piesele se pot muta doar pe diagonala, scopul fiind acela de a");
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 24, (char*)"inconjura piesa inamica pentru a o scoate de pe tabla. (img 1+2)");
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 28, (char*)"Castiga jocul cel care reuseste sa scoata din lupta mai multi soldati");
-  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 32, (char*)"adversi, deci cel care ramane cu mai multe piese pe tabla.");
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 20, (char*)dict["The pieces can only be moved diagonally, the goal being to surround"][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 24, (char*)dict["the enemy piece to remove it from the board. (img 1&2)"][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 28, (char*)dict["The one who manages to get more soldiers out of the battle wins the game"][LAN].c_str());
+  outtextxy((getmaxx() / 100) * 10, (getmaxy() / 100) * 32, (char*)dict["opponents, so the one who stays with more pieces on the board."][LAN].c_str());
   settextjustify(CENTER_TEXT, CENTER_TEXT);
   button menuButton, rules2Button;
-  menuButton = createButton(getmaxx() - 100, getmaxy() - 60, dict["<- Back"][LAN].c_str(), menu, BLACK, WHITE, CYAN);
+  menuButton = createButton(getmaxx() - 100, getmaxy() - 60, dict["Menu"][LAN].c_str(), menu, BLACK, WHITE, CYAN);
   rules2Button = createButton((getmaxx() / 100) * 25, (getmaxy() / 100) * 90, dict["<- Previous page"][LAN].c_str(), rules2, WHITE, BLACK, CYAN);
   while (1) {
-    // settextstyle(10, HORIZ_DIR, kk);
     drawButton(rules2Button);
-    // settextstyle(10, HORIZ_DIR, kk + 2);
     drawButton(menuButton);
 
     wait(50);
@@ -176,8 +169,8 @@ void language() {
   romanianLanguageButton = createButton(getmaxx() / 2 - 300, getmaxy() / 2 + 100, dict["Romanian"][LAN].c_str(), romanianLanguage, BLACK, WHITE, CYAN);
   franceLanguageButton = createButton(getmaxx() / 2 + 300, getmaxy() / 2 + 100, dict["France"][LAN].c_str(), franceLanguage, BLACK, WHITE, CYAN);
   englishLanguageButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, dict["English"][LAN].c_str(), englishLanguage, BLACK, WHITE, CYAN);
-  menuButton = createButton(getmaxx()*93/100, getmaxy() - 60, dict["Menu"][LAN].c_str(), menu, BLACK, WHITE, CYAN);
-  settingsButton = createButton(getmaxx()*7/100, getmaxy() - 60, dict["<- Back"][LAN].c_str(), settings, BLACK, WHITE, CYAN);
+  menuButton = createButton(getmaxx() * 93 / 100, getmaxy() - 60, dict["Menu"][LAN].c_str(), menu, BLACK, WHITE, CYAN);
+  settingsButton = createButton(getmaxx() * 8 / 100, getmaxy() - 60, dict["<- Back"][LAN].c_str(), settings, BLACK, WHITE, CYAN);
   while (1) {
     drawButton(romanianLanguageButton);
     drawButton(franceLanguageButton);
@@ -187,23 +180,6 @@ void language() {
 
     wait(50);
   }
-}
-
-void playyySound() {
-  playSound("assets/theme_hospital2.wav");
-}
-
-void romanianLanguage() {
-  LAN = RO;
-  language();
-}
-void franceLanguage() {
-  LAN = FR;
-  language();
-}
-void englishLanguage() {
-  LAN = EN;
-  language();
 }
 
 void gameResolution() {
@@ -251,4 +227,25 @@ void gameResolution() {
 
     wait(50);
   }
+}
+
+void playSoundTrack() {
+  playSound("assets/theme_hospital2.wav");
+}
+
+void stopSoundTrack() {
+  stopSound("assets/theme_hospital2.wav");
+}
+
+void romanianLanguage() {
+  LAN = RO;
+  language();
+}
+void franceLanguage() {
+  LAN = FR;
+  language();
+}
+void englishLanguage() {
+  LAN = EN;
+  language();
 }

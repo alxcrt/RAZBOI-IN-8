@@ -21,15 +21,9 @@ int minimax(GameBoard& gameBoard, int depth, int alpha, int beta, bool maxPlayer
 
           if (!validMoves.empty()) {
             for (Move& m : validMoves) {
-              // std::cout << m.i << ' ' << m.j << '\n';
-
-              // gameBoard.board[i][j].type = EMPTY;
-              // gameBoard.board[m.i][m.j].type = PLAYER_1;
               GameBoard tmpBoard = copyGameBoard(gameBoard);
               simulateMove(tmpBoard, i, j, m.i, m.j, PLAYER_1);
               int eval = minimax(tmpBoard, depth - 1, alpha, beta, false);
-              // gameBoard.board[m.i][m.j].type = EMPTY;
-              // gameBoard.board[i][j].type = PLAYER_1;
               alpha = std::max(alpha, eval);
               maxEval = std::max(maxEval, eval);
               if (beta <= alpha)
@@ -40,16 +34,6 @@ int minimax(GameBoard& gameBoard, int depth, int alpha, int beta, bool maxPlayer
       }
     }
     return maxEval;
-    /*
-    best_move = None
-    for move in getAllMoves(gameBoard,PLAYER_1):
-      eval = minimax(gameBoard, depth -1,false)[0]
-      maxEval = max(eval,maxEval)
-      if maxEval == eval:
-        best_move = move
-    return maxEval, best_move
-    */
-
   } else {
     int minEval = INT_MAX;
     for (int i = 0; i < gameBoard.size; i++) {
@@ -62,8 +46,6 @@ int minimax(GameBoard& gameBoard, int depth, int alpha, int beta, bool maxPlayer
               GameBoard tmpBoard = copyGameBoard(gameBoard);
               simulateMove(tmpBoard, i, j, m.i, m.j, PLAYER_2);
               int eval = minimax(tmpBoard, depth - 1, alpha, beta, true);
-              // gameBoard.board[m.i][m.j].type = EMPTY;
-              // gameBoard.board[i][j].type = PLAYER_2;
               minEval = std::min(minEval, eval);
               beta = std::min(beta, eval);
               if (beta <= alpha)
@@ -74,15 +56,6 @@ int minimax(GameBoard& gameBoard, int depth, int alpha, int beta, bool maxPlayer
       }
     }
     return minEval;
-    /*
-    best_move = None
-    for move in getAllMoves(gameBoard,PLAYER_2):
-      eval = minimax(gameBoard, depth -1,true)[0]
-      minEval = min(eval,minEval)
-      if minEval == eval:
-        best_move = move
-    return minEval, best_move
-    */
   }
 }
 
@@ -214,32 +187,6 @@ void simulateMove(GameBoard& gameBoard, int _i, int _j, int _newI, int _newJ, in
 
   for (int i = 0; i < gameBoard.size; i++) {
     for (int j = 0; j < gameBoard.size; j++) {
-      // O piesa nemutata dar ea u m=ai are locuri de mutare
-      // if (gameBoard.board[i][j].type != EMPTY && gameBoard.board[i][j].moved == false) {
-      //   int ok = true;
-      //   if (contains(gameBoard, i + 1, j - 1) && (gameBoard.board[i][j].type == gameBoard.board[i + 1][j - 1].type || gameBoard.board[i + 1][j - 1].type == EMPTY)) {
-      //     ok = false;
-      //   }
-      //   if (contains(gameBoard, i + 1, j + 1) && (gameBoard.board[i][j].type == gameBoard.board[i + 1][j + 1].type || gameBoard.board[i + 1][j + 1].type == EMPTY)) {
-      //     ok = false;
-      //   }
-      //   if (contains(gameBoard, i - 1, j - 1) && (gameBoard.board[i][j].type == gameBoard.board[i - 1][j - 1].type || gameBoard.board[i - 1][j - 1].type == EMPTY)) {
-      //     ok = false;
-      //   }
-      //   if (contains(gameBoard, i - 1, j + 1) && (gameBoard.board[i][j].type == gameBoard.board[i - 1][j + 1].type || gameBoard.board[i - 1][j + 1].type == EMPTY)) {
-      //     ok = false;
-      //   }
-
-      //   if (ok) {
-      //     if (gameBoard.board[i][j].type == PLAYER_1) {
-      //       gameBoard.p1Left--;
-      //     } else if (gameBoard.board[i][j].type == PLAYER_2) {
-      //       gameBoard.p2Left--;
-      //     }
-      //     gameBoard.board[i][j].type = EMPTY;
-      //     gameBoard.board[i][j].moved = false;
-      //   }
-      // } else
       if (gameBoard.board[i][j].type != EMPTY && gameBoard.board[i][j].moved == true) {
         int ok = true;
         if (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == EMPTY) {
@@ -267,106 +214,6 @@ void simulateMove(GameBoard& gameBoard, int _i, int _j, int _newI, int _newJ, in
       }
     }
   }
-
-  /// * player1 a mutat si veridicam daca dupa m-ai poate face vreo miscare
-  // if (player == PLAYER_1) {
-  //   int maxRow = 0;
-  //   for (int i = 0; i < gameBoard.size; i++) {
-  //     for (int j = 0; j < gameBoard.size; j++) {
-  //       if (gameBoard.board[i][j].type == PLAYER_1) {
-  //         maxRow = std::max(i, maxRow);
-  //       }
-  //     }
-  //   }
-
-  //   bool isOk = false;
-  //   for (int i = 0; i < gameBoard.size; i++) {
-  //     for (int j = 0; j < gameBoard.size; j++) {
-  //       if (gameBoard.board[i][j].type == PLAYER_1 && i == maxRow && (isValidMove(gameBoard, i, j, i + 1, j + 1) || isValidMove(gameBoard, i, j, i + 1, j - 1))) {
-  //         isOk = true;
-  //       }
-  //     }
-  //   }
-
-  //   if (!isOk) {
-  //     for (int i = gameBoard.size - 1 && !isOk; i >= 0; i--) {
-  //       for (int j = gameBoard.size - 1 && !isOk; j >= 0; j--) {
-  //         if (gameBoard.board[i][j].type == PLAYER_2) {
-  //           gameBoard.p2Left--;
-  //           gameBoard.board[i][j].type = EMPTY;
-  //           gameBoard.board[i][j].moved = false;
-  //           // remove(gameBoard, i, j);
-  //           isOk = true;
-  //         }
-  //       }
-  //     }
-  //   }
-  // } else {
-  //   int minRow = BOARD_SIZE;
-  //   for (int i = 0; i < gameBoard.size; i++) {
-  //     for (int j = 0; j < gameBoard.size; j++) {
-  //       if (gameBoard.board[i][j].type == PLAYER_2) {
-  //         minRow = std::min(i, minRow);
-  //       }
-  //     }
-  //   }
-
-  //   bool isOk = false;
-  //   for (int i = 0; i < gameBoard.size; i++) {
-  //     for (int j = 0; j < gameBoard.size; j++) {
-  //       if (gameBoard.board[i][j].type == PLAYER_2 && i == minRow && (isValidMove(gameBoard, i, j, i - 1, j + 1) || isValidMove(gameBoard, i, j, i - 1, j - 1))) {
-  //         isOk = true;
-  //       }
-  //     }
-  //   }
-
-  //   if (!isOk) {
-  //     for (int i = 0; i < gameBoard.size && !isOk; i++) {
-  //       for (int j = 0; j < gameBoard.size && !isOk; j++) {
-  //         if (gameBoard.board[i][j].type == PLAYER_1) {
-  //           gameBoard.p1Left--;
-  //           gameBoard.board[i][j].type = EMPTY;
-  //           gameBoard.board[i][j].moved = false;
-  //           // remove(gameBoard, i, j);
-  //           isOk = true;
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-
-  // int p1Pieces = 0;
-  // int p2Pieces = 0;
-  // // verify two lines
-  // for (int i = 0; i < gameBoard.size - 1; i++) {
-  //   for (int j = 0; j < gameBoard.size; j++) {
-  //     if (gameBoard.board[i][j].type == PLAYER_1 && ((contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j + 1].type == PLAYER_2) || (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == PLAYER_2))) {
-  //       p1Pieces++;
-  //     }
-  //   }
-  // }
-
-  // for (int i = 0; i < gameBoard.size - 1; i++) {
-  //   for (int j = 0; j < gameBoard.size; j++) {
-  //     if (gameBoard.board[i][j].type == PLAYER_2 && ((contains(gameBoard, i - 1, j + 1) && gameBoard.board[i - 1][j + 1].type == PLAYER_1) || (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i - 1][j - 1].type == PLAYER_1))) {
-  //       p2Pieces++;
-  //     }
-  //   }
-  // }
-
-  // if (p1Pieces == p2Pieces && p1Pieces == BOARD_SIZE / 2) {
-  //   bool removed = false;
-  //   for (int i = 0; i < gameBoard.size && !removed; i++) {
-  //     for (int j = 0; j < gameBoard.size && !removed; j++) {
-  //       if (gameBoard.board[i][j].type == PLAYER_1) {
-  //         gameBoard.p1Left--;
-  //         gameBoard.board[i][j].type = EMPTY;
-  //         gameBoard.board[i][j].moved = false;
-  //         removed = true;
-  //       }
-  //     }
-  //   }
-  // }
 }
 
 GameBoard copyGameBoard(GameBoard& gameBoard) {

@@ -7,8 +7,10 @@ void rules2();
 void rules3();
 void menu();
 void language();
+void playSoundTrack();
+void stopSoundTrack();
+
 void romanianLanguage();
 void englishLanguage();
 void franceLanguage();
-void playyySound();
 void gameResolution();

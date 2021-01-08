@@ -6,6 +6,7 @@
 
 #define BOARD_SIZE 8
 #define MAX_MOVES BOARD_SIZE / 2
+#define TOTAL_MOVES 25
 
 struct Piece {
   float x1, y1, x2, y2;
@@ -36,6 +37,7 @@ struct Move {
 GameBoard createBoard(int x, int y, int width, int lines);
 void drawBoard(GameBoard& gameBoard);
 void drawValidMove(GameBoard& gameBoard, int i, int j);
+void clearSideBar();
 
 void remove(GameBoard& gameBoard, int x, int y);
 void move(GameBoard& gameBoard, int i, int j, int player);

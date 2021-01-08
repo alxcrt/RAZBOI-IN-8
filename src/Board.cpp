@@ -11,6 +11,7 @@
 #include "Utils.hpp"
 #include "graphics.h"
 
+// * Draw
 void drawBoard(GameBoard& gameBoard) {
   int x1, x2, y1, y2;
   // Draw the cells
@@ -190,33 +191,6 @@ void checkNeighbours(GameBoard& gameBoard) {
 
   for (int i = 0; i < gameBoard.size; i++) {
     for (int j = 0; j < gameBoard.size; j++) {
-      // O piesa nemutata dar ea u m=ai are locuri de mutare
-      // if (gameBoard.board[i][j].type != EMPTY && gameBoard.board[i][j].moved == false) {
-      //   int ok = true;
-      //   if (contains(gameBoard, i + 1, j - 1) && (gameBoard.board[i][j].type == gameBoard.board[i + 1][j - 1].type || gameBoard.board[i + 1][j - 1].type == EMPTY)) {
-      //     ok = false;
-      //   }
-      //   if (contains(gameBoard, i + 1, j + 1) && (gameBoard.board[i][j].type == gameBoard.board[i + 1][j + 1].type || gameBoard.board[i + 1][j + 1].type == EMPTY)) {
-      //     ok = false;
-      //   }
-      //   if (contains(gameBoard, i - 1, j - 1) && (gameBoard.board[i][j].type == gameBoard.board[i - 1][j - 1].type || gameBoard.board[i - 1][j - 1].type == EMPTY)) {
-      //     ok = false;
-      //   }
-      //   if (contains(gameBoard, i - 1, j + 1) && (gameBoard.board[i][j].type == gameBoard.board[i - 1][j + 1].type || gameBoard.board[i - 1][j + 1].type == EMPTY)) {
-      //     ok = false;
-      //   }
-
-      //   if (ok) {
-      //     if (gameBoard.board[i][j].type == PLAYER_1) {
-      //       gameBoard.p1Left--;
-      //     } else if (gameBoard.board[i][j].type == PLAYER_2) {
-      //       gameBoard.p2Left--;
-      //     }
-      //     gameBoard.board[i][j].type = EMPTY;
-
-      //     remove(gameBoard, i, j);
-      //   }
-      // } else
       if (gameBoard.board[i][j].type != EMPTY && gameBoard.board[i][j].moved == true) {
         int ok = true;
         if (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == EMPTY) {
@@ -244,136 +218,6 @@ void checkNeighbours(GameBoard& gameBoard) {
       }
     }
   }
-
-  // int p1Pieces = 0;
-  // int p2Pieces = 0;
-  // // verify two lines
-  // for (int i = 0; i < gameBoard.size - 1; i++) {
-  //   p1Pieces = p2Pieces = 0;
-  //   for (int j = 0; j < gameBoard.size; j++) {
-  //     if (gameBoard.board[i][j].type == PLAYER_1 && ((contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j].type == PLAYER_2) || (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i][j].type == PLAYER_2))) {
-  //       p1Pieces++;
-  //     }
-  //     if (gameBoard.board[i + 1][j].type == PLAYER_2 && ((contains(gameBoard, i - 1, j + 1) && gameBoard.board[i][j].type == PLAYER_1) || (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i][j].type == PLAYER_1))) {
-  //       p2Pieces++;
-  //     }
-  //   }
-
-  //   if (p1Pieces == p2Pieces && p1Pieces == BOARD_SIZE / 2) {
-  //     break;
-  //   }
-  // }
-
-  // if (p1Pieces == p2Pieces && p1Pieces == BOARD_SIZE / 2) {
-  //   bool removed = false;
-  //   for (int i = 0; i < gameBoard.size && !removed; i++) {
-  //     for (int j = 0; j < gameBoard.size && !removed; j++) {
-  //       if (gameBoard.board[i][j].type == PLAYER_1) {
-  //         gameBoard.p1Left--;
-  //         gameBoard.board[i][j].type = EMPTY;
-  //         gameBoard.board[i][j].moved = false;
-  //       }
-  //     }
-  //   }
-  // }
-
-  // int p1Pieces;
-  // int p2Pieces;
-  // // verify two lines
-  // for (int i = 0; i < gameBoard.size - 1; i++) {
-  //   p1Pieces = p2Pieces = 0;
-  //   for (int j = 0; j < gameBoard.size; j++) {
-  //     if (gameBoard.board[i][j].type == PLAYER_1) {
-  //       p1Pieces++;
-  //     }
-  //     if (gameBoard.board[i + 1][j].type == PLAYER_2) {
-  //       p2Pieces++;
-  //     }
-  //   }
-
-  //   if (p1Pieces == p2Pieces && p1Pieces == BOARD_SIZE / 2) {
-  //     break;
-  //   }
-  // }
-
-  // if (p1Pieces == p2Pieces && p1Pieces == BOARD_SIZE / 2) {
-  //   bool removed = false;
-  //   for (int i = 0; i < gameBoard.size - 1 && !removed; i++) {
-  //     for (int j = 0; j < gameBoard.size && !removed; j++) {
-  //       if (gameBoard.board[i][j].type == PLAYER_1) {
-  //         gameBoard.p1Left--;
-  //         gameBoard.board[i][j].type = EMPTY;
-  //         remove(gameBoard, i, j);
-  //         removed = true;
-  //       }
-  //     }
-  //   }
-  // }
-
-  // // * Daca nici o piesa a unui player nu poate inainta atuni ii vom lua o piesa celuilalt player
-  // // * Player 1
-  // int maxRow = 0;
-  // for (int i = 0; i < gameBoard.size; i++) {
-  //   for (int j = 0; j < gameBoard.size; j++) {
-  //     if (gameBoard.board[i][j].type == PLAYER_1) {
-  //       maxRow = std::max(i, maxRow);
-  //     }
-  //   }
-  // }
-
-  // bool isOk = false;
-  // for (int i = 0; i < gameBoard.size; i++) {
-  //   for (int j = 0; j < gameBoard.size; j++) {
-  //     if (gameBoard.board[i][j].type == PLAYER_1 && i == maxRow && (isValidMove(gameBoard, i, j, i + 1, j + 1) || isValidMove(gameBoard, i, j, i + 1, j - 1))) {
-  //       isOk = true;
-  //     }
-  //   }
-  // }
-
-  // if (!isOk) {
-  //   for (int i = gameBoard.size - 1 || !isOk; i >= 0; i--) {
-  //     for (int j = gameBoard.size - 1 || !isOk; j >= 0; j--) {
-  //       if (gameBoard.board[i][j].type == PLAYER_2) {
-  //         gameBoard.p2Left--;
-  //         gameBoard.board[i][j].type = EMPTY;
-  //         remove(gameBoard, i, j);
-  //         isOk = true;
-  //       }
-  //     }
-  //   }
-  // }
-
-  // // * Player 2
-  // maxRow = BOARD_SIZE;
-  // for (int i = 0; i < gameBoard.size; i++) {
-  //   for (int j = 0; j < gameBoard.size; j++) {
-  //     if (gameBoard.board[i][j].type == PLAYER_2) {
-  //       maxRow = std::min(i, maxRow);
-  //     }
-  //   }
-  // }
-
-  // isOk = false;
-  // for (int i = 0; i < gameBoard.size; i++) {
-  //   for (int j = 0; j < gameBoard.size; j++) {
-  //     if (gameBoard.board[i][j].type == PLAYER_2 && i == maxRow && (isValidMove(gameBoard, i, j, i - 1, j + 1) || isValidMove(gameBoard, i, j, i - 1, j - 1))) {
-  //       isOk = true;
-  //     }
-  //   }
-  // }
-
-  // if (!isOk) {
-  //   for (int i = 0; i < gameBoard.size || !isOk; i++) {
-  //     for (int j = 0; j < gameBoard.size || !isOk; j++) {
-  //       if (gameBoard.board[i][j].type == PLAYER_1) {
-  //         gameBoard.p1Left--;
-  //         gameBoard.board[i][j].type = EMPTY;
-  //         remove(gameBoard, i, j);
-  //         isOk = true;
-  //       }
-  //     }
-  //   }
-  // }
 }
 
 bool isValidMove(GameBoard& gameBoard, int i, int j, int newI, int newJ) {
@@ -386,9 +230,18 @@ void changeTurn(GameBoard& gameBoard) {
   } else {
     gameBoard.currentPlayer = PLAYER_1;
   }
+  clearSideBar();
 }
 
 int winner(GameBoard& gameBoard) {
+  if (gameBoard.p1Moves >= TOTAL_MOVES && gameBoard.p2Moves >= TOTAL_MOVES) {
+    if (gameBoard.p1Left < gameBoard.p2Left) {
+      return PLAYER_2;
+    } else if (gameBoard.p2Left < gameBoard.p1Left) {
+      return PLAYER_1;
+    }
+  }
+
   if (gameBoard.p1Left <= 0) {
     return PLAYER_2;
   } else if (gameBoard.p2Left <= 0) {
@@ -531,14 +384,6 @@ void moveAiHard(GameBoard& gameBoard) {
     Move nextMove = {0, 0};
     int bestScore = INT_MIN;
 
-    // std::vector<std::vector<int>> board;
-    // for (int i = 0; i < gameBoard.size; i++) {
-    //   std::vector<int> v1;
-    //   for (int j = 0; j < gameBoard.size; j++) {
-    //     v1.push_back(gameBoard.board[i][j].type);
-    //   }
-    //   board.push_back(v1);
-    // }
     int alpha = INT_MIN;
     int beta = INT_MAX;
     for (int i = 0; i < gameBoard.size; i++) {
@@ -566,61 +411,19 @@ void moveAiHard(GameBoard& gameBoard) {
         }
       }
     }
-    // std::cout << "Hello";
     gameBoard.board[initMove.i][initMove.j].type = EMPTY;
     remove(gameBoard, initMove.i, initMove.j);
 
     move(gameBoard, nextMove.i, nextMove.j, gameBoard.currentPlayer);
     checkNeighbours(gameBoard);
     changeTurn(gameBoard);
-
-    // std::cout << "##############################" << '\n';
-    // for (int i = 0; i < gameBoard.size; i++) {
-    //   for (int j = 0; j < gameBoard.size; j++) {
-    //     std::cout << gameBoard.board[i][j].type << ' ';
-    //   }
-    //   std::cout << '\n';
-    // }'
-    // std::cout << gameBoard.p1Left << " " << gameBoard.p2Left << '\n';
-    // std::cout << "##############################" << '\n';
   }
   playSound("assets/moving_piece.wav");
 }
 
-/*
-   std::vector<GameBoard> boards;
-    std::vector<Move> validMoves;
-    for (int i = 0; i < gameBoard.size; i++) {
-      for (int j = 0; j < gameBoard.size; j++) {
-        if (gameBoard.board[i][j].type == PLAYER_1) {
-          validMoves = getValidMoves(gameBoard, i, j);
-          if (!validMoves.empty()) {
-            for (Move& m : validMoves) {
-              // std::cout << m.i << ' ' << m.j << '\n';
-              GameBoard tmpBoard = copyGameBoard(gameBoard);
-              simulateMove(tmpBoard, i, j, m.i, m.j, PLAYER_1);
-              boards.push_back(tmpBoard);
-            }
-          }
-        }
-      }
-    }
-
-    if (!boards.empty()) {
-      for (GameBoard& gb : boards) {
-        // std::cout << m.i << ' ' << m.j << '\n';
-
-        int score = minimax(gb, 4, false);
-        // gameBoard.board[m.i][m.j].type = EMPTY;
-        // gameBoard.board[i][j].type = PLAYER_1;
-
-        if (score > bestScore) {
-          bestScore = score;
-          initMove.i = i;
-          initMove.j = j;
-          nextMove.i = m.i;
-          nextMove.j = m.j;
-        }
-      }
-    }
-*/
+void clearSideBar() {
+  setcolor(COLOR(0, 0, 1));
+  rectangle(getmaxx() / 2 + 150, 0, getmaxx() - 1, getmaxy() - 1);
+  setfillstyle(SOLID_FILL, COLOR(232, 235, 239));
+  floodfill(getmaxx() / 2 + 150 + 10, 10, COLOR(0, 0, 1));
+}
