@@ -1,2 +1,2 @@
 *.o
-bin/relase/main.exe
+bin/release/*.exe
