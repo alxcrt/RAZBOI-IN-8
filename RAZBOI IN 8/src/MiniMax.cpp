@@ -2,13 +2,11 @@
 
 #include <climits>
 #include <cmath>
-#include <iostream>
 
 #include "graphics.h"
 
 int minimax(GameBoard& gameBoard, int depth, int alpha, int beta, bool maxPlayer) {
   if (depth == 0 || winner(gameBoard) != 0) {
-    // std::cout << evaluateBoard(gameBoard) << '\n';
     return evaluateBoard(gameBoard);
   }
 
@@ -42,7 +40,6 @@ int minimax(GameBoard& gameBoard, int depth, int alpha, int beta, bool maxPlayer
           std::vector<Move> validMoves = getValidMoves(gameBoard, i, j);
           if (!validMoves.empty()) {
             for (Move& m : validMoves) {
-              // std::cout << m.i << ' ' << m.j << '\n';
               GameBoard tmpBoard = copyGameBoard(gameBoard);
               simulateMove(tmpBoard, i, j, m.i, m.j, PLAYER_2);
               int eval = minimax(tmpBoard, depth - 1, alpha, beta, true);
@@ -61,41 +58,7 @@ int minimax(GameBoard& gameBoard, int depth, int alpha, int beta, bool maxPlayer
 
 //TODO Find a better function
 int evaluateBoard(GameBoard& gameBoard) {
-  // Cate piese virus inconjura un doctor
-  // int c1 = 0;
   int c2 = 0;
-
-  // for (int i = 0; i < BOARD_SIZE; i++) {
-  //   for (int j = 0; j < BOARD_SIZE; j++) {
-  //     if (gameBoard.board[i][j].type == PLAYER_2) {
-  //       if (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == PLAYER_1) {
-  //         c1++;
-  //       }
-  //       if (contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j + 1].type == PLAYER_1) {
-  //         c1++;
-  //       }
-  //       if (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i - 1][j - 1].type == PLAYER_1) {
-  //         c1++;
-  //       }
-  //       if (contains(gameBoard, i - 1, j + 1) && gameBoard.board[i - 1][j + 1].type == PLAYER_1) {
-  //         c1++;
-  //       }
-  //     } else if (gameBoard.board[i][j].type == PLAYER_1) {
-  //       if (contains(gameBoard, i + 1, j - 1) && gameBoard.board[i + 1][j - 1].type == PLAYER_2) {
-  //         c2++;
-  //       }
-  //       if (contains(gameBoard, i + 1, j + 1) && gameBoard.board[i + 1][j + 1].type == PLAYER_2) {
-  //         c2++;
-  //       }
-  //       if (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i - 1][j - 1].type == PLAYER_2) {
-  //         c2++;
-  //       }
-  //       if (contains(gameBoard, i - 1, j + 1) && gameBoard.board[i - 1][j + 1].type == PLAYER_2) {
-  //         c2++;
-  //       }
-  //     }
-  //   }
-  // }
 
   for (int i = 0; i < BOARD_SIZE; i++) {
     for (int j = 0; j < BOARD_SIZE; j++) {
@@ -106,10 +69,6 @@ int evaluateBoard(GameBoard& gameBoard) {
       }
     }
   }
-
-  // if (c1 != 0)
-  //   std::cout << c1 << '\n';
-  // return c1 - c2;
 
   if (winner(gameBoard) == PLAYER_1) {
     return INT_MAX;

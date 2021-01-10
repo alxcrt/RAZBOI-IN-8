@@ -13,11 +13,9 @@ extern _SETTINGS SETTINGS;
 
 void start() {
   loadSettings();
-  // setResolution(1024, 640);
   setResolution(SETTINGS.WIDTH, SETTINGS.HEIGHT);
   playSound("assets/theme_hospital2.wav");
 
-  // delay(1000);
   menu();
 }
 

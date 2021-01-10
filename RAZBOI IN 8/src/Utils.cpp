@@ -1,7 +1,6 @@
 #include "Utils.hpp"
 
 #include <cstring>
-#include <iostream>
 
 #include "graphics.h"
 

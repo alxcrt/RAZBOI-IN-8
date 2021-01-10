@@ -12,7 +12,6 @@ extern _SETTINGS SETTINGS;
 
 void game() {
   cleardevice();
-  // readimagefile("./assets/startingimg.jpg", 0, 0, getmaxx(), getmaxy());
   button pvpButton = createButton(getmaxx() / 2, getmaxy() / 2 - 100, dict["Player vs Player"][SETTINGS.LAN].c_str(), Pvp, BLACK, WHITE, CYAN);
   button pvcEasyButton = createButton(getmaxx() / 2, getmaxy() / 2, dict["Player vs Computer Easy"][SETTINGS.LAN].c_str(), PvcEasy, BLACK, WHITE, CYAN);
   button pvcHardButton = createButton(getmaxx() / 2, getmaxy() / 2 + 100, dict["Player vs Computer Hard"][SETTINGS.LAN].c_str(), PvcHard, BLACK, WHITE, CYAN);

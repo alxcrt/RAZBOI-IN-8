@@ -5,7 +5,6 @@
 #include <windows.h>
 
 #include <cmath>
-#include <iostream>
 
 #include "MiniMax.hpp"
 #include "Utils.hpp"
@@ -170,7 +169,6 @@ bool contains(GameBoard& gameBoard, int i, int j) {
 }
 
 void checkNeighbours(GameBoard& gameBoard) {
-  // std::cout << gameBoard.p1Moves << ' ' << gameBoard.p2Moves << '\n';
   if (gameBoard.p1Moves >= MAX_MOVES) {
     for (int i = 0; i < gameBoard.size; i++) {
       for (int j = 0; j < gameBoard.size; j++) {
@@ -367,8 +365,6 @@ void moveAiEasy(GameBoard& gameBoard) {
       }
     }
 
-    // std::cout << i << " " << j << '\n';
-
     move(gameBoard, newI, newJ, gameBoard.currentPlayer);
 
     checkNeighbours(gameBoard);
@@ -392,12 +388,9 @@ void moveAiHard(GameBoard& gameBoard) {
           std::vector<Move> validMoves = getValidMoves(gameBoard, i, j);
           if (!validMoves.empty()) {
             for (Move& m : validMoves) {
-              // std::cout << m.i << ' ' << m.j << '\n';
               GameBoard tmpBoard = copyGameBoard(gameBoard);
               simulateMove(tmpBoard, i, j, m.i, m.j, PLAYER_1);
               int score = minimax(tmpBoard, 5, alpha, beta, false);
-              // gameBoard.board[m.i][m.j].type = EMPTY;
-              // gameBoard.board[i][j].type = PLAYER_1;
 
               if (score > bestScore) {
                 bestScore = score;
