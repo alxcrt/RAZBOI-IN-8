@@ -1,0 +1,52 @@
+start game		démarrer jeu	incepe jocul
+rules		règles		reguli
+settings		réglages		setari
+exit		sortie		iesire
+language		langue		limba
+volume		le volume		volumul
+on		ouvrir		deschis
+off		vide		inchis
+resolution		la résolution	rezolutia
+menu		le menu		meniu
+romanian		roumaine		romana
+english		anglaise		engleza
+france		francais		franceza
+fullscreen		plein écran		ecran complet
+<- back		<-retour		<-inapoi
+next page ->	page suivante ->	pagina urmatoare->
+<- previous page	<- page précédente	<- pagina anterioara
+__________________________________________________
+
+player vs player 		joueur contre joueur		jucator contra jucator
+player vs computer easy	joueur contre ordinateur facile	jucator contra calculator usor
+player one's turn		tour du premier joueur		randului primului jucator
+
+__________________________________________________
+
+The game <War in 8> (with its version <War in 4>) is a rational game for all ages. It demands attention and the spirit of observation, favors the combinatorial analysis of the variants and develops the habit of carrying things to the end. A similar game - but simpler - that facilitates learning and practicing the game <War in 8> is <Dogs and fox>. The game offers amateurs a wide field of study and analysis - not too simple - being perfectly adapted for composing and solving problems, as well as for correspondence.
+
+Le jeu <War in 8> (avec sa version <War in 4>) est un jeu rationnel pour tous les âges. Il réclame attention et esprit d'observation, favorise l'analyse combinatoire des variantes et développe l'habitude de porter les choses jusqu'au bout. Un jeu similaire - mais plus simple - qui facilite l'apprentissage et la pratique du jeu <War in 8> est <Dogs and fox>. Le jeu offre aux amateurs un large champ d'étude et d'analyse - pas trop simple - parfaitement adapté pour la composition et la résolution de problèmes, ainsi que pour la correspondance.
+
+Jocul <Razboi in 8> (cu varianta sa <Razboi in 4>) este un joc          rational pentru toate varstele. El solicita atentia si spiritul de              observatie, favorizeaza analiza combinatorie a variantelor si dezvolta obisnuinta de a duce lucrurile la bun sfarsit. Un joc asemanator -dar  mai simplu -care faciliteaza invatarea si practicarea jocului <Razboi in 8> este <Cainii si vulpea>. Jocul ofera amatorilor un larg camp de studiu si analiza - nu prea simpla -fiind perfect adaptat pentru           compunere si rezolvare de probleme, precum si pentru desfasurare    prin corespondenta.
+
+__________________________________________________
+
+Two people take part in the game, each of whom aimed to get the opposing <armed> fight out. The game can end with the victory of one of the players, or undecided - the draw. Practicing the game requires a game board of 8x8 squares (chessboard) and 8 pieces (pawns) for each player - pieces that will be different colors. Let's name the two players: A and B, and the pieces - respectively their colors: white and black.
+
+Deux personnes participent au jeu, chacune visant à faire sortir le combat <armé> adverse. Le jeu peut se terminer par la victoire de l'un des joueurs, ou indécis - le tirage au sort. La pratique du jeu nécessite un plateau de jeu de 8x8 carrés (échiquier) et 8 pièces (pions) pour chaque joueur - des pièces qui seront de couleurs différentes. Nommons les deux joueurs: A et B, et les pièces - respectivement leurs couleurs: blanc et noir.
+
+La joc iau parte doua persoane, care urmarese, fiecare, a scoate din    lupta <armata> adversa. Jocul se poate incheia cu victoria unuia dintre jucatori, sau nedecis -remiza. Practicarea jocului reclama o tabla de   joc de 8x8 patratele (tabla de sah) si cate 8 piese (pioni) pentru fiecare jucator - piese care vor fi de culori diferite. Sa numim cei doi jucatori: A si B, iar piesele -respectiv culorile lor: alb si negru.
+
+__________________________________________________
+
+The pieces can only be moved diagonally, the goal being to surround the enemy piece to remove it from the board. (img 1&2)
+The one who manages to get more soldiers out of the battle wins the game
+opponents, so the one who stays with more pieces on the board.
+
+Les pièces ne peuvent être déplacées qu'en diagonale, le but étant d'entourer la pièce ennemie pour la retirer du plateau. (img 1&2)
+Celui qui parvient à faire sortir plus de soldats de la bataille remporte la partie
+adversaires, donc celui qui reste avec plus de pièces sur le plateau.
+
+Piesele se pot muta doar pe diagonala, scopul fiind acela de a inconjura piesa inamica pentru a o scoate de pe tabla. (img 1&2)
+Castiga jocul cel care reuseste sa scoata din lupta mai multi soldati
+adversi, deci cel care ramane cu mai multe piese pe tabla. 
