@@ -16,15 +16,6 @@ void start() {
   // setResolution(1024, 640);
   setResolution(SETTINGS.WIDTH, SETTINGS.HEIGHT);
   playSound("assets/theme_hospital2.wav");
-  readimagefile("./assets/startingScreen.jpg", 0, 0, getmaxx(), getmaxy());
-
-  while (1) {
-    if (ismouseclick(WM_LBUTTONDOWN)) {
-      clearmouseclick(WM_LBUTTONDOWN);
-      menu();
-    }
-    wait(50);
-  }
 
   // delay(1000);
   menu();
