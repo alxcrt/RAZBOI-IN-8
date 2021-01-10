@@ -1,3 +1,0 @@
-1. proiect de rulat + (cum se ruleaza) + constrangeri/ce se cere sa rulezi(windows.h)
-2. video (sa ne laudam + sa zicem ce e din barem ca sa ne puncteze)
-3. * cod autodocumentat + comentarii
