@@ -1,8 +1,11 @@
 #include "Utils.hpp"
 
 #include <cstring>
+#include <iostream>
 
 #include "graphics.h"
+
+_SETTINGS SETTINGS;
 
 // Create a buttonz
 button createButton(int x, int y, const char* label, void (*callFunction)(), int bkColor, int fontColor, int hoverColor) {
@@ -46,6 +49,7 @@ void drawButton(button& b) {
 }
 
 void exitGame() {
+  saveSettings();
   closegraph();
   exit(0);
 }
@@ -74,7 +78,8 @@ void wait(int x) {
 
 void setResolution(int width, int height) {
   closegraph();
-
+  SETTINGS.WIDTH = width;
+  SETTINGS.HEIGHT = height;
   if (width == 1200) {
     initwindow(width, height, "Razboi in 8", 0, 0);
     settextstyle(10, HORIZ_DIR, 5);
@@ -88,11 +93,45 @@ void setResolution(int width, int height) {
     initwindow(getmaxwidth(), getmaxheight(), "Razboi in 8", 0, 0);
     settextstyle(10, HORIZ_DIR, 5);
   }
+  saveSettings();
   settextjustify(CENTER_TEXT, CENTER_TEXT);
 }
 
+void loadSettings() {
+  FILE* saveFile;
+
+  saveFile = fopen(SAVE_FILE_NAME, "r");
+  if (saveFile == NULL) {
+    SETTINGS.LAN = EN;
+    SETTINGS.WIDTH = 1024;
+    SETTINGS.HEIGHT = 640;
+  } else {
+    // read file contents till end of file
+    fread(&SETTINGS, sizeof(struct _SETTINGS), 1, saveFile);
+
+    // close file
+    fclose(saveFile);
+  }
+}
+
+void saveSettings() {
+  FILE* saveFile;
+
+  saveFile = fopen(SAVE_FILE_NAME, "w");
+  if (saveFile == NULL) {
+    fprintf(stderr, "\nError opend file\n");
+    exit(1);
+  }
+
+  fwrite(&SETTINGS, sizeof(_SETTINGS), 1, saveFile);
+
+  printf("Settings file written successfully !\n");
+
+  // close file
+  fclose(saveFile);
+}
+
 // * Manage the language
-int LAN = EN;
 
 // * Dictionary
 std::unordered_map<std::string, std::array<std::string, 3>> dict{
