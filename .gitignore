@@ -1,3 +1,4 @@
 .vscode/
 /languages
+!/bin/release
 /bin/release/**
