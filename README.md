@@ -1,6 +1,10 @@
 # Razboi in 8
 
-## Description
+## Overview
+
+Razboi in 8 is a simple 2D game made in C++ using the graphics.h library.
+
+Two people take part in the game, each of whom aimed to get the opposing armed fight out. The game can end with the victory of one of the players, or undecided - the draw.
 
 This is the final project for the "Introduction to Programming" course (year I, semester I) from university.
 
