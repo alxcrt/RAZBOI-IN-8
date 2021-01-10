@@ -11,7 +11,7 @@ This is the final project for the "Introduction to Programming" course (year I, 
 
 # Screenshots
 
-<img src="https://https://raw.githubusercontent.com/Axellben/RAZBOI-IN-8/main/Screenshots/gameplay.png" width="98.5%">
+<img src="https://raw.githubusercontent.com/Axellben/RAZBOI-IN-8/main/Screenshots/gameplay.png" width="98.5%">
 
-<img src="https://https://raw.githubusercontent.com/Axellben/RAZBOI-IN-8/main/Screenshots/menu.png" width="49%">
-<img src="https://https://raw.githubusercontent.com/Axellben/RAZBOI-IN-8/main/Screenshots/languages.png" width="49%">
+<img src="https://raw.githubusercontent.com/Axellben/RAZBOI-IN-8/main/Screenshots/menu.png" width="49%">
+<img src="https://raw.githubusercontent.com/Axellben/RAZBOI-IN-8/main/Screenshots/languages.png" width="49%">
