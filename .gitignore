@@ -1,4 +1,4 @@
 .vscode/
 /languages
-!/bin/release
-/bin/release/**
+/bin/release/main.exe
+/bin/release/settings.dat
