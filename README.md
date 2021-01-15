@@ -1,5 +1,22 @@
 # Razboi in 8
 
+## Prerequisites
+
+- `Windows`
+- `gcc`
+- `graphics.h`
+
+# Instructions
+
+1. Open a cmd inside `RAZBOI IN 8`
+2. If you don't have have Make :
+
+   `$ g++ -o bin/release/main src/\*.cpp -std=c++17 -O3 -Wall -I include -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32 -lwinmm -lm && .\bin\release\main`
+
+3. If you don't have have Make :
+
+   `$ make release`
+
 ## Overview
 
 Razboi in 8 is a simple 2D game made in C++ using the graphics.h library.
