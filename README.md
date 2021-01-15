@@ -1,6 +1,6 @@
 # Razboi in 8
 
-## Prerequisites
+### Prerequisites
 
 - `Windows`
 - `MinGW`
