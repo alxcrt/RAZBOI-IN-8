@@ -124,7 +124,7 @@ void saveSettings() {
 
   fwrite(&SETTINGS, sizeof(_SETTINGS), 1, saveFile);
 
-  printf("Settings file written successfully !\n");
+  //printf("Settings file written successfully !\n");
 
   // close file
   fclose(saveFile);

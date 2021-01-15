@@ -65,6 +65,7 @@ void Pvp() {
 
     std::string m = dict["Virus"][SETTINGS.LAN] + " " + std::to_string(gameBoard.p1Moves) + " " + dict["moves"][SETTINGS.LAN] + " " + std::to_string(gameBoard.p1Left) + " " + dict["pieces"][SETTINGS.LAN];
     settextstyle(10, HORIZ_DIR, 3);
+
     outtextxy(xSideBar, getmaxy() / 4 - 100, (char*)m.c_str());
     m = dict["Dokter"][SETTINGS.LAN] + " " + std::to_string(gameBoard.p2Moves) + " " + dict["moves"][SETTINGS.LAN] + " " + std::to_string(gameBoard.p2Left) + " " + dict["pieces"][SETTINGS.LAN];
     outtextxy(xSideBar, getmaxy() / 4 - 50, (char*)m.c_str());
@@ -117,6 +118,7 @@ void PvcEasy() {
 
     std::string m = dict["Virus"][SETTINGS.LAN] + " " + std::to_string(gameBoard.p1Moves) + " " + dict["moves"][SETTINGS.LAN] + " " + std::to_string(gameBoard.p1Left) + " " + dict["pieces"][SETTINGS.LAN];
     settextstyle(10, HORIZ_DIR, 3);
+
     outtextxy(xSideBar, getmaxy() / 4 - 100, (char*)m.c_str());
     m = dict["Dokter"][SETTINGS.LAN] + " " + std::to_string(gameBoard.p2Moves) + " " + dict["moves"][SETTINGS.LAN] + " " + std::to_string(gameBoard.p2Left) + " " + dict["pieces"][SETTINGS.LAN];
     outtextxy(xSideBar, getmaxy() / 4 - 50, (char*)m.c_str());
@@ -174,6 +176,7 @@ void PvcHard() {
 
     std::string m = dict["Virus"][SETTINGS.LAN] + " " + std::to_string(gameBoard.p1Moves) + " " + dict["moves"][SETTINGS.LAN] + " " + std::to_string(gameBoard.p1Left) + " " + dict["pieces"][SETTINGS.LAN];
     settextstyle(10, HORIZ_DIR, 3);
+
     outtextxy(xSideBar, getmaxy() / 4 - 100, (char*)m.c_str());
     m = dict["Dokter"][SETTINGS.LAN] + " " + std::to_string(gameBoard.p2Moves) + " " + dict["moves"][SETTINGS.LAN] + " " + std::to_string(gameBoard.p2Left) + " " + dict["pieces"][SETTINGS.LAN];
     outtextxy(xSideBar, getmaxy() / 4 - 50, (char*)m.c_str());

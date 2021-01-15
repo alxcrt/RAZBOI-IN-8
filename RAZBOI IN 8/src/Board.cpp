@@ -390,7 +390,7 @@ void moveAiHard(GameBoard& gameBoard) {
             for (Move& m : validMoves) {
               GameBoard tmpBoard = copyGameBoard(gameBoard);
               simulateMove(tmpBoard, i, j, m.i, m.j, PLAYER_1);
-              int score = minimax(tmpBoard, 5, alpha, beta, false);
+              int score = minimax(tmpBoard, 4, alpha, beta, false);
 
               if (score > bestScore) {
                 bestScore = score;
