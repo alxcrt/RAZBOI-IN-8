@@ -1,11 +1,5 @@
 # Razboi in 8
 
-### Prerequisites
-
-- `Windows`
-- `MinGW`
-- `graphics.h`
-
 # Instructions
 
 1. Open a cmd inside `RAZBOI IN 8`
@@ -16,6 +10,12 @@
 3. If you have have Make run :
 
    `make release`
+
+### Prerequisites
+
+- `Windows`
+- `MinGW`
+- `graphics.h`
 
 ## Overview
 
