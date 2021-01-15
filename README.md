@@ -3,17 +3,17 @@
 ## Prerequisites
 
 - `Windows`
-- `gcc`
+- `MinGW`
 - `graphics.h`
 
 # Instructions
 
 1. Open a cmd inside `RAZBOI IN 8`
-2. If you don't have have Make :
+2. If you don't have have Make run :
 
    `$ g++ -o bin/release/main src/\*.cpp -std=c++17 -O3 -Wall -I include -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32 -lwinmm -lm && .\bin\release\main`
 
-3. If you don't have have Make :
+3. If you don't have have Make run :
 
    `$ make release`
 
