@@ -13,9 +13,10 @@
 
 ### Prerequisites
 
-- `Windows`
+- `Windows 10`
 - `MinGW`
 - `graphics.h`
+- `GNU Make` Optional
 
 ## Overview
 
