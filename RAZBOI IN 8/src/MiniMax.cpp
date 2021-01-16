@@ -56,14 +56,12 @@ int minimax(GameBoard& gameBoard, int depth, int alpha, int beta, bool maxPlayer
   }
 }
 
-//TODO Find a better function
 int evaluateBoard(GameBoard& gameBoard) {
   int c2 = 0;
 
   for (int i = 0; i < BOARD_SIZE; i++) {
     for (int j = 0; j < BOARD_SIZE; j++) {
       if (gameBoard.board[i][j].type == PLAYER_2) {
-        // c1 -= i - 1;
       } else if (gameBoard.board[i][j].type == PLAYER_1) {
         c2 += i + 1;
       }
@@ -76,10 +74,7 @@ int evaluateBoard(GameBoard& gameBoard) {
     return INT_MIN;
   }
 
-  // if (gameBoard.p2Left == gameBoard.size)
   return (gameBoard.p1Left - gameBoard.p2Left * 10) + c2 * 5;
-
-  // return (gameBoard.p1Left - gameBoard.p2Left) * 100 + c2 * 5;
 }
 
 std::vector<Move> getValidMoves(GameBoard& gameBoard, int i, int j) {

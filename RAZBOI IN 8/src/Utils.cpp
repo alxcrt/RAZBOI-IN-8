@@ -25,8 +25,6 @@ button createButton(int x, int y, const char* label, void (*callFunction)(), int
 }
 
 void drawButton(button& b) {
-  // rectangle(b.x - b.labelWidth / 2, b.y - b.labelHeight / 2, b.x + b.labelWidth / 2, b.y + b.labelHeight / 2);
-
   // * Verify if the mouse is inside the area of the button
   if (mousex() > b.x - b.labelWidth / 2 && mousex() < b.x + b.labelWidth / 2 && mousey() > b.y - b.labelHeight / 2 && mousey() < b.y + b.labelHeight / 2) {
     if (ismouseclick(WM_LBUTTONDOWN)) {
@@ -59,15 +57,7 @@ void stopSound(const std::string path) {
 
 void playSound(const std::string path) {
   // * Stops playback of a sound that is playing
-  // stopSound(path);
-
-  // Plays the sound
-  // waveOutSetVolume(NULL, 0xFFFF);
-  // PlaySoundA(path, NULL, SND_LOOP | SND_ASYNC);
-  // PlaySoundA(path, GetModuleHandle(NULL), SND_FILENAME | SND_ASYNC);
   mciSendStringA(("play " + path).c_str(), NULL, 0, 0);
-
-  // mciSendString("play mp3", NULL, 0, NULL);
 }
 
 void wait(int x) {
@@ -123,8 +113,6 @@ void saveSettings() {
   }
 
   fwrite(&SETTINGS, sizeof(_SETTINGS), 1, saveFile);
-
-  //printf("Settings file written successfully !\n");
 
   // close file
   fclose(saveFile);

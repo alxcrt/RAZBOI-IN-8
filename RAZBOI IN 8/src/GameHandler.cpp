@@ -3,8 +3,6 @@
 
 #include <windows.h>
 
-#include <iostream>
-
 #include "Game.hpp"
 #include "Utils.hpp"
 #include "graphics.h"
