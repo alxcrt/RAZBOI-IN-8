@@ -1,5 +1,12 @@
 # Razboi in 8
 
+#### Prerequisites
+
+- `Windows 10`
+- `MinGW`
+- `graphics.h`
+- `GNU Make` Optional
+
 # Instructions
 
 1. Open a cmd inside `RAZBOI IN 8`
@@ -10,13 +17,6 @@
 3. If you have have Make run :
 
    `make release`
-
-### Prerequisites
-
-- `Windows 10`
-- `MinGW`
-- `graphics.h`
-- `GNU Make` Optional
 
 ## Overview
 
