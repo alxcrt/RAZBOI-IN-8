@@ -3,6 +3,7 @@
 #define PLAYER_1 1
 #define PLAYER_2 2
 #define EMPTY 0
+#define DRAW 3
 
 #define BOARD_SIZE 8
 #define MAX_MOVES BOARD_SIZE / 2
@@ -49,5 +50,4 @@ int winner(GameBoard& gameBoard);
 void fillBoard(GameBoard& gameBoard, int player);
 
 void movePlayer(GameBoard& gameBoard);
-void moveAiEasy(GameBoard& gameBoard);
 void moveAiHard(GameBoard& gameBoard);

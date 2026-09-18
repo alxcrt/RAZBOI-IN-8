@@ -6,6 +6,7 @@
 
 #include <cmath>
 
+#include "Jev.hpp"
 #include "MiniMax.hpp"
 #include "Utils.hpp"
 #include "graphics.h"
@@ -238,6 +239,7 @@ int winner(GameBoard& gameBoard) {
     } else if (gameBoard.p2Left < gameBoard.p1Left) {
       return PLAYER_1;
     }
+    return DRAW;
   }
 
   if (gameBoard.p1Left <= 0) {
@@ -282,7 +284,10 @@ void fillBoard(GameBoard& gameBoard, int player) {
 }
 
 void movePlayer(GameBoard& gameBoard) {
-  if (ismouseclick(WM_LBUTTONDOWN) && !winner(gameBoard)) {
+  // No legal move: pass
+  if (getAllMoves(gameBoard, gameBoard.currentPlayer).empty()) {
+    changeTurn(gameBoard);
+  } else if (ismouseclick(WM_LBUTTONDOWN) && !winner(gameBoard)) {
     int x, y;
     getmouseclick(WM_LBUTTONDOWN, x, y);
 
@@ -328,81 +333,20 @@ void movePlayer(GameBoard& gameBoard) {
   }
 }
 
-void moveAiEasy(GameBoard& gameBoard) {
-  if (!winner(gameBoard)) {
-    bool foundMove = false;
-    int newI = 0, newJ = 0, i = 0, j = 0;
-
-    while (!foundMove) {
-      i = rand() % gameBoard.size;
-      j = rand() % gameBoard.size;
-      if (gameBoard.board[i][j].type == gameBoard.currentPlayer) {
-        if (isValidMove(gameBoard, i, j, i + 1, j - 1)) {
-          foundMove = true;
-          newI = i + 1;
-          newJ = j - 1;
-          gameBoard.board[i][j].type = EMPTY;
-          remove(gameBoard, i, j);
-        } else if (isValidMove(gameBoard, i, j, i + 1, j + 1)) {
-          foundMove = true;
-          newI = i + 1;
-          newJ = j + 1;
-          gameBoard.board[i][j].type = EMPTY;
-          remove(gameBoard, i, j);
-        } else if (isValidMove(gameBoard, i, j, i - 1, j - 1)) {
-          foundMove = true;
-          newI = i - 1;
-          newJ = j - 1;
-          gameBoard.board[i][j].type = EMPTY;
-          remove(gameBoard, i, j);
-        } else if (isValidMove(gameBoard, i, j, i - 1, j + 1)) {
-          foundMove = true;
-          newI = i - 1;
-          newJ = j + 1;
-          gameBoard.board[i][j].type = EMPTY;
-          remove(gameBoard, i, j);
-        }
-      }
-    }
-
-    move(gameBoard, newI, newJ, gameBoard.currentPlayer);
-
-    checkNeighbours(gameBoard);
-    changeTurn(gameBoard);
-    playSound("assets/moving_piece.wav");
-  }
-}
-
 void moveAiHard(GameBoard& gameBoard) {
   if (!winner(gameBoard)) {
-    // Move bestMove = minimax(gameBoard, 3, false);
-    Move initMove = {0, 0};
-    Move nextMove = {0, 0};
-    int bestScore = INT_MIN;
-
-    int alpha = INT_MIN;
-    int beta = INT_MAX;
-    for (int i = 0; i < gameBoard.size; i++) {
-      for (int j = 0; j < gameBoard.size; j++) {
-        if (gameBoard.board[i][j].type == PLAYER_1) {
-          std::vector<Move> validMoves = getValidMoves(gameBoard, i, j);
-          if (!validMoves.empty()) {
-            for (Move& m : validMoves) {
-              GameBoard tmpBoard = copyGameBoard(gameBoard);
-              simulateMove(tmpBoard, i, j, m.i, m.j, PLAYER_1);
-              int score = minimax(tmpBoard, 4, alpha, beta, false);
-
-              if (score > bestScore) {
-                bestScore = score;
-                initMove.i = i;
-                initMove.j = j;
-                nextMove.i = m.i;
-                nextMove.j = m.j;
-              }
-            }
-          }
-        }
+    Move initMove, nextMove;
+    if (!jevMove(gameBoard, initMove, nextMove)) {
+      // Jev could not answer: random legal move
+      std::vector<std::pair<Move, Move>> moves = getAllMoves(gameBoard, PLAYER_1);
+      if (moves.empty()) {
+        changeTurn(gameBoard);
+        return;
       }
+      int k = rand() % moves.size();
+      initMove = moves[k].first;
+      nextMove = moves[k].second;
+      jevJournal.offline = true;
     }
     gameBoard.board[initMove.i][initMove.j].type = EMPTY;
     remove(gameBoard, initMove.i, initMove.j);

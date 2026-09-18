@@ -1,81 +1,6 @@
 #include "MiniMax.hpp"
 
-#include <climits>
-#include <cmath>
-
 #include "graphics.h"
-
-int minimax(GameBoard& gameBoard, int depth, int alpha, int beta, bool maxPlayer) {
-  if (depth == 0 || winner(gameBoard) != 0) {
-    return evaluateBoard(gameBoard);
-  }
-
-  if (maxPlayer) {
-    int maxEval = INT_MIN;
-    for (int i = 0; i < gameBoard.size; i++) {
-      for (int j = 0; j < gameBoard.size; j++) {
-        if (gameBoard.board[i][j].type == PLAYER_1) {
-          std::vector<Move> validMoves = getValidMoves(gameBoard, i, j);
-
-          if (!validMoves.empty()) {
-            for (Move& m : validMoves) {
-              GameBoard tmpBoard = copyGameBoard(gameBoard);
-              simulateMove(tmpBoard, i, j, m.i, m.j, PLAYER_1);
-              int eval = minimax(tmpBoard, depth - 1, alpha, beta, false);
-              alpha = std::max(alpha, eval);
-              maxEval = std::max(maxEval, eval);
-              if (beta <= alpha)
-                return maxEval;
-            }
-          }
-        }
-      }
-    }
-    return maxEval;
-  } else {
-    int minEval = INT_MAX;
-    for (int i = 0; i < gameBoard.size; i++) {
-      for (int j = 0; j < gameBoard.size; j++) {
-        if (gameBoard.board[i][j].type == PLAYER_2) {
-          std::vector<Move> validMoves = getValidMoves(gameBoard, i, j);
-          if (!validMoves.empty()) {
-            for (Move& m : validMoves) {
-              GameBoard tmpBoard = copyGameBoard(gameBoard);
-              simulateMove(tmpBoard, i, j, m.i, m.j, PLAYER_2);
-              int eval = minimax(tmpBoard, depth - 1, alpha, beta, true);
-              minEval = std::min(minEval, eval);
-              beta = std::min(beta, eval);
-              if (beta <= alpha)
-                return minEval;
-            }
-          }
-        }
-      }
-    }
-    return minEval;
-  }
-}
-
-int evaluateBoard(GameBoard& gameBoard) {
-  int c2 = 0;
-
-  for (int i = 0; i < BOARD_SIZE; i++) {
-    for (int j = 0; j < BOARD_SIZE; j++) {
-      if (gameBoard.board[i][j].type == PLAYER_2) {
-      } else if (gameBoard.board[i][j].type == PLAYER_1) {
-        c2 += i + 1;
-      }
-    }
-  }
-
-  if (winner(gameBoard) == PLAYER_1) {
-    return INT_MAX;
-  } else if (winner(gameBoard) == PLAYER_2) {
-    return INT_MIN;
-  }
-
-  return (gameBoard.p1Left - gameBoard.p2Left * 10) + c2 * 5;
-}
 
 std::vector<Move> getValidMoves(GameBoard& gameBoard, int i, int j) {
   std::vector<Move> moves;
@@ -95,6 +20,22 @@ std::vector<Move> getValidMoves(GameBoard& gameBoard, int i, int j) {
   if (contains(gameBoard, i - 1, j - 1) && gameBoard.board[i - 1][j - 1].type == EMPTY) {
     Move m = {i - 1, j - 1};
     moves.push_back(m);
+  }
+
+  return moves;
+}
+
+std::vector<std::pair<Move, Move>> getAllMoves(GameBoard& gameBoard, int player) {
+  std::vector<std::pair<Move, Move>> moves;
+
+  for (int i = 0; i < gameBoard.size; i++) {
+    for (int j = 0; j < gameBoard.size; j++) {
+      if (gameBoard.board[i][j].type == player) {
+        for (Move& m : getValidMoves(gameBoard, i, j)) {
+          moves.push_back({{i, j}, m});
+        }
+      }
+    }
   }
 
   return moves;

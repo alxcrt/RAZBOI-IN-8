@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Razboi in 8</title>
+<link rel="icon" href="data:,">
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #000; }
+  body { display: grid; place-items: center; }
+  /* the BGI window, scaled to fit; bgi.cpp sets --ar to its width / height */
+  canvas { display: block; width: min(100vw, 100dvh * var(--ar, 1.6)); aspect-ratio: var(--ar, 1.6); touch-action: none; }
+  /* phone held upright: turn the landscape window sideways so it fills the screen (bgi.cpp maps taps back) */
+  @media (orientation: portrait) {
+    canvas { position: fixed; left: 50%; top: 50%; width: min(100dvh, 100vw * var(--ar, 1.6)); transform: translate(-50%, -50%) rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+{{{ SCRIPT }}}
+</body>
+</html>
