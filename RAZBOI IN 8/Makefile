@@ -5,5 +5,5 @@ release:
 web:
 	mkdir -p ../web/assets
 	cp assets/*.jpg ../web/assets/
-	for f in theme_hospital2 moving_piece winning losing; do afconvert -f m4af -d aac@48000 -b 96000 assets/$$f.wav ../web/assets/$$f.m4a; done
+	for f in theme_hospital2 moving_piece winning losing; do [ -f ../web/assets/$$f.m4a ] || afconvert -f m4af -d aac@48000 -b 96000 assets/$$f.wav ../web/assets/$$f.m4a; done
 	em++ src/*.cpp wasm/bgi.cpp -std=c++17 -O2 -I include -I wasm -sASYNCIFY -sSTACK_SIZE=8MB -sASYNCIFY_STACK_SIZE=1048576 -sALLOW_MEMORY_GROWTH --shell-file wasm/shell.html -o ../web/index.html

@@ -1,10 +1,12 @@
 #include "Game.hpp"
 
+#include <algorithm>
 #include <cmath>
 #include <cstring>
 
 #include "Board.hpp"
 #include "GameHandler.hpp"
+#include "Jev.hpp"
 #include "Utils.hpp"
 #include "graphics.h"
 
@@ -87,6 +89,7 @@ void PvcHard() {
   GameBoard gameBoard = createBoard(getmaxx() / 2 - 200, getmaxy() / 2, 600, BOARD_SIZE);
   drawBoard(gameBoard);
   clearSideBar();
+  jevJournal = {-1};
 
   bool b = false;
 
@@ -125,6 +128,50 @@ void PvcHard() {
     outtextxy(xSideBar, getmaxy() / 4 - 100, (char*)m.c_str());
     m = dict["Dokter"][SETTINGS.LAN] + " " + std::to_string(gameBoard.p2Moves) + " " + dict["moves"][SETTINGS.LAN] + " " + std::to_string(gameBoard.p2Left) + " " + dict["pieces"][SETTINGS.LAN];
     outtextxy(xSideBar, getmaxy() / 4 - 50, (char*)m.c_str());
+
+    // Jev's journal: the kind of move Jev just played, and how much it wanted each kind
+    const char* headlines[4] = {"Jev took a Dokter!", "Jev set a trap", "Jev played safe", "Jev took a risk"};
+    const char* kinds[4] = {"take", "trap", "safe", "risky"};
+    int y = getmaxy() / 4;
+    if (!winner(gameBoard) && gameBoard.currentPlayer == PLAYER_1) {
+      outtextxy(xSideBar, y, (char*)dict["Jev is thinking..."][SETTINGS.LAN].c_str());
+    } else if (jevJournal.offline) {
+      outtextxy(xSideBar, y, (char*)dict["Jev is offline"][SETTINGS.LAN].c_str());
+      settextstyle(10, HORIZ_DIR, 2);
+      outtextxy(xSideBar, y + 30, (char*)dict["random move"][SETTINGS.LAN].c_str());
+    } else if (jevJournal.kind >= 0) {
+      outtextxy(xSideBar, y, (char*)dict[headlines[jevJournal.kind]][SETTINGS.LAN].c_str());
+      settextstyle(10, HORIZ_DIR, 2);
+      int t = (jevJournal.ms + 50) / 100;
+      // ponytail: 0.5 is a display-only threshold
+      m = dict[jevJournal.confidence >= 0.5 ? "Jev was sure" : "Jev hesitated"][SETTINGS.LAN] + " (" + std::to_string(t / 10) + "." + std::to_string(t % 10) + "s)";
+      outtextxy(xSideBar, y + 30, (char*)m.c_str());
+
+      // A row per kind of move Jev could play: label, bar, percentage
+      int left = xSideBar - 150, right = xSideBar + 150, barLeft = left, barRight = right - textwidth((char*)"100%") - 8;
+      for (int k = 0; k < 4; k++) {
+        barLeft = std::max(barLeft, left + textwidth((char*)dict[kinds[k]][SETTINGS.LAN].c_str()) + 8);
+      }
+      settextjustify(LEFT_TEXT, CENTER_TEXT);
+      y += 64;
+      for (int k = 0; k < 4; k++) {
+        if (jevJournal.want[k] < 0) {
+          continue;
+        }
+        int percent = lround(jevJournal.want[k] * 100);
+        outtextxy(left, y, (char*)dict[kinds[k]][SETTINGS.LAN].c_str());
+        setfillstyle(SOLID_FILL, COLOR(200, 205, 212));
+        bar(barLeft, y - 11, barRight, y);
+        setfillstyle(SOLID_FILL, k == jevJournal.kind ? COLOR(42, 219, 68) : COLOR(125, 135, 150));
+        if (percent > 0) {
+          bar(barLeft, y - 11, barLeft + percent * (barRight - barLeft) / 100, y);
+        }
+        m = std::to_string(percent) + "%";
+        outtextxy(right - textwidth((char*)m.c_str()), y, (char*)m.c_str());
+        y += 26;
+      }
+      settextjustify(CENTER_TEXT, CENTER_TEXT);
+    }
     settextstyle(10, HORIZ_DIR, 4);
 
     if (!winner(gameBoard)) {

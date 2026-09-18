@@ -9,16 +9,23 @@ const root = fileURLToPath(new URL('.', import.meta.url));
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.wasm': 'application/wasm', '.jpg': 'image/jpeg', '.m4a': 'audio/mp4' };
 
 createServer(async (req, res) => {
-  const path = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
-  if (path === '/api/jev' && req.method === 'POST') {
-    const r = await POST(new Request('http://localhost/api/jev', { method: 'POST', body: req, duplex: 'half' })).catch((e) => new Response(`{"error":"${e.name}"}`, { status: 502 }));
-    res.writeHead(r.status, { 'Content-Type': 'application/json' }).end(await r.text());
-    return;
-  }
-  const file = join(root, path.endsWith('/') ? path + 'index.html' : path);
   try {
+    const path = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+    if (path === '/api/jev' && req.method === 'POST') {
+      // api/jev.js reads the whole body before checking its size
+      if (!(req.headers['content-length'] <= 65536)) {
+        res.writeHead(413, { 'Content-Type': 'application/json' }).end('{"error":"too large"}');
+        return;
+      }
+      const r = await POST(new Request('http://localhost/api/jev', { method: 'POST', body: req, duplex: 'half' })).catch((e) => new Response(`{"error":"${e.name}"}`, { status: 502 }));
+      const body = await r.text();
+      res.writeHead(r.status, { 'Content-Type': 'application/json' }).end(body);
+      return;
+    }
+    const file = join(root, path.endsWith('/') ? path + 'index.html' : path);
     if (!file.startsWith(root)) throw new Error('outside web/');
-    res.writeHead(200, { 'Content-Type': types[extname(file)] ?? 'application/octet-stream' }).end(await readFile(file));
+    const data = await readFile(file);
+    res.writeHead(200, { 'Content-Type': types[extname(file)] ?? 'application/octet-stream' }).end(data);
   } catch {
     res.writeHead(404).end();
   }

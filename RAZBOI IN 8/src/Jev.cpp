@@ -1,39 +1,37 @@
 #include "Jev.hpp"
 
 #include <algorithm>
+#include <cstdio>
 #include <cstdlib>
-#include <sstream>
+#include <cstring>
+#include <string>
 
 #include "MiniMax.hpp"
 
+JevJournal jevJournal;
+
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
-#endif
-
-JevJournal jevJournal = {-1};
 
 // "c7-d6": column letter + rank, row 0 is rank 8 (the Virus side)
 static std::string moveName(std::pair<Move, Move>& m) {
   return std::string(1, 'a' + m.first.j) + std::to_string(BOARD_SIZE - m.first.i) + "-" + std::string(1, 'a' + m.second.j) + std::to_string(BOARD_SIZE - m.second.i);
 }
 
-static int piecesLeft(GameBoard& gameBoard, int player) {
-  return player == PLAYER_1 ? gameBoard.p1Left : gameBoard.p2Left;
-}
-
-// Most `victim` pieces a single move of `player` removes from this position
-static int mostRemoved(GameBoard& gameBoard, int player, int victim) {
+// Most enemy pieces a single move of `player` removes from this position
+static int mostRemoved(GameBoard& gameBoard, int player) {
   int most = 0;
   for (auto& m : getAllMoves(gameBoard, player)) {
     GameBoard tmpBoard = copyGameBoard(gameBoard);
     simulateMove(tmpBoard, m.first.i, m.first.j, m.second.i, m.second.j, player);
-    most = std::max(most, piecesLeft(gameBoard, victim) - piecesLeft(tmpBoard, victim));
+    most = std::max(most, player == PLAYER_1 ? gameBoard.p2Left - tmpBoard.p2Left : gameBoard.p1Left - tmpBoard.p1Left);
   }
   return most;
 }
 
-// The gateway request body. Every string in it is ours, so nothing needs escaping.
-std::string jevRequest(GameBoard& gameBoard, std::vector<int>& kinds) {
+// The gateway request body, and kinds gets the JEV_* of each getAllMoves(gameBoard, PLAYER_1) move.
+// Every string in it is ours, so nothing needs escaping.
+static std::string jevRequest(GameBoard& gameBoard, std::vector<int>& kinds) {
   std::string board = "";
   for (int i = 0; i < BOARD_SIZE; i++) {
     board += "\"" + std::to_string(BOARD_SIZE - i) + " ";
@@ -49,7 +47,7 @@ std::string jevRequest(GameBoard& gameBoard, std::vector<int>& kinds) {
     GameBoard tmpBoard = copyGameBoard(gameBoard);
     simulateMove(tmpBoard, m.first.i, m.first.j, m.second.i, m.second.j, PLAYER_1);
     int removeNow = gameBoard.p2Left - tmpBoard.p2Left, lostNow = gameBoard.p1Left - tmpBoard.p1Left;
-    int dokterNext = mostRemoved(tmpBoard, PLAYER_2, PLAYER_1), virusNext = mostRemoved(tmpBoard, PLAYER_1, PLAYER_2);
+    int dokterNext = mostRemoved(tmpBoard, PLAYER_2), virusNext = mostRemoved(tmpBoard, PLAYER_1);
     kinds.push_back(removeNow ? JEV_TAKE : lostNow || dokterNext ? JEV_RISKY : virusNext ? JEV_TRAP : JEV_SAFE);
     if (criteria != "") {
       criteria += ",";
@@ -81,7 +79,6 @@ std::string jevRequest(GameBoard& gameBoard, std::vector<int>& kinds) {
          "\"providerOptions\":{\"gateway\":{\"noTraining\":true}}}";
 }
 
-#ifdef __EMSCRIPTEN__
 EM_JS_DEPS(jev, "$UTF8ToString,$stringToNewUTF8");
 
 // POSTs the request to /api/jev (web/api/jev.js adds the key) and returns (malloc'd) "choice confidence ms"
@@ -111,11 +108,7 @@ EM_ASYNC_JS(char*, jevAsk, (const char* body), {
 });
 
 bool jevMove(GameBoard& gameBoard, Move& from, Move& to) {
-  jevJournal = {-1};
   std::vector<std::pair<Move, Move>> moves = getAllMoves(gameBoard, PLAYER_1);
-  if (moves.empty()) {
-    return false;
-  }
   std::vector<int> kinds;
   std::string request = jevRequest(gameBoard, kinds);
   for (int k = 0; k < 4; k++) {
@@ -135,33 +128,29 @@ bool jevMove(GameBoard& gameBoard, Move& from, Move& to) {
   if (answer == NULL) {
     return false;
   }
-  std::istringstream in(answer);
-  free(answer);
-  std::string choice, key;
+  char choice[8] = "", key[8];
   float p;
-  in >> choice >> jevJournal.confidence >> jevJournal.ms;
-  while (in >> key >> p) {
+  int n = 0;
+  sscanf(answer, "%7s %f %d%n", choice, &jevJournal.confidence, &jevJournal.ms, &n);
+  for (char* s = answer + n; sscanf(s, "%7s %f%n", key, &p, &n) == 2; s += n) {
     for (size_t k = 0; k < moves.size(); k++) {
       if (moveName(moves[k]) == key) {
-        jevJournal.want[kinds[k]] += p;
+        // Jev's favourite move of each kind, so the kind it played always has the longest bar
+        jevJournal.want[kinds[k]] = std::max(jevJournal.want[kinds[k]], p);
+        if (!strcmp(key, choice)) {
+          from = moves[k].first;
+          to = moves[k].second;
+          jevJournal.kind = kinds[k];
+        }
       }
     }
   }
-
-  for (size_t k = 0; k < moves.size(); k++) {
-    if (moveName(moves[k]) == choice) {
-      from = moves[k].first;
-      to = moves[k].second;
-      jevJournal.kind = kinds[k];
-      return true;
-    }
-  }
-  return false;
+  free(answer);
+  return jevJournal.kind >= 0;
 }
 #else
 // ponytail: no Jev on the desktop build, Virus falls back to random moves
 bool jevMove(GameBoard&, Move&, Move&) {
-  jevJournal = {-1};
   return false;
 }
 #endif

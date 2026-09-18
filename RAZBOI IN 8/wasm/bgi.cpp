@@ -13,6 +13,7 @@ static const int fontHeight[11] = {0, 19, 21, 24, 32, 42, 53, 64, 80, 96, 128};
 static int width, height, color, bkcolor, fillcolor, thickness, charsize = 4, horiz, vert;
 static int last[4];   // the last rectangle(), for floodfill()
 static int mouse[5];  // pending left click, its x, y, then mousex, mousey; written by the canvas pointer handlers
+static bool spun;     // ismouseclick came up empty since the last delay()
 
 // saveSettings() exit(1)s when it can't open ./bin/release/settings.dat
 static int dirs = mkdir("bin", 0777) + mkdir("bin/release", 0777);
@@ -117,7 +118,11 @@ EM_JS(void, bgi_sound, (const char* command), {
 });
 
 // landscape even on a phone held upright (shell.html turns the window sideways there)
-EM_JS(int, bgi_screen, (int h), { return h ? Math.min(innerWidth, innerHeight) : Math.max(innerWidth, innerHeight); });
+// ponytail: scaled up to at least 1024x640 (the game's smallest layout) in the screen's shape, a phone has fewer CSS px than any 2021 screen
+EM_JS(int, bgi_screen, (int h), {
+  const s = Math.max(1, 640 / Math.min(innerWidth, innerHeight), 1024 / Math.max(innerWidth, innerHeight));
+  return Math.round(s * (h ? Math.min(innerWidth, innerHeight) : Math.max(innerWidth, innerHeight)));
+});
 
 int initwindow(int w, int h, const char* title, int left, int top, bool dbflag, bool closeflag) {
   width = w;
@@ -223,9 +228,11 @@ int textheight(const char* s) {
   return fontHeight[charsize];
 }
 
-// The game busy-waits on this (Board.cpp movePlayer), so it has to let the browser run.
+// The game busy-waits on this (Board.cpp movePlayer), so it has to let the browser run, but only from the
+// second empty call: a tap during a yield inside a frame would move mousex/mousey after drawButton's hover test.
 bool ismouseclick(int kind) {
-  if (!mouse[0]) emscripten_sleep(0);
+  if (!mouse[0] && spun) emscripten_sleep(0);
+  spun = !mouse[0];
   return kind == WM_LBUTTONDOWN && mouse[0];
 }
 
@@ -251,6 +258,7 @@ int mousey() {
 }
 
 void delay(int msec) {
+  spun = false;
   emscripten_sleep(msec);
 }
 

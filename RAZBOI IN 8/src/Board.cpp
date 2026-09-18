@@ -335,14 +335,16 @@ void movePlayer(GameBoard& gameBoard) {
 
 void moveAiHard(GameBoard& gameBoard) {
   if (!winner(gameBoard)) {
+    jevJournal = {-1};
+    std::vector<std::pair<Move, Move>> moves = getAllMoves(gameBoard, PLAYER_1);
+    // No legal move: pass
+    if (moves.empty()) {
+      changeTurn(gameBoard);
+      return;
+    }
     Move initMove, nextMove;
     if (!jevMove(gameBoard, initMove, nextMove)) {
       // Jev could not answer: random legal move
-      std::vector<std::pair<Move, Move>> moves = getAllMoves(gameBoard, PLAYER_1);
-      if (moves.empty()) {
-        changeTurn(gameBoard);
-        return;
-      }
       int k = rand() % moves.size();
       initMove = moves[k].first;
       nextMove = moves[k].second;
