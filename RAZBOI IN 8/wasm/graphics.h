@@ -31,7 +31,6 @@ void setbkcolor(int color);
 void setfillstyle(int pattern, int color);
 void setlinestyle(int linestyle, unsigned upattern, int thickness);
 void rectangle(int left, int top, int right, int bottom);
-void bar(int left, int top, int right, int bottom);
 void floodfill(int x, int y, int border);
 void readimagefile(const char* filename = NULL, int left = 0, int top = 0, int right = INT_MAX, int bottom = INT_MAX);
 

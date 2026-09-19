@@ -38,11 +38,6 @@ The computer opponent is now **Jev** ([TypeSafe](https://typesafe.ai)) through V
 
    It also deploys on Vercel as is: `web` as the root directory, plus the same environment variable. Either way, set a spend limit on your AI Gateway key.
 
-During a game against Jev, the sidebar shows **Jev's journal**:
-- what Jev just did, in words ("Jev took a Dokter!", "Jev set a trap", "Jev played safe", "Jev took a risk")
-- whether it was sure or hesitated, and how long it thought
-- a bar for how much it liked its favourite move of each kind
-
 On a phone held upright, the game turns sideways to fill the screen. Turn the phone and play with taps.
 
 On the Windows build, Player vs Jev plays random moves (no Jev there).
@@ -75,9 +70,8 @@ web/api/jev.js             server function the game calls for Jev's moves
 - **In-memory filesystem**: `settings.dat` still works through `fopen`/`fwrite`. It resets when the page reloads.
 - **Jev ([TypeSafe](https://docs.typesafe.ai) System One model) via [Vercel AI Gateway](https://vercel.com/ai-gateway)**: replaces minimax.
   - For every legal Virus move, `Jev.cpp` uses the original `simulateMove` to compute plain facts: how many Dokters it takes now, how many Virus pieces Dokter could take back, how many moves each side has left, and so on.
-  - It sends those facts to Jev as one `Choice` question. Jev answers with the move it picked and a probability for every option.
+  - It sends those facts to Jev as one `Choice` question, and Jev answers with the move it picked.
   - The rules stay in C++; Jev only makes the judgement.
-  - The journal groups the options into take / trap / safe / risky. Each bar is Jev's probability for its favourite move of that kind, so the kind it played has the longest bar. "Sure" means Jev's confidence was at least 50%.
 - **Responsive page** (`RAZBOI IN 8/wasm/shell.html`): the window is scaled to fit and centred. On a portrait screen, one CSS rule turns it 90°, and the shim maps taps back through the rotation.
 - **Vercel Function** (`web/api/jev.js`): keeps the API key on the server and forwards only Jev requests. `web/dev.mjs` does the same locally.
 

@@ -335,7 +335,6 @@ void movePlayer(GameBoard& gameBoard) {
 
 void moveAiHard(GameBoard& gameBoard) {
   if (!winner(gameBoard)) {
-    jevJournal = {-1};
     std::vector<std::pair<Move, Move>> moves = getAllMoves(gameBoard, PLAYER_1);
     // No legal move: pass
     if (moves.empty()) {
@@ -348,7 +347,6 @@ void moveAiHard(GameBoard& gameBoard) {
       int k = rand() % moves.size();
       initMove = moves[k].first;
       nextMove = moves[k].second;
-      jevJournal.offline = true;
     }
     gameBoard.board[initMove.i][initMove.j].type = EMPTY;
     remove(gameBoard, initMove.i, initMove.j);

@@ -1,14 +1,10 @@
 #include "Jev.hpp"
 
 #include <algorithm>
-#include <cstdio>
 #include <cstdlib>
-#include <cstring>
 #include <string>
 
 #include "MiniMax.hpp"
-
-JevJournal jevJournal;
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
@@ -29,9 +25,8 @@ static int mostRemoved(GameBoard& gameBoard, int player) {
   return most;
 }
 
-// The gateway request body, and kinds gets the JEV_* of each getAllMoves(gameBoard, PLAYER_1) move.
-// Every string in it is ours, so nothing needs escaping.
-static std::string jevRequest(GameBoard& gameBoard, std::vector<int>& kinds) {
+// The gateway request body. Every string in it is ours, so nothing needs escaping.
+static std::string jevRequest(GameBoard& gameBoard) {
   std::string board = "";
   for (int i = 0; i < BOARD_SIZE; i++) {
     board += "\"" + std::to_string(BOARD_SIZE - i) + " ";
@@ -48,7 +43,6 @@ static std::string jevRequest(GameBoard& gameBoard, std::vector<int>& kinds) {
     simulateMove(tmpBoard, m.first.i, m.first.j, m.second.i, m.second.j, PLAYER_1);
     int removeNow = gameBoard.p2Left - tmpBoard.p2Left, lostNow = gameBoard.p1Left - tmpBoard.p1Left;
     int dokterNext = mostRemoved(tmpBoard, PLAYER_2), virusNext = mostRemoved(tmpBoard, PLAYER_1);
-    kinds.push_back(removeNow ? JEV_TAKE : lostNow || dokterNext ? JEV_RISKY : virusNext ? JEV_TRAP : JEV_SAFE);
     if (criteria != "") {
       criteria += ",";
     }
@@ -81,11 +75,9 @@ static std::string jevRequest(GameBoard& gameBoard, std::vector<int>& kinds) {
 
 EM_JS_DEPS(jev, "$UTF8ToString,$stringToNewUTF8");
 
-// POSTs the request to /api/jev (web/api/jev.js adds the key) and returns (malloc'd) "choice confidence ms"
-// then a "move probability" line per option, or 0
+// POSTs the request to /api/jev (web/api/jev.js adds the key) and returns Jev's choice (malloc'd) or 0
 EM_ASYNC_JS(char*, jevAsk, (const char* body), {
   try {
-    var start = performance.now();
     var res = await fetch("api/jev", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
@@ -95,12 +87,8 @@ EM_ASYNC_JS(char*, jevAsk, (const char* body), {
     if (!res.ok) {
       throw new Error("HTTP " + res.status);
     }
-    var json = await res.json(), move = json.answers.move;
-    var text = move.choice + " " + json.providerMetadata.typesafe.confidence.move + " " + Math.round(performance.now() - start);
-    for (var k in move.probabilities) {
-      text += "\n" + k + " " + move.probabilities[k];
-    }
-    return stringToNewUTF8(text);
+    var json = await res.json();
+    return stringToNewUTF8(json.answers.move.choice);
   } catch (e) {
     console.warn("Jev: " + e);
     return 0;
@@ -109,44 +97,28 @@ EM_ASYNC_JS(char*, jevAsk, (const char* body), {
 
 bool jevMove(GameBoard& gameBoard, Move& from, Move& to) {
   std::vector<std::pair<Move, Move>> moves = getAllMoves(gameBoard, PLAYER_1);
-  std::vector<int> kinds;
-  std::string request = jevRequest(gameBoard, kinds);
-  for (int k = 0; k < 4; k++) {
-    jevJournal.want[k] = std::count(kinds.begin(), kinds.end(), k) ? 0 : -1;
-  }
-
   // Nothing to judge: play the only move
   if (moves.size() == 1) {
     from = moves[0].first;
     to = moves[0].second;
-    jevJournal.kind = kinds[0];
-    jevJournal.want[kinds[0]] = jevJournal.confidence = 1;
     return true;
   }
 
-  char* answer = jevAsk(request.c_str());
+  char* answer = jevAsk(jevRequest(gameBoard).c_str());
   if (answer == NULL) {
     return false;
   }
-  char choice[8] = "", key[8];
-  float p;
-  int n = 0;
-  sscanf(answer, "%7s %f %d%n", choice, &jevJournal.confidence, &jevJournal.ms, &n);
-  for (char* s = answer + n; sscanf(s, "%7s %f%n", key, &p, &n) == 2; s += n) {
-    for (size_t k = 0; k < moves.size(); k++) {
-      if (moveName(moves[k]) == key) {
-        // Jev's favourite move of each kind, so the kind it played always has the longest bar
-        jevJournal.want[kinds[k]] = std::max(jevJournal.want[kinds[k]], p);
-        if (!strcmp(key, choice)) {
-          from = moves[k].first;
-          to = moves[k].second;
-          jevJournal.kind = kinds[k];
-        }
-      }
+  std::string choice = answer;
+  free(answer);
+
+  for (auto& m : moves) {
+    if (moveName(m) == choice) {
+      from = m.first;
+      to = m.second;
+      return true;
     }
   }
-  free(answer);
-  return jevJournal.kind >= 0;
+  return false;
 }
 #else
 // ponytail: no Jev on the desktop build, Virus falls back to random moves

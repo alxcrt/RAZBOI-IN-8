@@ -186,11 +186,6 @@ void rectangle(int left, int top, int right, int bottom) {
   last[0] = left, last[1] = top, last[2] = right, last[3] = bottom;
 }
 
-// Filled with the fill colour, no border; right and bottom included like BGI's bar()
-void bar(int left, int top, int right, int bottom) {
-  bgi_fill(left, top, right - left + 1, bottom - top + 1, rgb(fillcolor));
-}
-
 // ponytail: floodfill = fill the last rectangle's interior (all call sites follow rectangle()); real scanline fill if that changes
 void floodfill(int x, int y, int border) {
   if (x > last[0] && x < last[2] && y > last[1] && y < last[3])
